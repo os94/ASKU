@@ -1,35 +1,45 @@
 package kr.ac.korea.lecturestalk.kulecturestalk;
 
-import android.os.Build;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
-import android.webkit.JavascriptInterface;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Button;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 public class WebViewActivity extends AppCompatActivity {
     public static final String EVERYTIME_URL = "https://everytime.kr/timetable";
-    private WebView webView;
+    private WebView mWebView;
+    private String mText = new String();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_webview);
-        webView = (WebView) findViewById(R.id.webView);
-        webView.setWebViewClient(new HelloWebViewClient());
-        webView.getSettings().setJavaScriptEnabled(true);
-//        webView.getSettings().setPluginsEnabled(true);
-        webView.getSettings().setJavaScriptCanOpenWindowsAutomatically(true);
-//        webView.addJavascriptInterface(new MyJavaScriptInterface(),"HTMLOUT");
-        webView.addJavascriptInterface(new MyJavaScriptInterface(), "Android");
-        webView.loadUrl(EVERYTIME_URL);
+        mWebView = (WebView) findViewById(R.id.webView);
+        mWebView.setWebViewClient(new HelloWebViewClient());
+        mWebView.getSettings().setJavaScriptEnabled(true);
+        mWebView.getSettings().setJavaScriptCanOpenWindowsAutomatically(true);
+        final MyJavaScriptInterface javaScriptInterface = new MyJavaScriptInterface();
+        mWebView.addJavascriptInterface(javaScriptInterface, "Android");
+        mWebView.loadUrl(EVERYTIME_URL);
+
+        Button button = (Button) findViewById(R.id.button);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(WebViewActivity.this, TestActivity.class);
+                intent.putExtra("text", javaScriptInterface.getText());
+                startActivity(intent);
+            }
+        });
     }
 }
 
@@ -63,23 +73,40 @@ class HelloWebViewClient extends WebViewClient {
 
 }
 
-
 class MyJavaScriptInterface {
-    MyJavaScriptInterface() {
+    String mText;
 
+    MyJavaScriptInterface() {
     }
 
     @android.webkit.JavascriptInterface
     public void getHtml(String html) {
         Log.d("MyJavaScriptInterface", "Here is the value from html::" + html);
 
-        /** DROPBOX */
         Document doc = Jsoup.parse(html);
-        // <div id="email">다음 이메일로 로그인함: lhjnano@gmail.com</div> Elements emails = doc.select("div#email");
-//        Elements emails = doc.select("div#container");
-        Elements emails = doc.select("div[class=tablebody");
-        Log.d("tablebody", emails.text());
+        Elements tablebody = doc.select("div[class=tablebody");
+        Elements cols = tablebody.select("div[class=cols");
+        Elements sub1 = cols.select("div[class=subject color1");
+        mText = sub1.get(0).text();
 
+        Elements sub2 = cols.select("div[class=subject color2");
+        mText += "\n\n";
+        mText += sub2.get(0).text();
+
+        Elements sub3 = cols.select("div[class=subject color3");
+        mText += "\n\n";
+        mText += sub3.get(0).text();
+
+        Elements sub4 = cols.select("div[class=subject color4");
+        mText += "\n\n";
+        mText += sub4.get(0).text();
+
+        Elements sub5 = cols.select("div[class=subject color5");
+        mText += "\n\n";
+        mText += sub5.get(0).text();
     }
 
+    public String getText() {
+        return mText;
+    }
 }
