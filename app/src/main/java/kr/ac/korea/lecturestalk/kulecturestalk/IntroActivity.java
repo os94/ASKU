@@ -24,8 +24,15 @@ public class IntroActivity extends AppCompatActivity {
             @Override
             public void handleMessage(Message msg) {
                 super.handleMessage(msg);
-                startActivity(new Intent(IntroActivity.this, MainActivity.class));
-                finish();
+
+                boolean isLogined = false;
+                if (isLogined) {
+                    startActivity(new Intent(IntroActivity.this, MainActivity.class));
+                    finish();
+                } else {
+                    startActivity(new Intent(IntroActivity.this, LoginActivity.class));
+                    finish();
+                }
             }
         };
         handler.sendEmptyMessageDelayed(0, 2000);

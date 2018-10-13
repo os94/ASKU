@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">애스쿠</string>
+    <string name="login_id_edittext_hint">아이디</string>
+    <string name="password_edittext_hint">비밀번호</string>
+    <string name="login_button">로그인</string>
+    <string name="sign_up_button">회원가입</string>
+    <string name="sign_up_button_description">회원가입 후 클레스메이트와 수업 정보를 공유해보세요!</string>
+</resources>
