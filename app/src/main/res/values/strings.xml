@@ -1,8 +1,26 @@
 <resources>
     <string name="app_name">AsKU</string>
+
+    <!-- LoginActivity -->
     <string name="login_id_edittext_hint">ID</string>
     <string name="password_edittext_hint">Password</string>
     <string name="login_button">Login</string>
     <string name="sign_up_button">Sign up</string>
     <string name="sign_up_button_description">After you sign up, share class information with classmates!</string>
+
+    <!-- SignupActivity -->
+    <string name="signup_id_edittext_hint">Need for login</string>
+    <string name="signup_id_duplication_check_button">Check</string>
+    <string name="signup_password_edittext_hint">More than %dchars</string>
+    <string name="signup_confirm_password_edittext_hint">Input password one more</string>
+    <string name="signup_id_textview">ID</string>
+    <string name="signup_password_textview">Password</string>
+    <string name="signup_confirm_password_textview">Reconfirm</string>
+    <string name="signup_request_button">Sign up</string>
+    <string name="signup_toast_input_id">Input ID</string>
+    <string name="signup_toast_already_used_id">Already used ID</string>
+    <string name="signup_toast_usable_used_id">You can use this ID</string>
+    <string name="signup_toast_password_chars">Input password more than %d characters</string>
+    <string name="signup_toast_password_reconfirm">Miss matched password and the reconfirm</string>
+    <string name="signup_toast_need_to_confirm_id">At first, you need to click \"%s\" button</string>
 </resources>

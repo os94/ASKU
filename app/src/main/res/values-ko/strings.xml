@@ -1,8 +1,26 @@
 <resources>
     <string name="app_name">애스쿠</string>
+
+    <!-- LoginActivity -->
     <string name="login_id_edittext_hint">아이디</string>
     <string name="password_edittext_hint">비밀번호</string>
     <string name="login_button">로그인</string>
     <string name="sign_up_button">회원가입</string>
     <string name="sign_up_button_description">회원가입 후 클레스메이트와 수업 정보를 공유해보세요!</string>
+
+    <!-- SignupActivity -->
+    <string name="signup_id_edittext_hint">로그인 시 필요</string>
+    <string name="signup_id_duplication_check_button">중복확인</string>
+    <string name="signup_password_edittext_hint">%d자리 이상</string>
+    <string name="signup_confirm_password_edittext_hint">비밀번호 한번 더 입력</string>
+    <string name="signup_id_textview">아이디</string>
+    <string name="signup_password_textview">비밀번호</string>
+    <string name="signup_confirm_password_textview">재확인</string>
+    <string name="signup_request_button">가입하기</string>
+    <string name="signup_toast_input_id">아이디를 입력해주세요.</string>
+    <string name="signup_toast_already_used_id">이미 사용중인 아이디입니다.</string>
+    <string name="signup_toast_usable_used_id">사용 가능한 아이디입니다.</string>
+    <string name="signup_toast_password_chars">비밀번호 %d자리 이상으로 입력하세요.</string>
+    <string name="signup_toast_password_reconfirm">비밀번호가 일치하지 않습니다.</string>
+    <string name="signup_toast_need_to_confirm_id">먼저 \"%s\" 버튼을 눌러주세요</string>
 </resources>
