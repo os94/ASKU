@@ -2,8 +2,8 @@ package kr.ac.korea.lecturestalk.kulecturestalk;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -19,8 +19,16 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         mFirebaseAuth = FirebaseAuth.getInstance();
+
         TextView email = (TextView) findViewById(R.id.email);
-        email.setText(mFirebaseAuth.getCurrentUser().getEmail());
+        email.setText("email : " + mFirebaseAuth.getCurrentUser().getEmail());
+
+        TextView uid = (TextView) findViewById(R.id.uid);
+        uid.setText("uid : " + mFirebaseAuth.getCurrentUser().getUid());
+
+        Log.d("getPhotoUrl", "" + mFirebaseAuth.getCurrentUser().getPhotoUrl());
+        Log.d("getDisplayName", "" + mFirebaseAuth.getCurrentUser().getDisplayName());
+        Log.d("getPhoneNumber", "" + mFirebaseAuth.getCurrentUser().getPhoneNumber());
 
         Button logout = (Button) findViewById(R.id.logout);
         logout.setOnClickListener(new View.OnClickListener() {
