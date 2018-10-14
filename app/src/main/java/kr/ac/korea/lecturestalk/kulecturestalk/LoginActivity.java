@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -13,8 +14,13 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
+import com.google.firebase.auth.FirebaseAuthInvalidUserException;
+import com.google.firebase.auth.FirebaseAuthUserCollisionException;
+import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
 
 public class LoginActivity extends AppCompatActivity {
+    private static final String TAG = LoginActivity.class.getSimpleName();
     private FirebaseAuth mFirebaseAuth;
 
     @Override
@@ -41,9 +47,30 @@ public class LoginActivity extends AppCompatActivity {
                                     Toast.makeText(LoginActivity.this, "로그인 성공", Toast.LENGTH_SHORT).show();
                                     finish();
                                 } else {
-                                    Toast.makeText(LoginActivity.this, "로그인 오류", Toast.LENGTH_SHORT).show();
+                                    try {
+                                        throw task.getException();
+                                    } catch (FirebaseAuthInvalidCredentialsException e) {
+                                        String msg = e.getMessage().trim();
+                                        if ("The email address is badly formatted.".equals(msg)) {
+                                            Toast.makeText(LoginActivity.this, "이메일 형식에 맞지 않습니다.", Toast.LENGTH_SHORT).show();
+                                        } else if ("The password is invalid or the user does not have a password.".equals(msg)) {
+                                            Toast.makeText(LoginActivity.this, "없는 아이디거나 패스워드가 틀렸습니다.", Toast.LENGTH_SHORT).show();
+                                        } else {
+                                            Log.e(TAG, "FirebaseAuthInvalidCredentialsException occured");
+                                            Toast.makeText(LoginActivity.this, msg, Toast.LENGTH_SHORT).show();
+                                        }
+                                    } catch (FirebaseAuthInvalidUserException e) {
+                                        //There is no user record corresponding to this identifier. The user may have been deleted.
+                                        Toast.makeText(LoginActivity.this, "없는 아이디입니다", Toast.LENGTH_SHORT).show();
+                                    } catch (Exception e) {
+                                        e.printStackTrace();
+                                        Toast.makeText(LoginActivity.this, e.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+                                    }
                                 }
+
                             }
+
+
                         });
             }
         });

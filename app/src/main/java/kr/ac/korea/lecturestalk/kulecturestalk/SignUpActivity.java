@@ -75,8 +75,7 @@ public class SignUpActivity extends AppCompatActivity {
                                         } catch (FirebaseAuthUserCollisionException e) {
                                             Toast.makeText(SignUpActivity.this, R.string.signup_toast_already_used_id, Toast.LENGTH_SHORT).show();
                                         } catch (Exception e) {
-                                            Toast.makeText(SignUpActivity.this, "다시 확인해주세요..", Toast.LENGTH_SHORT).show();
-                                        }
+                                            Toast.makeText(SignUpActivity.this, e.getLocalizedMessage(), Toast.LENGTH_SHORT).show();}
                                     }
                                 }
                             });
