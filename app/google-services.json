@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "199068152288",
+    "firebase_url": "https://asku-a9905.firebaseio.com",
+    "project_id": "asku-a9905",
+    "storage_bucket": "asku-a9905.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:199068152288:android:e0bd2b8b0f5044d6",
+        "android_client_info": {
+          "package_name": "kr.ac.korea.lecturestalk.kulecturestalk"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "199068152288-rj4nk97goerkuo527peevbaosdoj7foq.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "kr.ac.korea.lecturestalk.kulecturestalk",
+            "certificate_hash": "96d2088c8c9de8449d4b43be58b09958c8c00c01"
+          }
+        },
+        {
+          "client_id": "199068152288-kq9pj8kea078864n6eja3lrbq9fo5mmn.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDD0RUGBwkDcEwZgt3jwmwfu0c8sYgXH9E"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "199068152288-kq9pj8kea078864n6eja3lrbq9fo5mmn.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
