@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -16,10 +17,12 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
+import com.google.firebase.auth.FirebaseAuthUserCollisionException;
+import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
 
 public class SignUpActivity extends AppCompatActivity {
     private static final int PASSWORD_CHARACTERS_AT_LEAST = 6;
-    private boolean mIsConfirmedId = false;
     private FirebaseAuth mFirebaseAuth;
 
     @Override
@@ -29,52 +32,11 @@ public class SignUpActivity extends AppCompatActivity {
 
         mFirebaseAuth = FirebaseAuth.getInstance();
 
-
         final EditText edittext_login_id = (EditText) findViewById(R.id.edittext_login_id);
-        edittext_login_id.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                mIsConfirmedId = false;
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-
-            }
-        });
-
         final EditText edittext_password = (EditText) findViewById(R.id.signup_edittext_password);
         edittext_password.setHint(getString(R.string.signup_password_edittext_hint, PASSWORD_CHARACTERS_AT_LEAST));
 
         final EditText edittext_password_confirm = (EditText) findViewById(R.id.edittext_password_confirm);
-
-        Button signup_id_check_button = (Button) findViewById(R.id.signup_id_check_button);
-        signup_id_check_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (TextUtils.isEmpty(edittext_login_id.getText().toString().trim())) {
-                    // 아이디 입력을 아무것도 안했으면 토스트 출력
-                    Toast.makeText(SignUpActivity.this, R.string.signup_toast_input_id, Toast.LENGTH_SHORT).show();
-                    mIsConfirmedId = false;
-                } else {
-                    //todo request id check
-                    boolean isIdInUse = false;
-                    if (isIdInUse) {
-                        Toast.makeText(SignUpActivity.this, R.string.signup_toast_already_used_id, Toast.LENGTH_SHORT).show();
-                        mIsConfirmedId = false;
-                    } else {
-                        Toast.makeText(SignUpActivity.this, R.string.signup_toast_usable_used_id, Toast.LENGTH_SHORT).show();
-                        mIsConfirmedId = true;
-                    }
-                }
-
-            }
-        });
 
         Button signup_button = (Button) findViewById(R.id.signup_button);
         signup_button.setOnClickListener(new View.OnClickListener() {
@@ -87,10 +49,6 @@ public class SignUpActivity extends AppCompatActivity {
                 if (TextUtils.isEmpty(idText)) {
                     // 아이디 입력을 아무것도 안했으면 토스트 출력
                     Toast.makeText(SignUpActivity.this, R.string.signup_toast_input_id, Toast.LENGTH_SHORT).show();
-                } else if (!mIsConfirmedId) {
-                    //아이디 중복확인이 안되었으면 중복확인 버튼 누르도록 유도하는 토스트 출력
-                    Toast.makeText(SignUpActivity.this, getString(R.string.signup_toast_need_to_confirm_id,
-                            getString(R.string.signup_id_duplication_check_button)), Toast.LENGTH_SHORT).show();
                 } else if (passText.length() < PASSWORD_CHARACTERS_AT_LEAST) {
                     // 비밀번호 입력이 6자리 미만이면 토스트 출력
                     Toast.makeText(SignUpActivity.this, getString(R.string.signup_toast_password_chars, PASSWORD_CHARACTERS_AT_LEAST), Toast.LENGTH_SHORT).show();
@@ -108,8 +66,17 @@ public class SignUpActivity extends AppCompatActivity {
                                         startActivity(intent);
                                         finish();
                                     } else {
-                                        Toast.makeText(SignUpActivity.this, "등록 에러", Toast.LENGTH_SHORT).show();
-                                        return;
+                                        try {
+                                            throw task.getException();
+                                        } catch (FirebaseAuthWeakPasswordException e) {
+                                            Toast.makeText(SignUpActivity.this, "비밀번호가 간단해요..", Toast.LENGTH_SHORT).show();
+                                        } catch (FirebaseAuthInvalidCredentialsException e) {
+                                            Toast.makeText(SignUpActivity.this, "email 형식에 맞지 않습니다.", Toast.LENGTH_SHORT).show();
+                                        } catch (FirebaseAuthUserCollisionException e) {
+                                            Toast.makeText(SignUpActivity.this, R.string.signup_toast_already_used_id, Toast.LENGTH_SHORT).show();
+                                        } catch (Exception e) {
+                                            Toast.makeText(SignUpActivity.this, "다시 확인해주세요..", Toast.LENGTH_SHORT).show();
+                                        }
                                     }
                                 }
                             });

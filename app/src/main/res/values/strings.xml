@@ -10,7 +10,6 @@
 
     <!-- SignupActivity -->
     <string name="signup_id_edittext_hint">myemail@google.com</string>
-    <string name="signup_id_duplication_check_button">Check</string>
     <string name="signup_password_edittext_hint">More than %dchars</string>
     <string name="signup_confirm_password_edittext_hint">Input password one more</string>
     <string name="signup_id_textview">Email</string>
@@ -22,5 +21,4 @@
     <string name="signup_toast_usable_used_id">You can use this Email</string>
     <string name="signup_toast_password_chars">Input password more than %d characters</string>
     <string name="signup_toast_password_reconfirm">Miss matched password and the reconfirm</string>
-    <string name="signup_toast_need_to_confirm_id">At first, you need to click \"%s\" button</string>
 </resources>

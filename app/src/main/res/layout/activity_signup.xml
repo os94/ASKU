@@ -29,14 +29,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <Button
-                android:id="@+id/signup_id_check_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_centerVertical="true"
-                android:text="@string/signup_id_duplication_check_button" />
-
             <TextView
                 android:id="@+id/signup_id_textview"
                 android:layout_width="wrap_content"
@@ -52,7 +44,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_toEndOf="@id/signup_id_textview"
-                android:layout_toStartOf="@id/signup_id_check_button"
+                android:inputType="textEmailAddress"
                 android:hint="@string/signup_id_edittext_hint" />
 
         </RelativeLayout>
