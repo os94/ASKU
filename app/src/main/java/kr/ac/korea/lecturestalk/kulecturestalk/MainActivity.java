@@ -2,11 +2,15 @@ package kr.ac.korea.lecturestalk.kulecturestalk;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.support.design.widget.BottomNavigationView;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -50,5 +54,29 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(new Intent(MainActivity.this, WebViewActivity.class));
             }
         });
+
+        BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.navigation);
+        bottomNavigationView.setOnNavigationItemSelectedListener(
+                new BottomNavigationView.OnNavigationItemSelectedListener() {
+                    @Override
+                    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+
+                        switch (item.getItemId()) {
+
+                            case R.id.menu_lectures:
+                                Toast.makeText(MainActivity.this, "수강과목", Toast.LENGTH_SHORT).show();
+                                return true;
+
+                            case R.id.menu_messages:
+                                Toast.makeText(MainActivity.this, "쪽지함", Toast.LENGTH_SHORT).show();
+                                return true;
+
+                            case R.id.menu_mypage:
+                                Toast.makeText(MainActivity.this, "마이페이지", Toast.LENGTH_SHORT).show();
+                                return true;
+                        }
+                        return false;
+                    }
+                });
     }
 }
