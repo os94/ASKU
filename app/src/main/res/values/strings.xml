@@ -21,4 +21,13 @@
     <string name="signup_toast_usable_used_id">You can use this Email</string>
     <string name="signup_toast_password_chars">Input password more than %d characters</string>
     <string name="signup_toast_password_reconfirm">Miss matched password and the reconfirm</string>
+    <string name="save_button">Save</string>
+    <string name="msg_list_recv">Received Messages</string>
+    <string name="msg_list_sent">Sent Messages</string>
+    <string name="msg_list_recv_no">No received messages.</string>
+    <string name="msg_list_sent_no">No sent messages.</string>
+    <string name="name_edittext_hint">User name</string>
+    <string name="new_msg_button">New Message</string>
+    <string name="delete_msg_button">Del. Message</string>
+    <string name="send_msg_button">Send Message</string>
 </resources>
