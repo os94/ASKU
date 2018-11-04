@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:focusable="false"
+        android:id="@+id/imageView1"
+        android:layout_weight="1" />
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_weight="4">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="3"
+            android:orientation="horizontal"
+            android:scrollbars="horizontal|vertical">
+
+            <TextView
+                android:id="@+id/id_person"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:focusable="false"
+                android:layout_weight="2"
+                android:gravity="center_vertical"
+                android:text="Person"
+                android:textColor="#000000"
+                android:textSize="16dp" />
+
+            <TextView
+                android:id="@+id/id_datetime"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:focusable="false"
+                android:layout_weight="1"
+                android:ems="10"
+                android:gravity="right"
+                android:inputType="date"
+                android:paddingRight="10dip" />
+        </LinearLayout>
+
+        <ScrollView
+            android:layout_height="60dp"
+            android:layout_width="fill_parent"
+            android:focusable="false"
+            android:scrollbars="vertical"
+            android:fillViewport="true">
+
+        <TextView
+            android:id="@+id/id_msg"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:focusable="false"
+            android:layout_weight="1.0"/>
+
+        </ScrollView>
+
+    </LinearLayout>
+
+</LinearLayout>
+
