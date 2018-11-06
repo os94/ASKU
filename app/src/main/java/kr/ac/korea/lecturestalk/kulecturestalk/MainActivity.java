@@ -75,10 +75,12 @@ public class MainActivity extends AppCompatActivity {
 
                             case R.id.menu_messages:
                                 Toast.makeText(MainActivity.this, "쪽지함", Toast.LENGTH_SHORT).show();
+                                startActivity(new Intent(MainActivity.this, MsgTabActivity.class));
                                 return true;
 
                             case R.id.menu_mypage:
                                 Toast.makeText(MainActivity.this, "마이페이지", Toast.LENGTH_SHORT).show();
+                                startActivity(new Intent(MainActivity.this, MyInfoActivity.class));
                                 return true;
                         }
                         return false;
