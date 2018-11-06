@@ -7,26 +7,6 @@
     android:orientation="vertical"
     tools:context=".MainActivity">
 
-    <TextView
-        android:id="@+id/email"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-    <TextView
-        android:id="@+id/uid"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-    <Button
-        android:id="@+id/logout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="logout"/>
-    <Button
-        android:id="@+id/LaunchWebView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="LaunchWebView"/>
-
-
     <FrameLayout
         android:id="@+id/fragment_container"
         android:layout_width="match_parent"

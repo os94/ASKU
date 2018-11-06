@@ -22,6 +22,9 @@
         <activity android:name=".TestActivity" />
         <activity android:name=".LoginActivity" />
         <activity android:name=".SignUpActivity" />
+        <activity android:name=".MsgTabActivity" />
+        <activity android:name=".MyInfoActivity" />
+
     </application>
 
 </manifest>
