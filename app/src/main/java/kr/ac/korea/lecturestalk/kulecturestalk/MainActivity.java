@@ -6,13 +6,15 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MenuItem;
+import android.support.design.widget.BottomNavigationView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import android.support.design.widget.BottomNavigationView;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
+
+import kr.ac.korea.lecturestalk.kulecturestalk.View.Fragment.CourseFragment;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -64,7 +66,11 @@ public class MainActivity extends AppCompatActivity {
                         switch (item.getItemId()) {
 
                             case R.id.menu_lectures:
-                                Toast.makeText(MainActivity.this, "수강과목", Toast.LENGTH_SHORT).show();
+//                                Toast.makeText(MainActivity.this, "수강과목", Toast.LENGTH_SHORT).show();
+                                getSupportFragmentManager()
+                                        .beginTransaction()
+                                        .replace(R.id.fragment_container, new CourseFragment())
+                                        .commit();
                                 return true;
 
                             case R.id.menu_messages:

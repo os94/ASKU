@@ -21,4 +21,13 @@
     <string name="signup_toast_usable_used_id">You can use this Email</string>
     <string name="signup_toast_password_chars">Input password more than %d characters</string>
     <string name="signup_toast_password_reconfirm">Miss matched password and the reconfirm</string>
+
+    <!-- Course Fragement -->
+    <string name="course_tab_all">All</string>
+    <string name="course_tab_notice">Notice</string>
+    <string name="course_tab_materials">Materials</string>
+    <string name="course_tab_qna">Q&amp;A</string>
+    <string name="course_tab_etc">Etc.</string>
+    <string name="course_no_posts1">There are no posts yet.</string>
+    <string name="course_no_posts2">Please write a post.</string>
 </resources>

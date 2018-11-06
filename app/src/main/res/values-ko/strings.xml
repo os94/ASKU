@@ -21,4 +21,13 @@
     <string name="signup_toast_usable_used_id">사용 가능한 이메일입니다.</string>
     <string name="signup_toast_password_chars">비밀번호 %d자리 이상으로 입력하세요.</string>
     <string name="signup_toast_password_reconfirm">비밀번호가 일치하지 않습니다.</string>
+
+    <!-- Course Fragement -->
+    <string name="course_tab_all">전체</string>
+    <string name="course_tab_notice">공지</string>
+    <string name="course_tab_materials">수업 자료</string>
+    <string name="course_tab_qna">Q&amp;A</string>
+    <string name="course_tab_etc">기타</string>
+    <string name="course_no_posts1">아직 작성된 글이 없습니다.</string>
+    <string name="course_no_posts2">글을 작성해 주세요.</string>
 </resources>
