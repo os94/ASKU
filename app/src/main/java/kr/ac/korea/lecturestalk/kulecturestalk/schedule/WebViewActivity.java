@@ -1,52 +1,72 @@
-package kr.ac.korea.lecturestalk.kulecturestalk;
+package kr.ac.korea.lecturestalk.kulecturestalk.schedule;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Button;
+import android.widget.Toast;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+
+import kr.ac.korea.lecturestalk.kulecturestalk.R;
 
 public class WebViewActivity extends AppCompatActivity {
     public static final String EVERYTIME_URL = "https://everytime.kr/timetable";
     private WebView mWebView;
-    private String mText = new String();
+    private MyJavaScriptInterface mJavaScriptInterface;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_webview);
+        mJavaScriptInterface = new MyJavaScriptInterface();
+
         mWebView = (WebView) findViewById(R.id.webView);
-        mWebView.setWebViewClient(new HelloWebViewClient());
+        mWebView.setWebViewClient(new HelloWebViewClient(WebViewActivity.this));
         mWebView.getSettings().setJavaScriptEnabled(true);
         mWebView.getSettings().setJavaScriptCanOpenWindowsAutomatically(true);
-        final MyJavaScriptInterface javaScriptInterface = new MyJavaScriptInterface();
-        mWebView.addJavascriptInterface(javaScriptInterface, "Android");
+        mWebView.addJavascriptInterface(mJavaScriptInterface, "Android");
         mWebView.loadUrl(EVERYTIME_URL);
 
         Button button = (Button) findViewById(R.id.button);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(WebViewActivity.this, TestActivity.class);
-                intent.putExtra("text", javaScriptInterface.getText());
-                startActivity(intent);
+//                finish();
+                String scheduleText = mJavaScriptInterface.getText();
+                if (!TextUtils.isEmpty(scheduleText)) {
+                    SharedPreferences setting = getSharedPreferences("setting", 0);
+                    setting.edit().putString("scheduleList", scheduleText).commit();
+
+                    Intent intent = new Intent(WebViewActivity.this, TestActivity.class);
+                    intent.putExtra("text", scheduleText);
+                    startActivity(intent);
+                } else {
+                    Toast.makeText(WebViewActivity.this, "시간표가 보여질 때 누르세요", Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }
 }
 
 class HelloWebViewClient extends WebViewClient {
+    Activity activity;
+
+    public HelloWebViewClient(Activity activity) {
+        this.activity = activity;
+    }
+
     @Override
     public boolean shouldOverrideUrlLoading(WebView view, String url) {
-
         view.loadUrl(url);
         Log.d("HelloWebViewClient", "url - " + url);
 //        if (WebViewActivity.EVERYTIME_URL.equals(url)) {
@@ -64,7 +84,6 @@ class HelloWebViewClient extends WebViewClient {
         if (WebViewActivity.EVERYTIME_URL.equals(url)) {
             Log.d("HelloWebViewClient 2", "This is EVERYTIME_URL. ");
             view.loadUrl("javascript:window.Android.getHtml(document.getElementsByTagName('body')[0].innerHTML);");
-//
         }
 
         super.onPageFinished(view, url);
@@ -104,6 +123,7 @@ class MyJavaScriptInterface {
         Elements sub5 = cols.select("div[class=subject color5");
         mText += "\n\n";
         mText += sub5.get(0).text();
+
     }
 
     public String getText() {

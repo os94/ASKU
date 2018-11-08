@@ -18,12 +18,13 @@
             </intent-filter>
         </activity>
         <activity android:name=".MainActivity" />
-        <activity android:name=".WebViewActivity" />
-        <activity android:name=".TestActivity" />
+        <activity android:name=".schedule.WebViewActivity" />
+        <activity android:name=".schedule.TestActivity" />
         <activity android:name=".LoginActivity" />
         <activity android:name=".SignUpActivity" />
         <activity android:name=".MsgTabActivity" />
         <activity android:name=".MyInfoActivity" />
+        <activity android:name=".cource.CourceActivity" />
 
     </application>
 

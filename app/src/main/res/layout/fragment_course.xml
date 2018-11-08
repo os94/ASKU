@@ -80,7 +80,7 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <kr.ac.korea.lecturestalk.kulecturestalk.View.EmptyRecyclerView
+            <kr.ac.korea.lecturestalk.kulecturestalk.cource.View.EmptyRecyclerView
                 android:id="@+id/course_posts_recycler_view"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"

@@ -1,12 +1,9 @@
-package kr.ac.korea.lecturestalk.kulecturestalk.View.Fragment;
+package kr.ac.korea.lecturestalk.kulecturestalk.cource;
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -14,11 +11,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import kr.ac.korea.lecturestalk.kulecturestalk.Adapter.PostListAdapter;
-import kr.ac.korea.lecturestalk.kulecturestalk.Model.Post;
+import kr.ac.korea.lecturestalk.kulecturestalk.cource.Model.Post;
 import kr.ac.korea.lecturestalk.kulecturestalk.R;
-import kr.ac.korea.lecturestalk.kulecturestalk.View.EmptyRecyclerView;
+import kr.ac.korea.lecturestalk.kulecturestalk.cource.View.EmptyRecyclerView;
 
-public class CourseFragment extends Fragment {
+public class CourceActivity extends AppCompatActivity {
     private TextView mAllTab;
     private TextView mNoticeTab;
     private TextView mMaterialsTab;
@@ -26,16 +23,16 @@ public class CourseFragment extends Fragment {
     private TextView mEtcTab;
 
 
-    @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_course, container, false);
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.fragment_course);
 
-        mAllTab = view.findViewById(R.id.course_tab_all);
-        mNoticeTab = view.findViewById(R.id.course_tab_notice);
-        mMaterialsTab = view.findViewById(R.id.course_tab_materials);
-        mQnaTab = view.findViewById(R.id.course_tab_qna);
-        mEtcTab = view.findViewById(R.id.course_tab_etc);
+        mAllTab = findViewById(R.id.course_tab_all);
+        mNoticeTab = findViewById(R.id.course_tab_notice);
+        mMaterialsTab = findViewById(R.id.course_tab_materials);
+        mQnaTab = findViewById(R.id.course_tab_qna);
+        mEtcTab = findViewById(R.id.course_tab_etc);
 
         mAllTab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -45,7 +42,7 @@ public class CourseFragment extends Fragment {
                 mMaterialsTab.setTextColor(getResources().getColor(android.R.color.black, null));
                 mQnaTab.setTextColor(getResources().getColor(android.R.color.black, null));
                 mEtcTab.setTextColor(getResources().getColor(android.R.color.black, null));
-                Toast.makeText(getContext(), "All Tab Clicked.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(CourceActivity.this, "All Tab Clicked.", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -57,7 +54,7 @@ public class CourseFragment extends Fragment {
                 mMaterialsTab.setTextColor(getResources().getColor(android.R.color.black, null));
                 mQnaTab.setTextColor(getResources().getColor(android.R.color.black, null));
                 mEtcTab.setTextColor(getResources().getColor(android.R.color.black, null));
-                Toast.makeText(getContext(), "Notice Tab Clicked.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(CourceActivity.this, "Notice Tab Clicked.", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -69,7 +66,7 @@ public class CourseFragment extends Fragment {
                 mMaterialsTab.setTextColor(getResources().getColor(R.color.colorPrimary, null));
                 mQnaTab.setTextColor(getResources().getColor(android.R.color.black, null));
                 mEtcTab.setTextColor(getResources().getColor(android.R.color.black, null));
-                Toast.makeText(getContext(), "Materials Tab Clicked.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(CourceActivity.this, "Materials Tab Clicked.", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -81,7 +78,7 @@ public class CourseFragment extends Fragment {
                 mMaterialsTab.setTextColor(getResources().getColor(android.R.color.black, null));
                 mQnaTab.setTextColor(getResources().getColor(R.color.colorPrimary, null));
                 mEtcTab.setTextColor(getResources().getColor(android.R.color.black, null));
-                Toast.makeText(getContext(), "Q&A Tab Clicked.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(CourceActivity.this, "Q&A Tab Clicked.", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -93,18 +90,18 @@ public class CourseFragment extends Fragment {
                 mMaterialsTab.setTextColor(getResources().getColor(android.R.color.black, null));
                 mQnaTab.setTextColor(getResources().getColor(android.R.color.black, null));
                 mEtcTab.setTextColor(getResources().getColor(R.color.colorPrimary, null));
-                Toast.makeText(getContext(), "Etc Tab Clicked.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(CourceActivity.this, "Etc Tab Clicked.", Toast.LENGTH_SHORT).show();
             }
         });
 
         // TODO: Initialize with 'All' tab clicked
 
         // Use EmptyRecyclerView
-        EmptyRecyclerView recyclerView = view.findViewById(R.id.course_posts_recycler_view);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        EmptyRecyclerView recyclerView = findViewById(R.id.course_posts_recycler_view);
+        recyclerView.setLayoutManager(new LinearLayoutManager(CourceActivity.this));
 
         // Fetch the empty view from the layout and set it on the new recycler view
-        View emptyView = view.findViewById(R.id.course_post_empty);
+        View emptyView = findViewById(R.id.course_post_empty);
         recyclerView.setEmptyView(emptyView);
 
         List<Post> posts = new ArrayList<>();
@@ -120,7 +117,5 @@ public class CourseFragment extends Fragment {
         PostListAdapter adapter = new PostListAdapter(posts);
         recyclerView.setAdapter(adapter);
 
-
-        return view;
     }
 }

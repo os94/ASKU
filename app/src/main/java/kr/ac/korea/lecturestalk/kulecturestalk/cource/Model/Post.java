@@ -1,7 +1,6 @@
-package kr.ac.korea.lecturestalk.kulecturestalk.Model;
+package kr.ac.korea.lecturestalk.kulecturestalk.cource.Model;
 
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 

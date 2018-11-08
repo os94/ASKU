@@ -1,4 +1,4 @@
-package kr.ac.korea.lecturestalk.kulecturestalk.View;
+package kr.ac.korea.lecturestalk.kulecturestalk.cource.View;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;

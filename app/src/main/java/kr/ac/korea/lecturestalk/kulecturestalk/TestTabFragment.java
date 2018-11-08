@@ -13,6 +13,8 @@ import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
 
+import kr.ac.korea.lecturestalk.kulecturestalk.schedule.WebViewActivity;
+
 public class TestTabFragment extends Fragment {
     private FirebaseAuth mFirebaseAuth;
 
