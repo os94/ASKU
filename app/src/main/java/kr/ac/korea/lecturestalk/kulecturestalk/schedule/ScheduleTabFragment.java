@@ -56,11 +56,16 @@ public class ScheduleTabFragment extends Fragment {
 
         LinearLayout courceList = view.findViewById(R.id.cource_listview);
 
-        View testCource = inflater.inflate(R.layout.schedule_list_view, container, false);
+        final View testCource = inflater.inflate(R.layout.schedule_list_view, container, false);
         testCource.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getActivity(), CourceActivity.class));
+                Intent intent = new Intent(getActivity(), CourceActivity.class);
+                TextView testSubject = testCource.findViewById(R.id.subject);
+                intent.putExtra("subject", testSubject.getText());
+                TextView testProfessor = testCource.findViewById(R.id.professor);
+                intent.putExtra("professor", testProfessor.getText());
+                startActivity(intent);
             }
         });
         courceList.addView(testCource);

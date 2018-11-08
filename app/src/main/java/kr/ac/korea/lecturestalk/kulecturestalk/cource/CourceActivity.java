@@ -3,6 +3,8 @@ package kr.ac.korea.lecturestalk.kulecturestalk.cource;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
+import android.text.TextUtils;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -22,11 +24,22 @@ public class CourceActivity extends AppCompatActivity {
     private TextView mQnaTab;
     private TextView mEtcTab;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_course);
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+//        getSupportActionBar().setHomeAsUpIndicator(R.drawable.arrow_back); // 화살표 아이콘 바꾸고싶으면 설정
+
+        if (getIntent() != null) {
+            String subject = getIntent().getStringExtra("subject");
+            String professor = getIntent().getStringExtra("professor");
+            if (!TextUtils.isEmpty(subject) && !TextUtils.isEmpty(professor)) {
+                setTitle(subject + "(" + professor + ")");
+            }
+        }
+
 
         mAllTab = findViewById(R.id.course_tab_all);
         mNoticeTab = findViewById(R.id.course_tab_notice);
@@ -117,5 +130,18 @@ public class CourceActivity extends AppCompatActivity {
         PostListAdapter adapter = new PostListAdapter(posts);
         recyclerView.setAdapter(adapter);
 
+    }
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                // 상단 액션바의 '<-' 버튼 눌렀을 때.
+                onBackPressed();
+                return true;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 }
