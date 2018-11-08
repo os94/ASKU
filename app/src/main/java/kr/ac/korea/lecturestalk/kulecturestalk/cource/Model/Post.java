@@ -5,7 +5,7 @@ import java.util.Date;
 import java.util.List;
 
 public class Post {
-    int id;
+    String id;
     String author;
 
     String course;
@@ -23,7 +23,7 @@ public class Post {
     int numReports;
     String img;
 
-    public Post(int id, String author, String course, String semester, String professor,
+    public Post(String id, String author, String course, String semester, String professor,
                 String timeTable, String category, String title, String description,
                 List<Integer> comments, List<String> likes, int numView, long time,
                 int numReports, String img) {
@@ -45,11 +45,11 @@ public class Post {
     }
 
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 

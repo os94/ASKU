@@ -39,4 +39,7 @@
     <string name="course_tab_etc">Etc.</string>
     <string name="course_no_posts1">There are no posts yet.</string>
     <string name="course_no_posts2">Please write a post.</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
