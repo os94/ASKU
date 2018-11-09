@@ -4,7 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/box_border"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:padding="5dp">
 
     <TextView
         android:id="@+id/post_title"
@@ -12,7 +13,6 @@
         android:layout_height="wrap_content"
         android:layout_margin="3dp"
         android:textSize="20sp"
-        android:textStyle="bold"
         tools:text="[공지]다음주 수업은 휴강이래요!" />
 
     <TextView
@@ -24,7 +24,7 @@
         android:background="@drawable/line_bottom_border"
         android:maxLines="2"
         android:paddingBottom="6dp"
-        android:textSize="18sp"
+        android:textSize="16sp"
         tools:text="화요일에 교수님 출장으로 휴강인 대신 블랙보드에 PPT 올려주신다고 합니다." />
 
     <LinearLayout
@@ -34,7 +34,7 @@
         android:orientation="horizontal">
 
         <ImageView
-            android:layout_width="wrap_content"
+            android:layout_width="20dp"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_view" />
 
@@ -48,7 +48,7 @@
             tools:text="7" />
 
         <ImageView
-            android:layout_width="wrap_content"
+            android:layout_width="20dp"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_like" />
 
@@ -62,7 +62,7 @@
             tools:text="3" />
 
         <ImageView
-            android:layout_width="wrap_content"
+            android:layout_width="20dp"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_comment" />
 

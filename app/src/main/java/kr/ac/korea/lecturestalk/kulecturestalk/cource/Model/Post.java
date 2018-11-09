@@ -1,12 +1,13 @@
 package kr.ac.korea.lecturestalk.kulecturestalk.cource.Model;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 public class Post {
-    String id;
-    String author;
+    String id; // Document id in Firebase Collection
+    String author; // author who write post
 
     String course;
     String semester;
@@ -17,16 +18,16 @@ public class Post {
     String title;
     String description;
     List<Integer> comments; // List of the id of comments
-    List<String> likes; // List of the id of the users who pressed like
+    ArrayList<String> likes; // List of the id of the users who pressed like
     int numView;
     long time; // TODO: Format?
-    int numReports;
+    List<String> numReports;
     String img;
 
     public Post(String id, String author, String course, String semester, String professor,
                 String timeTable, String category, String title, String description,
-                List<Integer> comments, List<String> likes, int numView, long time,
-                int numReports, String img) {
+                List<Integer> comments, ArrayList<String> likes, int numView, long time,
+                List<String> numReports, String img) {
         this.id = id;
         this.author = author;
         this.course = course;
@@ -125,11 +126,11 @@ public class Post {
         this.comments = comments;
     }
 
-    public List<String> getLikes() {
+    public ArrayList<String> getLikes() {
         return likes;
     }
 
-    public void setLikes(List<String> likes) {
+    public void setLikes(List<String> Arraylikes) {
         this.likes = likes;
     }
 
@@ -152,11 +153,11 @@ public class Post {
         this.time = time;
     }
 
-    public int getNumReports() {
+    public List<String> getNumReports() {
         return numReports;
     }
 
-    public void setNumReports(int numReports) {
+    public void setNumReports(List<String> numReports) {
         this.numReports = numReports;
     }
 

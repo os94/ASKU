@@ -36,17 +36,18 @@ public class PostListFragment extends Fragment {
     private TextView mQnaTab;
     private TextView mEtcTab;
 
-    private List<Post> posts = new ArrayList<>();
+
     private Button writeButton;
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     private static final String TAG = "@@@@@ get:";
     private EmptyRecyclerView recyclerView;
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_post_list, container, false);
+
+        final List<Post> posts = new ArrayList<>();
 
         mAllTab = view.findViewById(R.id.course_tab_all);
         mNoticeTab = view.findViewById(R.id.course_tab_notice);
@@ -134,10 +135,10 @@ public class PostListFragment extends Fragment {
                                         , (String)data.get("title")
                                         , (String)data.get("description")
                                         , (List<Integer>)data.get("comments")
-                                        , (List<String>)data.get("likes")
+                                        , (ArrayList<String>)data.get("likes")
                                         , (int) (long) data.get("numView") //firestore에 int로 넣었지만, long으로 들어가고 반납되고 있음. 때문에 int로 형변환
                                         , (long)data.get("time")
-                                        , (int) (long) data.get("numReports")
+                                        , (List<String>)data.get("numReports")
                                         , (String)data.get("img")
                                 );
                                 posts.add(post);
@@ -167,7 +168,7 @@ public class PostListFragment extends Fragment {
         writeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                getFragmentManager().beginTransaction().replace(R.id.post_container, new WritePostFragment()).commit();
+                getFragmentManager().beginTransaction().replace(R.id.post_container, new WritePostFragment()).addToBackStack(null).commit();
             }
         });
 

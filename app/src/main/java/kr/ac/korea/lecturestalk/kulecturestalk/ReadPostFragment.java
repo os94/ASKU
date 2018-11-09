@@ -9,7 +9,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -17,16 +19,21 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 import kr.ac.korea.lecturestalk.kulecturestalk.cource.Model.Post;
 
-public class ReadPostFragment extends Fragment {
+import static kr.ac.korea.lecturestalk.kulecturestalk.MainActivity.userid;
+
+public class ReadPostFragment extends Fragment implements View.OnClickListener {
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     private Post post;
     private final String TAG = "@@@@@Read";
     TextView tv_author, tv_time, tv_view, tv_like, tv_tile, tv_content;
+    private String docID;
+    Button btn_like, btn_msg, btn_report;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -38,7 +45,7 @@ public class ReadPostFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_read_post, container, false);
 
-        String docID = getArguments().getString("id");
+        docID = getArguments().getString("id");
         DocumentReference docRef = db.collection("Post").document(docID);
         docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
@@ -58,10 +65,10 @@ public class ReadPostFragment extends Fragment {
                                 , (String)data.get("title")
                                 , (String)data.get("description")
                                 , (List<Integer>)data.get("comments")
-                                , (List<String>)data.get("likes")
+                                , (ArrayList<String>)data.get("likes")
                                 , (int) (long) data.get("numView") //firestore에 int로 넣었지만, long으로 들어가고 반납되고 있음. 때문에 int로 형변환
                                 , (long)data.get("time")
-                                , (int) (long) data.get("numReports")
+                                , (List<String>)data.get("numReports")
                                 , (String)data.get("img")
                         );
                         Log.d(TAG, "why!!!"+(String)data.get("id"));
@@ -82,6 +89,13 @@ public class ReadPostFragment extends Fragment {
         tv_tile = (TextView)view.findViewById(R.id.tv_title);
         tv_content = (TextView)view.findViewById(R.id.tv_content);
 
+        btn_like = view.findViewById(R.id.btn_like);
+        btn_msg = view.findViewById(R.id.btn_msg);
+        btn_report = view.findViewById(R.id.btn_report);
+        btn_like.setOnClickListener(this);
+        btn_msg.setOnClickListener(this);
+        btn_report.setOnClickListener(this);
+
         // Inflate the layout for this fragment
         return view;
     }
@@ -94,6 +108,40 @@ public class ReadPostFragment extends Fragment {
         tv_like.setText(String.valueOf(post.getLikes().size()));
         tv_tile.setText(post.getTitle());
         tv_content.setText(post.getDescription());
+
+        db.collection("Post").document(docID).update(
+                "numView", (int)post.getNumView()+1
+        );
     }
 
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.btn_like:
+                if(post.getLikes().contains(userid)) {
+                    Toast.makeText(getContext(), "이미 추천했습니다.", Toast.LENGTH_SHORT).show();
+                } else {
+                    post.getLikes().add(userid);
+                    db.collection("Post").document(docID).update(
+                            "likes", post.getLikes()
+                    );
+                    Toast.makeText(getContext(), "이 글을 추천했습니다.", Toast.LENGTH_SHORT).show();
+                }
+                break;
+            case R.id.btn_msg:
+                Toast.makeText(getContext(), "msg btn clicked", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.btn_report:
+                if(post.getNumReports().contains(userid)) {
+                    Toast.makeText(getContext(), "이미 신고했습니다.", Toast.LENGTH_SHORT).show();
+                } else {
+                    post.getNumReports().add(userid);
+                    db.collection("Post").document(docID).update(
+                            "numReports", post.getNumReports()
+                    );
+                    Toast.makeText(getContext(), "이 글을 신고했습니다.", Toast.LENGTH_SHORT).show();
+                }
+                break;
+        }
+    }
 }

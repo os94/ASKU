@@ -6,14 +6,25 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.support.design.widget.BottomNavigationView;
+import android.widget.Toast;
+
+import com.google.firebase.auth.FirebaseAuth;
 
 import kr.ac.korea.lecturestalk.kulecturestalk.schedule.ScheduleTabFragment;
 
 public class MainActivity extends AppCompatActivity {
+    private FirebaseAuth mFirebaseAuth;
+    public static String userid; //다른 클래스들에서 import해서 쓸수있도록. (현재 사용자 uid)
+    public static String userEmail;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        mFirebaseAuth = FirebaseAuth.getInstance();
+        userid = mFirebaseAuth.getCurrentUser().getUid();
+        userEmail = mFirebaseAuth.getCurrentUser().getEmail();
 
         getSupportFragmentManager()
                 .beginTransaction()

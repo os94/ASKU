@@ -25,6 +25,9 @@ import java.util.ArrayList;
 
 import kr.ac.korea.lecturestalk.kulecturestalk.cource.Model.Post;
 
+import static kr.ac.korea.lecturestalk.kulecturestalk.MainActivity.userEmail;
+import static kr.ac.korea.lecturestalk.kulecturestalk.MainActivity.userid;
+
 public class WritePostFragment extends Fragment implements View.OnClickListener {
     private final String TAG = "##### WritePage Log:";
     private Spinner spinner;
@@ -45,20 +48,15 @@ public class WritePostFragment extends Fragment implements View.OnClickListener 
             , new ArrayList<String>()
             ,0
             ,0
-            ,0
+            , new ArrayList<String>()
             , null );
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     private String docID;
-    private FirebaseAuth mFirebaseAuth;
-    String userid;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_write_post, container, false);
-
-        mFirebaseAuth = FirebaseAuth.getInstance();
-        userid = mFirebaseAuth.getCurrentUser().getUid();
 
         category = getResources().getStringArray(R.array.category);
         spinner = (Spinner)view.findViewById(R.id.category);
@@ -95,7 +93,10 @@ public class WritePostFragment extends Fragment implements View.OnClickListener 
         post.setProfessor("Peter");
         post.setSemester("18-2");
         post.setTimeTable("월수");
-        post.setAuthor(userid);
+
+        int index = userEmail.indexOf("@");
+        String author = userEmail.substring(0, index);
+        post.setAuthor(author);
 
         long now = System.currentTimeMillis();
         post.setTime(now);
