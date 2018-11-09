@@ -79,7 +79,7 @@ class PostListHolder extends RecyclerView.ViewHolder {
     }
 
     void bindPost(Post post) {
-        titleTextView.setText(post.getTitle());
+        titleTextView.setText("["+post.getCategory()+"] "+post.getTitle());
         String desc = post.getDescription();
         if (desc.length() >= 50) {
             desc = desc.substring(0, 50);
