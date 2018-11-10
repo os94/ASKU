@@ -1,4 +1,4 @@
-package kr.ac.korea.lecturestalk.kulecturestalk.cource.Model;
+package kr.ac.korea.lecturestalk.kulecturestalk.course.Model;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;

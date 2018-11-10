@@ -1,9 +1,8 @@
 package kr.ac.korea.lecturestalk.kulecturestalk;
 
-import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.util.Log;
@@ -12,7 +11,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -25,9 +23,8 @@ import java.util.List;
 import java.util.Map;
 
 import kr.ac.korea.lecturestalk.kulecturestalk.Adapter.PostListAdapter;
-import kr.ac.korea.lecturestalk.kulecturestalk.cource.CourceActivity;
-import kr.ac.korea.lecturestalk.kulecturestalk.cource.Model.Post;
-import kr.ac.korea.lecturestalk.kulecturestalk.cource.View.EmptyRecyclerView;
+import kr.ac.korea.lecturestalk.kulecturestalk.course.Model.Post;
+import kr.ac.korea.lecturestalk.kulecturestalk.course.View.EmptyRecyclerView;
 
 public class PostListFragment extends Fragment implements View.OnClickListener {
     private TextView mAllTab;
@@ -35,7 +32,7 @@ public class PostListFragment extends Fragment implements View.OnClickListener {
     private TextView mMaterialsTab;
     private TextView mQnaTab;
     private TextView mEtcTab;
-    private Button writeButton;
+    private FloatingActionButton writeButton;
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     private static final String TAG = "@@@@@ get:";
     private EmptyRecyclerView recyclerView;
@@ -71,7 +68,7 @@ public class PostListFragment extends Fragment implements View.OnClickListener {
                 new ArrayList<String>(), 7, System.currentTimeMillis(), 0, null);
         posts.add(p);*/
 
-        writeButton = view.findViewById(R.id.buttonWrite1);
+        writeButton = view.findViewById(R.id.btn_write);
         writeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

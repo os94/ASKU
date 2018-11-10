@@ -11,7 +11,7 @@ import android.widget.TextView;
 import java.util.List;
 
 import kr.ac.korea.lecturestalk.kulecturestalk.ReadPostFragment;
-import kr.ac.korea.lecturestalk.kulecturestalk.cource.Model.Post;
+import kr.ac.korea.lecturestalk.kulecturestalk.course.Model.Post;
 import kr.ac.korea.lecturestalk.kulecturestalk.R;
 
 public class PostListAdapter extends RecyclerView.Adapter<PostListHolder> {

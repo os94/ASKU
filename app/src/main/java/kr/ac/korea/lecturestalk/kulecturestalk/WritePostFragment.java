@@ -17,16 +17,14 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 
-import kr.ac.korea.lecturestalk.kulecturestalk.cource.Model.Post;
+import kr.ac.korea.lecturestalk.kulecturestalk.course.Model.Post;
 
 import static kr.ac.korea.lecturestalk.kulecturestalk.MainActivity.userEmail;
-import static kr.ac.korea.lecturestalk.kulecturestalk.MainActivity.userid;
 
 public class WritePostFragment extends Fragment implements View.OnClickListener {
     private final String TAG = "##### WritePage Log:";

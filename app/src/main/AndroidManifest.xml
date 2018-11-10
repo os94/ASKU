@@ -24,7 +24,7 @@
         <activity android:name=".SignUpActivity" />
         <activity android:name=".MsgTabActivity" />
         <activity android:name=".MyInfoActivity" />
-        <activity android:name=".cource.CourceActivity" />
+        <activity android:name=".course.CourseActivity" />
 
     </application>
 

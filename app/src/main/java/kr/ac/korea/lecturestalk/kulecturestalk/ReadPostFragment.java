@@ -1,7 +1,5 @@
 package kr.ac.korea.lecturestalk.kulecturestalk;
 
-import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
@@ -23,7 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import kr.ac.korea.lecturestalk.kulecturestalk.cource.Model.Post;
+import kr.ac.korea.lecturestalk.kulecturestalk.course.Model.Post;
 
 import static kr.ac.korea.lecturestalk.kulecturestalk.MainActivity.userid;
 

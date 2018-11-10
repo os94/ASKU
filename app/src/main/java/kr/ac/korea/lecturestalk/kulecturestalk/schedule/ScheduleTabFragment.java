@@ -1,13 +1,10 @@
 package kr.ac.korea.lecturestalk.kulecturestalk.schedule;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,9 +14,8 @@ import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
 
-import kr.ac.korea.lecturestalk.kulecturestalk.LoginActivity;
 import kr.ac.korea.lecturestalk.kulecturestalk.R;
-import kr.ac.korea.lecturestalk.kulecturestalk.cource.CourceActivity;
+import kr.ac.korea.lecturestalk.kulecturestalk.course.CourseActivity;
 
 public class ScheduleTabFragment extends Fragment {
     private static final String TAG = ScheduleTabFragment.class.getSimpleName();
@@ -60,7 +56,7 @@ public class ScheduleTabFragment extends Fragment {
         testCource.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), CourceActivity.class);
+                Intent intent = new Intent(getActivity(), CourseActivity.class);
                 TextView testSubject = testCource.findViewById(R.id.subject);
                 intent.putExtra("subject", testSubject.getText());
                 TextView testProfessor = testCource.findViewById(R.id.professor);
