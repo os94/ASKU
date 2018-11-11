@@ -1,17 +1,18 @@
-package kr.ac.korea.lecturestalk.kulecturestalk;
+package kr.ac.korea.lecturestalk.kulecturestalk.message;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
-import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import java.util.Date;
 import java.util.ArrayList;
+
+import kr.ac.korea.lecturestalk.kulecturestalk.R;
 
 public class MsgListViewAdapter extends BaseAdapter {
     // Adapter에 추가된 데이터를 저장하기 위한 ArrayList
@@ -44,6 +45,7 @@ public class MsgListViewAdapter extends BaseAdapter {
         TextView personTextView = (TextView) convertView.findViewById(R.id.id_person) ;
         TextView dtTextView = (TextView) convertView.findViewById(R.id.id_datetime) ;
         TextView msgTextView = (TextView) convertView.findViewById(R.id.id_msg) ;
+        CheckBox selCheck = (CheckBox) convertView.findViewById(R.id.id_check_box) ;
 
         // Data Set(listViewItemList)에서 position에 위치한 데이터 참조 획득
         MsgListViewItem listViewItem = listViewItemList.get(position);
@@ -71,14 +73,20 @@ public class MsgListViewAdapter extends BaseAdapter {
     }
 
     // 아이템 데이터 추가를 위한 함수. 개발자가 원하는대로 작성 가능.
-    public void addItem(Drawable icon, String person, String strDateTime, String msg) {
+    public void addItem(long id, Drawable icon, String person, String strDateTime, String msg) {
         MsgListViewItem item = new MsgListViewItem();
 
+        item.setId(id);
         item.setIcon(icon);
         item.setPerson(person);
         item.setDateTime(strDateTime);
         item.setMsg(msg);
+        item.setChkSelect(false);
 
         listViewItemList.add(item);
+    }
+
+    public void remove(int position){
+        listViewItemList.remove(listViewItemList.get(position));;
     }
 }

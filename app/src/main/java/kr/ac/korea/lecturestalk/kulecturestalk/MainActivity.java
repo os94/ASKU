@@ -6,10 +6,11 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.support.design.widget.BottomNavigationView;
-import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 
+import kr.ac.korea.lecturestalk.kulecturestalk.message.MsgTabActivity;
+import kr.ac.korea.lecturestalk.kulecturestalk.my.MyInfoActivity;
 import kr.ac.korea.lecturestalk.kulecturestalk.schedule.ScheduleTabFragment;
 
 public class MainActivity extends AppCompatActivity {
