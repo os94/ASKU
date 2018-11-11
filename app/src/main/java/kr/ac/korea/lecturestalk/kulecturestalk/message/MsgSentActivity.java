@@ -132,6 +132,7 @@ public class MsgSentActivity extends Fragment {
                         mDbOpenHelper.deleteColumn(id);
 
                         //Adapter에서 항목 삭제.
+                        item.setChkSelect(false);
                         farrayAdapter.remove(i);
                     }
                 }

@@ -56,6 +56,7 @@ public class MsgListViewAdapter extends BaseAdapter {
         //dtTextView.setText(DateFormat..format("yyyy/MM/dd HH:mm", listViewItem.getDateTime()).toString());
         dtTextView.setText(listViewItem.getDateTime());
         msgTextView.setText(listViewItem.getMsg());
+        selCheck.setChecked(false);
 
         return convertView;
     }
