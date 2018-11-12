@@ -22,7 +22,6 @@ import kr.ac.korea.lecturestalk.kulecturestalk.course.CourseActivity;
 public class ScheduleTabFragment extends Fragment {
     private static final String TAG = ScheduleTabFragment.class.getSimpleName();
     private FirebaseAuth mFirebaseAuth;
-    private static final int REQUEST_DODE_WEBVIEW = 162873;
     private LinearLayout mCourceList;
 
     @Nullable

@@ -98,20 +98,24 @@ class MyJavaScriptInterface {
 
     @android.webkit.JavascriptInterface
     public void getHtml(String html) {
-        mText = new StringBuilder();
         Log.d("MyJavaScriptInterface", "Here is the value from html::" + html);
 
         Document doc = Jsoup.parse(html);
         Elements tablebody = doc.select("div[class=tablebody");
         Elements cols = tablebody.select("div[class=cols");
         for (int i = 1; i <= 10; i++) {
-            Element subject = cols.select("div[class=subject color" + i).get(0);
-            mText.append(subject.select("h3").text()); // subject
-            mText.append("/");
-            mText.append(subject.select("em").text()); // professor
-            mText.append("/");
-            mText.append(subject.select("span").text()); // room
-            mText.append("\n");
+            try {
+                Element subject = cols.select("div[class=subject color" + i).get(0);
+                mText = new StringBuilder();
+                mText.append(subject.select("h3").text()); // subject
+                mText.append("/");
+                mText.append(subject.select("em").text()); // professor
+                mText.append("/");
+                mText.append(subject.select("span").text()); // room
+                mText.append("\n");
+            } catch (IndexOutOfBoundsException e) {
+                e.printStackTrace();
+            }
         }
 
     }
