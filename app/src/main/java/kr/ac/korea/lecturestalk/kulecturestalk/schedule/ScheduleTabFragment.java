@@ -5,6 +5,8 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +23,7 @@ public class ScheduleTabFragment extends Fragment {
     private static final String TAG = ScheduleTabFragment.class.getSimpleName();
     private FirebaseAuth mFirebaseAuth;
     private static final int REQUEST_DODE_WEBVIEW = 162873;
+    private LinearLayout mCourceList;
 
     @Nullable
     @Override
@@ -35,55 +38,79 @@ public class ScheduleTabFragment extends Fragment {
         TextView uid = (TextView) view.findViewById(R.id.uid);
         uid.setText("uid : " + mFirebaseAuth.getCurrentUser().getUid());
 
-        TextView scheduleText = view.findViewById(R.id.schedule_list);
+
+        mCourceList = view.findViewById(R.id.cource_listview);
+
+
         SharedPreferences setting = getActivity().getSharedPreferences("setting", 0);
-        scheduleText.setText(setting.getString("scheduleList", ""));
+        String scheduleList = setting.getString("scheduleList", "");
 
         Button takeScheduleButton = (Button) view.findViewById(R.id.take_schedule_button);
+        takeScheduleButton.setVisibility(TextUtils.isEmpty(scheduleList) ? View.VISIBLE : View.GONE);
         takeScheduleButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (getActivity() != null) {
-//                    startActivityForResult(new Intent(getActivity(), WebViewActivity.class), REQUEST_DODE_WEBVIEW);
                     startActivity(new Intent(getActivity(), WebViewActivity.class));
                 }
             }
         });
 
-        LinearLayout courceList = view.findViewById(R.id.cource_listview);
+        String subejcts[] = scheduleList.split("\n");
 
-        final View testCource = inflater.inflate(R.layout.schedule_list_view, container, false);
-        testCource.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), CourseActivity.class);
-                TextView testSubject = testCource.findViewById(R.id.subject);
-                intent.putExtra("subject", testSubject.getText());
-                TextView testProfessor = testCource.findViewById(R.id.professor);
-                intent.putExtra("professor", testProfessor.getText());
-                startActivity(intent);
+
+        // 이건 only test용... 필요할 때 enable 해서 쓰세요
+//        SubjectInfo testSubject = new SubjectInfo("testSubject", "testName", "RoomA");
+//        addCourceView(inflater, container, testSubject);
+
+        Log.d(TAG, "subejcts length : " + subejcts.length);
+        for (String subject : subejcts) {
+            Log.d(TAG, "subject: " + subject);
+            String[] subejctInfo = subject.split("/");
+            try {
+                String subjectTitle = subejctInfo[0];
+                String professorName = subejctInfo[1];
+                String roomName = subejctInfo[2];
+
+                SubjectInfo subjectInfo = new SubjectInfo(subjectTitle, professorName, roomName);
+                addCourceView(inflater, container, subjectInfo);
+            } catch (ArrayIndexOutOfBoundsException e) {
+                e.printStackTrace();
             }
-        });
-        courceList.addView(testCource);
+        }
 
         return view;
     }
 
-
-/*
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (resultCode == Activity.RESULT_OK) {
-            switch (requestCode) {
-                case REQUEST_DODE_WEBVIEW:
-                    String extraText = data.getStringExtra("scheduleList");
-                    Log.d(TAG, "schedule list : " + extraText);
-                    if (!TextUtils.isEmpty(extraText) && getView() != null) {
-                        TextView scheduleText = getView().findViewById(R.id.schedule_list);
-                        scheduleText.setText(extraText);
-                    }
-                    break;
-            }
+    private void addCourceView(LayoutInflater inflater, @Nullable ViewGroup container, SubjectInfo subject) {
+        if (inflater == null || container == null) {
+            Log.e(TAG, "Failed to add CourceView. caused inflater or container is null.");
+            return;
         }
-    }*/
+
+        final View courseView = inflater.inflate(R.layout.schedule_list_view, container, false);
+        final TextView subjectTextView = courseView.findViewById(R.id.subject);
+        subjectTextView.setText(subject.getSubject());
+        final TextView professorTextView = courseView.findViewById(R.id.professor);
+        professorTextView.setText(subject.getProfessor());
+        final TextView roomTextView = courseView.findViewById(R.id.room);
+        roomTextView.setText(subject.getRoom());
+
+
+        courseView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), CourseActivity.class);
+                intent.putExtra("subject", subjectTextView.getText());
+                intent.putExtra("professor", professorTextView.getText());
+                intent.putExtra("room", roomTextView.getText());
+                startActivity(intent);
+            }
+        });
+
+        if (mCourceList != null) {
+            mCourceList.addView(courseView);
+        }
+    }
+
 }

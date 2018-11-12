@@ -15,8 +15,10 @@ import android.widget.Toast;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+import kr.ac.korea.lecturestalk.kulecturestalk.MainActivity;
 import kr.ac.korea.lecturestalk.kulecturestalk.R;
 
 public class WebViewActivity extends AppCompatActivity {
@@ -31,7 +33,7 @@ public class WebViewActivity extends AppCompatActivity {
         mJavaScriptInterface = new MyJavaScriptInterface();
 
         mWebView = (WebView) findViewById(R.id.webView);
-        mWebView.setWebViewClient(new HelloWebViewClient(WebViewActivity.this));
+        mWebView.setWebViewClient(new ScheduleWebViewClient(WebViewActivity.this));
         mWebView.getSettings().setJavaScriptEnabled(true);
         mWebView.getSettings().setJavaScriptCanOpenWindowsAutomatically(true);
         mWebView.addJavascriptInterface(mJavaScriptInterface, "Android");
@@ -47,8 +49,8 @@ public class WebViewActivity extends AppCompatActivity {
                     SharedPreferences setting = getSharedPreferences("setting", 0);
                     setting.edit().putString("scheduleList", scheduleText).commit();
 
-                    Intent intent = new Intent(WebViewActivity.this, TestActivity.class);
-                    intent.putExtra("text", scheduleText);
+                    Intent intent = new Intent(WebViewActivity.this, MainActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(intent);
                 } else {
                     Toast.makeText(WebViewActivity.this, "시간표가 보여질 때 누르세요", Toast.LENGTH_SHORT).show();
@@ -58,21 +60,17 @@ public class WebViewActivity extends AppCompatActivity {
     }
 }
 
-class HelloWebViewClient extends WebViewClient {
+class ScheduleWebViewClient extends WebViewClient {
     Activity activity;
 
-    public HelloWebViewClient(Activity activity) {
+    public ScheduleWebViewClient(Activity activity) {
         this.activity = activity;
     }
 
     @Override
     public boolean shouldOverrideUrlLoading(WebView view, String url) {
         view.loadUrl(url);
-        Log.d("HelloWebViewClient", "url - " + url);
-//        if (WebViewActivity.EVERYTIME_URL.equals(url)) {
-//            Log.d("HelloWebViewClient", "This is EVERYTIME_URL. ");
-//            view.loadUrl("javascript:window.Android.getHtml(document.getElementsByTagName('body')[0].innerHTML);");
-//        }
+        Log.d("ScheduleWebViewClient", "url - " + url);
         return true;
     }
 
@@ -80,9 +78,9 @@ class HelloWebViewClient extends WebViewClient {
     public void onPageFinished(WebView view, String url) {
         // This call inject JavaScript into the page which just finished loading.
 
-        Log.d("HelloWebViewClient 2", "url - " + url);
+        Log.d("ScheduleWebViewClient 2", "url - " + url);
         if (WebViewActivity.EVERYTIME_URL.equals(url)) {
-            Log.d("HelloWebViewClient 2", "This is EVERYTIME_URL. ");
+            Log.d("ScheduleWebViewClient 2", "This is EVERYTIME_URL. ");
             view.loadUrl("javascript:window.Android.getHtml(document.getElementsByTagName('body')[0].innerHTML);");
         }
 
@@ -93,40 +91,35 @@ class HelloWebViewClient extends WebViewClient {
 }
 
 class MyJavaScriptInterface {
-    String mText;
+    StringBuilder mText;
 
     MyJavaScriptInterface() {
     }
 
     @android.webkit.JavascriptInterface
     public void getHtml(String html) {
+        mText = new StringBuilder();
         Log.d("MyJavaScriptInterface", "Here is the value from html::" + html);
 
         Document doc = Jsoup.parse(html);
         Elements tablebody = doc.select("div[class=tablebody");
         Elements cols = tablebody.select("div[class=cols");
-        Elements sub1 = cols.select("div[class=subject color1");
-        mText = sub1.get(0).text();
-
-        Elements sub2 = cols.select("div[class=subject color2");
-        mText += "\n\n";
-        mText += sub2.get(0).text();
-
-        Elements sub3 = cols.select("div[class=subject color3");
-        mText += "\n\n";
-        mText += sub3.get(0).text();
-
-        Elements sub4 = cols.select("div[class=subject color4");
-        mText += "\n\n";
-        mText += sub4.get(0).text();
-
-        Elements sub5 = cols.select("div[class=subject color5");
-        mText += "\n\n";
-        mText += sub5.get(0).text();
+        for (int i = 1; i <= 10; i++) {
+            Element subject = cols.select("div[class=subject color" + i).get(0);
+            mText.append(subject.select("h3").text()); // subject
+            mText.append("/");
+            mText.append(subject.select("em").text()); // professor
+            mText.append("/");
+            mText.append(subject.select("span").text()); // room
+            mText.append("\n");
+        }
 
     }
 
     public String getText() {
-        return mText;
+        if (mText == null) {
+            return "";
+        }
+        return mText.toString();
     }
 }

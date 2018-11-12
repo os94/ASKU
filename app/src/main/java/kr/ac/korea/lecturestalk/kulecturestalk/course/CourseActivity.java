@@ -21,8 +21,11 @@ public class CourseActivity extends AppCompatActivity {
 //        getSupportActionBar().setHomeAsUpIndicator(R.drawable.arrow_back); // 화살표 아이콘 바꾸고싶으면 설정
 
         if (getIntent() != null) {
+            // todo 이거 세개 조합해서 게시판 key로 쓰세요
             String subject = getIntent().getStringExtra("subject");
             String professor = getIntent().getStringExtra("professor");
+            String room = getIntent().getStringExtra("room");
+
             if (!TextUtils.isEmpty(subject) && !TextUtils.isEmpty(professor)) {
                 setTitle(subject + "(" + professor + ")");
             }

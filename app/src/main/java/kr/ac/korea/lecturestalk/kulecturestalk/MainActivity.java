@@ -54,12 +54,12 @@ public class MainActivity extends AppCompatActivity {
                                 startActivity(new Intent(MainActivity.this, MyInfoActivity.class));
                                 return true;
 
-                            case R.id.menu_test:
+/*                            case R.id.menu_test:
                                 getSupportFragmentManager()
                                         .beginTransaction()
                                         .replace(R.id.fragment_container, new TestTabFragment())
                                         .commit();
-                                return true;
+                                return true;*/
                         }
                         return false;
                     }
