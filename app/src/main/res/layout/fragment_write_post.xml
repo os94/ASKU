@@ -29,7 +29,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
-                android:layout_margin="5dp"
+                android:layout_margin="10dp"
                 android:layout_toStartOf="@+id/buttonWrite2"
                 android:background="@null"
                 android:clickable="true"
@@ -41,7 +41,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
                 android:layout_alignParentEnd="true"
-                android:layout_margin="5dp"
+                android:layout_margin="10dp"
                 android:background="@null"
                 android:clickable="true"
                 android:src="@android:drawable/ic_menu_send" />
@@ -59,11 +59,28 @@
         <EditText
             android:id="@+id/editTextContent"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:background="@android:drawable/editbox_background"
             android:ems="10"
             android:hint="내용을 입력하세요."
-            android:inputType="textMultiLine" />
+            android:inputType="textMultiLine"
+            android:minLines="12"
+            android:maxLines="17"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:text="첨부파일" />
+
+        <TextView
+            android:id="@+id/tv_imgpath"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/line_bottom_border"
+            android:maxLines="1"
+            android:padding="5dp"
+            android:textSize="12sp" />
     </LinearLayout>
 
 </FrameLayout>
