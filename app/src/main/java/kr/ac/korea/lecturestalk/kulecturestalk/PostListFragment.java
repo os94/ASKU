@@ -2,6 +2,7 @@ package kr.ac.korea.lecturestalk.kulecturestalk;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.NestedScrollView;
@@ -41,7 +42,7 @@ public class PostListFragment extends Fragment implements View.OnClickListener {
     private static final String TAG = "@@@@@ get:";
     private EmptyRecyclerView recyclerView;
     private ProgressBar progressBar;
-    private LinearLayout linearLayout;
+    private ConstraintLayout Layout;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -49,9 +50,9 @@ public class PostListFragment extends Fragment implements View.OnClickListener {
         View view = inflater.inflate(R.layout.fragment_post_list, container, false);
 
         progressBar = view.findViewById(R.id.progressBar);
-        linearLayout = view.findViewById(R.id.post_list_view);
+        Layout = view.findViewById(R.id.post_list_view);
         progressBar.setVisibility(view.VISIBLE);
-        linearLayout.setVisibility(view.GONE);
+        Layout.setVisibility(view.GONE);
 
         mAllTab = view.findViewById(R.id.course_tab_all);
         mNoticeTab = view.findViewById(R.id.course_tab_notice);
@@ -160,7 +161,7 @@ public class PostListFragment extends Fragment implements View.OnClickListener {
                             Log.d(TAG, "Error getting documents: ", task.getException());
                         }
                         progressBar.setVisibility(view.GONE);
-                        linearLayout.setVisibility(view.VISIBLE);
+                        Layout.setVisibility(view.VISIBLE);
                     }
                 });
     }
@@ -203,7 +204,7 @@ public class PostListFragment extends Fragment implements View.OnClickListener {
                             Log.d(TAG, "Error getting documents: ", task.getException());
                         }
                         progressBar.setVisibility(view.GONE);
-                        linearLayout.setVisibility(view.VISIBLE);
+                        Layout.setVisibility(view.VISIBLE);
                     }
                 });
     }
