@@ -4,12 +4,16 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.FrameLayout;
+import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -36,11 +40,18 @@ public class PostListFragment extends Fragment implements View.OnClickListener {
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     private static final String TAG = "@@@@@ get:";
     private EmptyRecyclerView recyclerView;
+    private ProgressBar progressBar;
+    private LinearLayout linearLayout;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_post_list, container, false);
+
+        progressBar = view.findViewById(R.id.progressBar);
+        linearLayout = view.findViewById(R.id.post_list_view);
+        progressBar.setVisibility(view.VISIBLE);
+        linearLayout.setVisibility(view.GONE);
 
         mAllTab = view.findViewById(R.id.course_tab_all);
         mNoticeTab = view.findViewById(R.id.course_tab_notice);
@@ -56,7 +67,7 @@ public class PostListFragment extends Fragment implements View.OnClickListener {
 
         // default
         mAllTab.setTextColor(getResources().getColor(R.color.colorPrimary, null));
-        getDB();
+        getDB(view.getRootView());
 
         //setView
         setView(view);
@@ -89,28 +100,28 @@ public class PostListFragment extends Fragment implements View.OnClickListener {
         switch (view.getId()) {
             case R.id.course_tab_all:
                 mAllTab.setTextColor(getResources().getColor(R.color.colorPrimary, null));
-                getDB();
+                getDB(view.getRootView());
                 break;
             case R.id.course_tab_notice:
                 mNoticeTab.setTextColor(getResources().getColor(R.color.colorPrimary, null));
-                getDB("공지");
+                getDB(view.getRootView(), "공지");
                 break;
             case R.id.course_tab_materials:
                 mMaterialsTab.setTextColor(getResources().getColor(R.color.colorPrimary, null));
-                getDB("수업자료");
+                getDB(view.getRootView(),"수업자료");
                 break;
             case R.id.course_tab_qna:
                 mQnaTab.setTextColor(getResources().getColor(R.color.colorPrimary, null));
-                getDB("QA");
+                getDB(view.getRootView(),"QA");
                 break;
             case R.id.course_tab_etc:
                 mEtcTab.setTextColor(getResources().getColor(R.color.colorPrimary, null));
-                getDB("기타");
+                getDB(view.getRootView(),"기타");
                 break;
         }
     }
 
-    private void getDB(String category) {
+    private void getDB(final View view, String category) {
         final List<Post> posts = new ArrayList<>();
         db.collection("Post")
                 .whereEqualTo("professor", "Peter")
@@ -148,11 +159,13 @@ public class PostListFragment extends Fragment implements View.OnClickListener {
                         } else {
                             Log.d(TAG, "Error getting documents: ", task.getException());
                         }
+                        progressBar.setVisibility(view.GONE);
+                        linearLayout.setVisibility(view.VISIBLE);
                     }
                 });
     }
 
-    private void getDB() {
+    private void getDB(final View view) {
         final List<Post> posts = new ArrayList<>();
         db.collection("Post")
                 .whereEqualTo("professor", "Peter")
@@ -189,6 +202,8 @@ public class PostListFragment extends Fragment implements View.OnClickListener {
                         } else {
                             Log.d(TAG, "Error getting documents: ", task.getException());
                         }
+                        progressBar.setVisibility(view.GONE);
+                        linearLayout.setVisibility(view.VISIBLE);
                     }
                 });
     }

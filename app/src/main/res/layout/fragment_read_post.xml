@@ -6,7 +6,16 @@
     tools:context=".ReadPostFragment">
 
     <!-- TODO: Update blank fragment layout -->
+
+    <ProgressBar
+        android:id="@+id/progressBar2"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"/>
+
     <android.support.v4.widget.NestedScrollView
+        android:id="@+id/post_read_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -102,11 +111,17 @@
                 android:id="@+id/tv_content"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="50dp"
                 android:background="@drawable/box_border"
+                android:minLines="5"
                 android:padding="10dp"
                 android:text="내용"
                 android:textSize="18sp" />
+
+            <ImageView
+                android:id="@+id/iv_img"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:layout_gravity="center"/>
 
         </LinearLayout>
 
