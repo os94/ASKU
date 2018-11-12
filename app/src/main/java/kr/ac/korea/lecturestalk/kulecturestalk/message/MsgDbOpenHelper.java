@@ -1,4 +1,4 @@
-package kr.ac.korea.lecturestalk.kulecturestalk;
+package kr.ac.korea.lecturestalk.kulecturestalk.message;
 
 import android.content.ContentValues;
 import android.content.Context;

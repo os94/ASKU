@@ -1,4 +1,4 @@
-package kr.ac.korea.lecturestalk.kulecturestalk;
+package kr.ac.korea.lecturestalk.kulecturestalk.message;
 
 import android.provider.BaseColumns;
 

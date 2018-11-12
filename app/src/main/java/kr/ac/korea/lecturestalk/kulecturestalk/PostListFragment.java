@@ -209,7 +209,7 @@ public class PostListFragment extends Fragment implements View.OnClickListener {
     }
 
     private void setView(View view) {
-        // Use EmptyRecyclerViewr
+        // Use EmptyRecyclerView
         recyclerView = view.findViewById(R.id.course_posts_recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         // Fetch the empty view from the layout and set it on the new recycler view

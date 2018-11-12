@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.NestedScrollView;
+import android.support.v7.widget.LinearLayoutManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,12 +25,17 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import kr.ac.korea.lecturestalk.kulecturestalk.Adapter.CommentListAdapter;
+import kr.ac.korea.lecturestalk.kulecturestalk.course.Model.Comment;
 import kr.ac.korea.lecturestalk.kulecturestalk.course.Model.Post;
+import kr.ac.korea.lecturestalk.kulecturestalk.course.View.EmptyRecyclerView;
 
 import static kr.ac.korea.lecturestalk.kulecturestalk.MainActivity.userid;
 
@@ -38,12 +45,14 @@ public class ReadPostFragment extends Fragment implements View.OnClickListener {
     private final String TAG = "@@@@@Read";
     TextView tv_author, tv_time, tv_view, tv_like, tv_tile, tv_content;
     private String docID;
-    Button btn_like, btn_msg, btn_report;
     FirebaseStorage storage = FirebaseStorage.getInstance();
     StorageReference storageRef = storage.getReference();
     StorageReference storageRef2;
     private ProgressBar progressBar;
     private NestedScrollView nestedScrollView;
+    Button btn_like, btn_msg, btn_report, btn_send_comment;
+    EditText comment_desc;
+    private EmptyRecyclerView recyclerView;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -109,9 +118,28 @@ public class ReadPostFragment extends Fragment implements View.OnClickListener {
         btn_like = view.findViewById(R.id.btn_like);
         btn_msg = view.findViewById(R.id.btn_msg);
         btn_report = view.findViewById(R.id.btn_report);
+        btn_send_comment = view.findViewById(R.id.btn_send_comment);
+
+        comment_desc = view.findViewById(R.id.edit_comment);
+
         btn_like.setOnClickListener(this);
         btn_msg.setOnClickListener(this);
         btn_report.setOnClickListener(this);
+        btn_send_comment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String desc = comment_desc.getText().toString();
+                if (desc == null || desc.equals("")) {
+                    Toast.makeText(view.getContext(), "Please Write a comment", Toast.LENGTH_SHORT).show();
+                } else {
+                    // TODO: implementation
+                    Toast.makeText(view.getContext(), "아직 구현 안됨 !", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+        setRecyclerView(view);
+
+
 
         ImageView imageView = (ImageView) view.findViewById(R.id.iv_img);
         storageRef2 = storageRef.child("images/" + docID);
@@ -135,6 +163,8 @@ public class ReadPostFragment extends Fragment implements View.OnClickListener {
         db.collection("Post").document(docID).update(
                 "numView", (int)post.getNumView()+1
         );
+
+        getComments();
     }
 
     @Override
@@ -166,5 +196,42 @@ public class ReadPostFragment extends Fragment implements View.OnClickListener {
                 }
                 break;
         }
+    }
+
+    private void getComments() {
+        final List<Comment> comments = new ArrayList<>();
+        db.collection("Comment")
+                .whereEqualTo("postId", post.getId())
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                Log.d(TAG, String.valueOf(document.getData()));
+                                Map<String, Object> data = document.getData();
+                                Comment comment = new Comment((String)data.get("id")
+                                , (String)data.get("postId")
+                                , (String)data.get("author")
+                                , (String)data.get("desc")
+                                , (long)data.get("time")
+                                , (boolean)data.get("isPicked"));
+                                comments.add(comment);
+                            }
+                            recyclerView.setAdapter(new CommentListAdapter(post, comments));
+                        } else {
+                            Log.d(TAG, "onComplete: Error getting documents: ", task.getException());
+                        }
+                    }
+                });
+    }
+
+    private void setRecyclerView(View view) {
+        // Use EmptyRecyclerView
+        recyclerView = view.findViewById(R.id.post_comment_recycler_view);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        // Fetch the empty view from the layout and set it on the new recycler view
+        View emptyView = view.findViewById(R.id.post_comment_empty);
+        recyclerView.setEmptyView(emptyView);
     }
 }

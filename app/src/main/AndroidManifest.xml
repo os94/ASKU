@@ -25,8 +25,9 @@
         <activity android:name=".schedule.TestActivity" />
         <activity android:name=".LoginActivity" />
         <activity android:name=".SignUpActivity" />
-        <activity android:name=".MsgTabActivity" />
-        <activity android:name=".MyInfoActivity" />
+        <activity android:name=".message.MsgTabActivity" />
+        <activity android:name=".message.MsgNewActivity" />
+        <activity android:name=".my.MyInfoActivity" />
         <activity android:name=".course.CourseActivity" />
 
     </application>

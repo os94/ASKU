@@ -1,4 +1,4 @@
-package kr.ac.korea.lecturestalk.kulecturestalk;
+package kr.ac.korea.lecturestalk.kulecturestalk.message;
 
 import android.content.Context;
 import android.content.Intent;
@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.CheckBox;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -18,11 +19,13 @@ import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
 
+import kr.ac.korea.lecturestalk.kulecturestalk.R;
+
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class MsgSentActivity extends Fragment {
+public class MsgRecvActivity extends Fragment {
 
     long nowIndex;
     String sort = "sent_at";
@@ -34,9 +37,9 @@ public class MsgSentActivity extends Fragment {
     private MsgDbOpenHelper mDbOpenHelper;
 
     private FirebaseAuth mFirebaseAuth;
-    private String mStrSender = "";
+    private String mStrReceiver = "";
 
-    public MsgSentActivity() {
+    public MsgRecvActivity() {
         // Required empty public constructor
     }
 
@@ -45,28 +48,20 @@ public class MsgSentActivity extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        //return inflater.inflate(R.layout.activity_msg_sent, container, false);
+        //return inflater.inflate(R.layout.activity_msg_recv, container, false);
         //super.onCreate(savedInstanceState);
-        //setContentView(R.layout.activity_msg_sent);
-        View view = inflater.inflate(R.layout.activity_msg_sent, container, false);
+        //setContentView(R.layout.activity_msg_recv);
+        View view = inflater.inflate(R.layout.activity_msg_recv, container, false);
 
         //사용자 이름 추출.
         mFirebaseAuth = FirebaseAuth.getInstance();
-        mStrSender = mFirebaseAuth.getCurrentUser().getDisplayName();
+        mStrReceiver = mFirebaseAuth.getCurrentUser().getDisplayName();
 
         //쪽지 보내기.
         (view.findViewById(R.id.id_new_msg_button)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getActivity(), MsgNewActivity.class));
-            }
-        });
-
-        //쪽지 삭제.
-        (view.findViewById(R.id.id_delete_msg_button)).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //(ToDo)
+            startActivity(new Intent(getActivity(), MsgNewActivity.class));
             }
         });
 
@@ -89,40 +84,67 @@ public class MsgSentActivity extends Fragment {
         mDbOpenHelper.open();
         mDbOpenHelper.create();
 
-        showDatabase(listview, mStrSender);
+        showDatabase(listview, mStrReceiver);
         int countItem = arrayAdapter.getCount();
-        /*
-        // 첫 번째 아이템 추가.
-        arrayAdapter.addItem(res.getDrawable( R.drawable.baseline_accessibility_new_black_18dp),
-                "Box", Calendar.getInstance().getTime(), "Account Box Black 36dp") ;
-        // 두 번째 아이템 추가.
-        arrayAdapter.addItem(res.getDrawable(R.drawable.baseline_account_box_black_18dp),
-                "Circle", Calendar.getInstance().getTime(), "Account\n Circle\n Black\n 36dp") ;
-        // 세 번째 아이템 추가.
-        arrayAdapter.addItem(res.getDrawable(R.drawable.baseline_account_circle_black_18dp),
-                "Ind", Calendar.getInstance().getTime(), "Assignment Ind Black 36dp") ;
-        */
 
         //쪽지 없음 표시.
-        TextView txtView = (TextView) view.findViewById(R.id.id_no_msg_sent);
+        TextView txtView = (TextView) view.findViewById(R.id.id_no_msg_recv);
         if (countItem > 0)
             txtView.setVisibility(View.INVISIBLE);
         else
             txtView.setVisibility(View.VISIBLE);
 
         // 위에서 생성한 listview에 클릭 이벤트 핸들러 정의.
+        final MsgListViewAdapter farrayAdapter = arrayAdapter;
+        final ListView flistview = listview;
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView parent, View v, int position, long id) {
-                startActivity(new Intent(getActivity(), MsgNewActivity.class));
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                //startActivity(new Intent(getActivity(), MsgNewActivity.class));
+                //super.onListItemClick(parent, v, position, id);
+
+                //Get related checkbox and change flag status..
+                CheckBox cb = (CheckBox) view.findViewById(R.id.id_check_box);
+                cb.setChecked(!cb.isChecked());
+
+                MsgListViewItem item = (MsgListViewItem) farrayAdapter.getItem(position);
+                item.setChkSelect(cb.isChecked());
+                //Toast.makeText(getActivity(), "Click item", Toast.LENGTH_SHORT).show();
             }
         }) ;
+
+        //쪽지 삭제.
+        (view.findViewById(R.id.id_delete_msg_button)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String strMsg = "";
+                for(int i = farrayAdapter.getCount() - 1; i >= 0; i--) {
+                    MsgListViewItem item = (MsgListViewItem) farrayAdapter.getItem(i);
+                    boolean bSel = item.isChkSelect();
+                    if (bSel) {
+                        long id = item.getId();
+                        strMsg += ">> " + bSel + ", " + id;
+
+                        //DB에서 항목 삭제.
+                        mDbOpenHelper.deleteColumn(id);
+
+                        //Adapter에서 항목 삭제.
+                        item.setChkSelect(false);
+                        farrayAdapter.remove(i);
+                    }
+                }
+                if(strMsg != "") {
+                    //Toast.makeText(getActivity(), "Selected item:" + strMsg, Toast.LENGTH_SHORT).show();
+                    farrayAdapter.notifyDataSetChanged();
+                    //flistview.invalidate();
+                }}
+        });
 
         return view;
     }
 
 
-    public void showDatabase(ListView listview, String strSender) {
+    public void showDatabase(ListView listview, String strReceiver) {
         final MsgTabActivity activity = (MsgTabActivity) getActivity();
         Resources res = ((Context)(activity)).getResources();
 
@@ -130,16 +152,16 @@ public class MsgSentActivity extends Fragment {
         arrayAdapter = new MsgListViewAdapter() ;
         listview.setAdapter(arrayAdapter);
 
-        Cursor iCursor = mDbOpenHelper.getSentMsgList(strSender);
+        Cursor iCursor = mDbOpenHelper.getRecvMsgList(strReceiver);
         Log.d("showDatabase", "DB Size: " + iCursor.getCount());
         arrayData.clear();
         arrayIndex.clear();
         while(iCursor.moveToNext()){
-            String tempIndex = iCursor.getString(iCursor.getColumnIndex("_id"));
-            //String strSender = iCursor.getString(iCursor.getColumnIndex("sender"));
-            //strSender = setTextLength(strSender,20);
-            String strReceiver = iCursor.getString(iCursor.getColumnIndex("receiver"));
-            strReceiver = setTextLength(strReceiver,20);
+            long tempIndex = iCursor.getLong(iCursor.getColumnIndex("_id"));
+            String strSender = iCursor.getString(iCursor.getColumnIndex("sender"));
+            strSender = setTextLength(strSender,20);
+            //String strReceiver = iCursor.getString(iCursor.getColumnIndex("receiver"));
+            //strReceiver = setTextLength(strReceiver,20);
             String strMsg = iCursor.getString(iCursor.getColumnIndex("message"));
             strMsg = setTextLength(strMsg,1000);
             //Date dtSentAt = iCursor.get(iCursor.getColumnIndex("sent_at"));
@@ -150,10 +172,10 @@ public class MsgSentActivity extends Fragment {
             //arrayData.add(Result);
             //arrayIndex.add(tempIndex);
 
-            arrayAdapter.addItem(res.getDrawable(R.drawable.baseline_account_circle_black_18dp), strReceiver, strSentAt, strMsg);
+            arrayAdapter.addItem(tempIndex, res.getDrawable(R.drawable.baseline_account_circle_black_18dp), strSender, strSentAt, strMsg);
         }
         //arrayAdapter.addAll(arrayData);
-    }
+     }
 
     public String setTextLength(String text, int length){
         if(text.length()<length){
