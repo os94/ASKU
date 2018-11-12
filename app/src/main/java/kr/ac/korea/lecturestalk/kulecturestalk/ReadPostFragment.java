@@ -81,6 +81,7 @@ public class ReadPostFragment extends Fragment implements View.OnClickListener {
                         Map<String, Object> data = document.getData();
                         post = new Post( (String)data.get("id")
                                 , (String)data.get("author")
+                                , (String)data.get("authorID")
                                 , (String)data.get("course")
                                 , (String)data.get("semester")
                                 , (String)data.get("professor")
@@ -103,6 +104,12 @@ public class ReadPostFragment extends Fragment implements View.OnClickListener {
                     Log.d(TAG, "get failed with ", task.getException());
                 }
                 setView(post);
+                ImageView imageView = (ImageView) view.findViewById(R.id.iv_img);
+                storageRef2 = storageRef.child("images/" + post.getImg());
+                Glide.with(getContext())
+                        .using(new FirebaseImageLoader())
+                        .load(storageRef2)
+                        .into(imageView);
                 progressBar.setVisibility(view.GONE);
                 nestedScrollView.setVisibility(view.VISIBLE);
             }
@@ -138,15 +145,6 @@ public class ReadPostFragment extends Fragment implements View.OnClickListener {
             }
         });
         setRecyclerView(view);
-
-
-
-        ImageView imageView = (ImageView) view.findViewById(R.id.iv_img);
-        storageRef2 = storageRef.child("images/" + docID);
-        Glide.with(this)
-                .using(new FirebaseImageLoader())
-                .load(storageRef2)
-                .into(imageView);
 
         return view;
     }

@@ -60,8 +60,8 @@ public class ScheduleTabFragment extends Fragment {
 
 
         // 이건 only test용... 필요할 때 enable 해서 쓰세요
-//        SubjectInfo testSubject = new SubjectInfo("testSubject", "testName", "RoomA");
-//        addCourceView(inflater, container, testSubject);
+        SubjectInfo testSubject = new SubjectInfo("testSubject", "testName", "RoomA");
+        addCourceView(inflater, container, testSubject);
 
         Log.d(TAG, "subejcts length : " + subejcts.length);
         for (String subject : subejcts) {

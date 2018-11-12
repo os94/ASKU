@@ -37,6 +37,7 @@ import kr.ac.korea.lecturestalk.kulecturestalk.course.Model.Post;
 
 import static android.app.Activity.RESULT_OK;
 import static kr.ac.korea.lecturestalk.kulecturestalk.MainActivity.userEmail;
+import static kr.ac.korea.lecturestalk.kulecturestalk.MainActivity.userid;
 
 public class WritePostFragment extends Fragment implements View.OnClickListener {
     private final String TAG = "##### WritePage Log:";
@@ -46,6 +47,7 @@ public class WritePostFragment extends Fragment implements View.OnClickListener 
     private ImageButton write, img;
     private EditText editTextTitle, editTextContent;
     private Post post = new Post(null
+            , null
             , null
             , null
             , null
@@ -69,7 +71,7 @@ public class WritePostFragment extends Fragment implements View.OnClickListener 
     };
     FirebaseStorage storage = FirebaseStorage.getInstance();
     StorageReference storageRef = storage.getReference();
-    Uri file;
+    Uri file = null;
     StorageReference imageRef;
     UploadTask uploadTask;
     private TextView tv_imgpath;
@@ -141,7 +143,7 @@ public class WritePostFragment extends Fragment implements View.OnClickListener 
                     Toast.makeText(getContext(), "권한을 허용했습니다.", Toast.LENGTH_SHORT).show();
                     getImg();
                 } else {
-                    Toast.makeText(getContext(), "권한을 허용해야 합니다.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "권한을 허용해야합니다.", Toast.LENGTH_SHORT).show();
                 }
         }
     }
@@ -172,6 +174,7 @@ public class WritePostFragment extends Fragment implements View.OnClickListener 
         int index = userEmail.indexOf("@");
         String author = userEmail.substring(0, index);
         post.setAuthor(author);
+        post.setAuthorID(userid);
 
         long now = System.currentTimeMillis();
         post.setTime(now);
@@ -185,14 +188,19 @@ public class WritePostFragment extends Fragment implements View.OnClickListener 
             public void onSuccess(DocumentReference documentReference) {
                 Log.d(TAG, "DocumentSnapshot added with ID: " + documentReference.getId());
                 docID = documentReference.getId();
-                Toast.makeText(getContext(), "Write !", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "작성완료!", Toast.LENGTH_SHORT).show();
                 getFragmentManager().beginTransaction().replace(R.id.post_container, new PostListFragment()).commit();
                 db.collection("Post").document(docID).update(
                         "id", docID
                 );
-                imageRef = storageRef.child("images/"+docID);
-                uploadTask = imageRef.putFile(file);
-                uploadImg();
+                if(file != null) {
+                    db.collection("Post").document(docID).update(
+                            "img", docID
+                    );
+                    imageRef = storageRef.child("images/"+docID);
+                    uploadTask = imageRef.putFile(file);
+                    uploadImg();
+                }
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
@@ -212,7 +220,7 @@ public class WritePostFragment extends Fragment implements View.OnClickListener 
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                 // taskSnapshot.getMetadata() contains file metadata such as size, content-type, etc.
-                Toast.makeText(getContext(), "Send !", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getContext(), "Send !", Toast.LENGTH_SHORT).show();
             }
         });
     }

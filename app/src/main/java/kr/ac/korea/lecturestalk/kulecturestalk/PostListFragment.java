@@ -140,6 +140,7 @@ public class PostListFragment extends Fragment implements View.OnClickListener {
                                 Map<String, Object> data = document.getData();
                                 Post post = new Post( (String)data.get("id")
                                         , (String)data.get("author")
+                                        , (String)data.get("authorID")
                                         , (String)data.get("course")
                                         , (String)data.get("semester")
                                         , (String)data.get("professor")
@@ -183,6 +184,7 @@ public class PostListFragment extends Fragment implements View.OnClickListener {
                                 Map<String, Object> data = document.getData();
                                 Post post = new Post( (String)data.get("id")
                                         , (String)data.get("author")
+                                        , (String)data.get("authorID")
                                         , (String)data.get("course")
                                         , (String)data.get("semester")
                                         , (String)data.get("professor")
