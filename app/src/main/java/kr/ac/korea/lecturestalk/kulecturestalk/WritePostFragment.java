@@ -17,11 +17,14 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.SpinnerAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.firebase.ui.storage.images.FirebaseImageLoader;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentReference;
@@ -30,6 +33,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -62,24 +66,33 @@ public class WritePostFragment extends Fragment implements View.OnClickListener 
             ,0
             , new ArrayList<String>()
             , null );
-    FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private String docID;
     private static final int GALLERY_CODE = 1112;
     private static final int MY_PERMISSIONS = 101;
     private String[] permissons = {
             android.Manifest.permission.READ_EXTERNAL_STORAGE
     };
-    FirebaseStorage storage = FirebaseStorage.getInstance();
-    StorageReference storageRef = storage.getReference();
-    Uri file = null;
-    StorageReference imageRef;
-    UploadTask uploadTask;
-    private TextView tv_imgpath;
+    private FirebaseStorage storage = FirebaseStorage.getInstance();
+    private StorageReference storageRef = storage.getReference();
+    private Uri file = null;
+    private StorageReference imageRef;
+    private UploadTask uploadTask;
+    private ImageView iv_img;
+    private String professor, course;
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_write_post, container, false);
+
+        professor = getArguments().getString("professor");
+        course = getArguments().getString("course");
 
         category = getResources().getStringArray(R.array.category);
         spinner = (Spinner)view.findViewById(R.id.category);
@@ -103,7 +116,7 @@ public class WritePostFragment extends Fragment implements View.OnClickListener 
         write = (ImageButton)view.findViewById(R.id.buttonWrite2);
         write.setOnClickListener(this);
 
-        tv_imgpath = (TextView)view.findViewById(R.id.tv_imgpath);
+        iv_img = view.findViewById(R.id.iv_img);
 
         return view;
     }
@@ -159,15 +172,18 @@ public class WritePostFragment extends Fragment implements View.OnClickListener 
         super.onActivityResult(requestCode, resultCode, data);
         if(resultCode == RESULT_OK) {
             file = data.getData();
-            tv_imgpath.setText(String.valueOf(file));
+            Glide.with(getContext())
+                    .load(file)
+                    .centerCrop()
+                    .into(iv_img);
         }
     }
 
     private void setPost() {
         post.setTitle(editTextTitle.getText().toString());
         post.setDescription(editTextContent.getText().toString());
-        post.setCourse("SW Engineering");
-        post.setProfessor("Peter");
+        post.setCourse(course);
+        post.setProfessor(professor);
         post.setSemester("18-2");
         post.setTimeTable("월수");
 
@@ -189,7 +205,8 @@ public class WritePostFragment extends Fragment implements View.OnClickListener 
                 Log.d(TAG, "DocumentSnapshot added with ID: " + documentReference.getId());
                 docID = documentReference.getId();
                 Toast.makeText(getContext(), "작성완료!", Toast.LENGTH_SHORT).show();
-                getFragmentManager().beginTransaction().replace(R.id.post_container, new PostListFragment()).commit();
+                getFragmentManager().beginTransaction().remove(WritePostFragment.this).commit();
+                getFragmentManager().popBackStack();
                 db.collection("Post").document(docID).update(
                         "id", docID
                 );

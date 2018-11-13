@@ -40,18 +40,18 @@ import kr.ac.korea.lecturestalk.kulecturestalk.course.View.EmptyRecyclerView;
 import static kr.ac.korea.lecturestalk.kulecturestalk.MainActivity.userid;
 
 public class ReadPostFragment extends Fragment implements View.OnClickListener {
-    FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private Post post;
     private final String TAG = "@@@@@Read";
-    TextView tv_author, tv_time, tv_view, tv_like, tv_tile, tv_content;
+    private TextView tv_author, tv_time, tv_view, tv_like, tv_tile, tv_content;
     private String docID;
-    FirebaseStorage storage = FirebaseStorage.getInstance();
-    StorageReference storageRef = storage.getReference();
-    StorageReference storageRef2;
+    private FirebaseStorage storage = FirebaseStorage.getInstance();
+    private StorageReference storageRef = storage.getReference();
+    private StorageReference storageRef2;
     private ProgressBar progressBar;
     private NestedScrollView nestedScrollView;
-    Button btn_like, btn_msg, btn_report, btn_send_comment;
-    EditText comment_desc;
+    private Button btn_like, btn_msg, btn_report, btn_send_comment;
+    private EditText comment_desc;
     private EmptyRecyclerView recyclerView;
 
     @Override
