@@ -3,16 +3,21 @@ package kr.ac.korea.lecturestalk.kulecturestalk;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.firebase.ui.storage.images.FirebaseImageLoader;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -20,6 +25,8 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
@@ -36,15 +43,21 @@ import static kr.ac.korea.lecturestalk.kulecturestalk.MainActivity.userid;
 import static kr.ac.korea.lecturestalk.kulecturestalk.MainActivity.userEmail;
 
 public class ReadPostFragment extends Fragment implements View.OnClickListener {
-    FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private Post post;
     private final String TAG = "@@@@@Read";
-    TextView tv_author, tv_time, tv_view, tv_like, tv_tile, tv_content;
+    private TextView tv_author, tv_time, tv_view, tv_like, tv_tile, tv_content;
     private String docID;
-    Button btn_like, btn_msg, btn_report, btn_send_comment;
-    EditText comment_desc;
 
     private int atIndex = userEmail.indexOf("@");
+    private FirebaseStorage storage = FirebaseStorage.getInstance();
+    private StorageReference storageRef = storage.getReference();
+    private StorageReference storageRef2;
+    private ProgressBar progressBar;
+    private NestedScrollView nestedScrollView;
+    private Button btn_like, btn_msg, btn_report, btn_send_comment;
+    private EditText comment_desc;
+
     private EmptyRecyclerView recyclerView;
 
     private String userName = userEmail.substring(0, atIndex);
@@ -57,7 +70,12 @@ public class ReadPostFragment extends Fragment implements View.OnClickListener {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_read_post, container, false);
+        final View view = inflater.inflate(R.layout.fragment_read_post, container, false);
+
+        progressBar = view.findViewById(R.id.progressBar2);
+        nestedScrollView = view.findViewById(R.id.post_read_view);
+        progressBar.setVisibility(view.VISIBLE);
+        nestedScrollView.setVisibility(view.GONE);
 
         docID = getArguments().getString("id");
         DocumentReference docRef = db.collection("Post").document(docID);
@@ -71,6 +89,7 @@ public class ReadPostFragment extends Fragment implements View.OnClickListener {
                         Map<String, Object> data = document.getData();
                         post = new Post( (String)data.get("id")
                                 , (String)data.get("author")
+                                , (String)data.get("authorID")
                                 , (String)data.get("course")
                                 , (String)data.get("semester")
                                 , (String)data.get("professor")
@@ -93,6 +112,14 @@ public class ReadPostFragment extends Fragment implements View.OnClickListener {
                     Log.d(TAG, "get failed with ", task.getException());
                 }
                 setView(post);
+                ImageView imageView = (ImageView) view.findViewById(R.id.iv_img);
+                storageRef2 = storageRef.child("images/" + post.getImg());
+                Glide.with(getContext())
+                        .using(new FirebaseImageLoader())
+                        .load(storageRef2)
+                        .into(imageView);
+                progressBar.setVisibility(view.GONE);
+                nestedScrollView.setVisibility(view.VISIBLE);
             }
         });
 
@@ -145,9 +172,6 @@ public class ReadPostFragment extends Fragment implements View.OnClickListener {
         });
         setRecyclerView(view);
 
-
-
-        // Inflate the layout for this fragment
         return view;
     }
 

@@ -21,11 +21,12 @@
         android:icon="@android:drawable/ic_dialog_info"
         android:title="MY"
         app:showAsAction="always" />
-
+<!--
+    테스트 용도의 화면이 필요할 때 enable해서 쓰세요
     <item
         android:id="@+id/menu_test"
         android:enabled="true"
         android:icon="@android:drawable/ic_dialog_dialer"
         android:title="테스트"
-        app:showAsAction="always" />
+        app:showAsAction="always" />-->
 </menu>

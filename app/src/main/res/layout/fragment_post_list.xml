@@ -1,136 +1,154 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    tools:context=".PostListFragment">
 
-    <LinearLayout
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center" />
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/post_list_view"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/course_tab_all"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:id="@+id/categoryList"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="7dp"
-            android:layout_marginTop="7dp"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="@string/course_tab_all"
-            android:textSize="16sp"
-            android:textColor="@android:color/black"/>
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
-        <TextView
-            android:id="@+id/course_tab_notice"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="7dp"
-            android:layout_marginTop="7dp"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="@string/course_tab_notice"
-            android:textSize="16sp"
-            android:textColor="@android:color/black"/>
+            <TextView
+                android:id="@+id/course_tab_all"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="7dp"
+                android:layout_marginBottom="7dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="@string/course_tab_all"
+                android:textColor="@android:color/black"
+                android:textSize="16sp" />
 
-        <TextView
-            android:id="@+id/course_tab_materials"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="7dp"
-            android:layout_marginTop="7dp"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="@string/course_tab_materials"
-            android:textSize="16sp"
-            android:textColor="@android:color/black"/>
+            <TextView
+                android:id="@+id/course_tab_notice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="7dp"
+                android:layout_marginBottom="7dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="@string/course_tab_notice"
+                android:textColor="@android:color/black"
+                android:textSize="16sp" />
 
-        <TextView
-            android:id="@+id/course_tab_qna"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="7dp"
-            android:layout_marginTop="7dp"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="@string/course_tab_qna"
-            android:textSize="16sp"
-            android:textColor="@android:color/black"/>
+            <TextView
+                android:id="@+id/course_tab_materials"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="7dp"
+                android:layout_marginBottom="7dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="@string/course_tab_materials"
+                android:textColor="@android:color/black"
+                android:textSize="16sp" />
 
-        <TextView
-            android:id="@+id/course_tab_etc"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="7dp"
-            android:layout_marginTop="7dp"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="@string/course_tab_etc"
-            android:textSize="16sp"
-            android:textColor="@android:color/black"/>
+            <TextView
+                android:id="@+id/course_tab_qna"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="7dp"
+                android:layout_marginBottom="7dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="@string/course_tab_qna"
+                android:textColor="@android:color/black"
+                android:textSize="16sp" />
 
-    </LinearLayout>
+            <TextView
+                android:id="@+id/course_tab_etc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="7dp"
+                android:layout_marginBottom="7dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="@string/course_tab_etc"
+                android:textColor="@android:color/black"
+                android:textSize="16sp" />
 
+        </LinearLayout>
 
-
-    <!-- To enclose the EmptyRecyclerView and the empty view -->
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-
+        <!-- To enclose the EmptyRecyclerView and the empty view -->
 
         <!--<Button-->
-            <!--android:id="@+id/buttonWrite1"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_alignParentEnd="true"-->
-            <!--android:layout_alignParentBottom="true"-->
-            <!--android:layout_margin="20dp"-->
-            <!--android:text="write" />-->
+        <!--android:id="@+id/buttonWrite1"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_alignParentEnd="true"-->
+        <!--android:layout_alignParentBottom="true"-->
+        <!--android:layout_margin="20dp"-->
+        <!--android:text="write" />-->
 
         <kr.ac.korea.lecturestalk.kulecturestalk.course.View.EmptyRecyclerView
             android:id="@+id/course_posts_recycler_view"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:visibility="gone"/>
+            android:layout_height="0dp"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/categoryList" />
 
         <LinearLayout
             android:id="@+id/course_post_empty"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:gravity="center">
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/categoryList">
 
             <ImageView
-                android:src="@drawable/ic_error_outline_black_24dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginBottom="20dp"/>
+                android:layout_marginBottom="20dp"
+                android:src="@drawable/ic_error_outline_black_24dp" />
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
                 android:text="@string/course_no_posts1"
-                android:textSize="16sp"
-                android:gravity="center_horizontal"/>
+                android:textSize="16sp" />
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
                 android:text="@string/course_no_posts2"
-                android:textSize="16sp"
-                android:gravity="center_horizontal"/>
+                android:textSize="16sp" />
         </LinearLayout>
 
         <android.support.design.widget.FloatingActionButton
-            android:src="@drawable/ic_write_white_24dp"
             android:id="@+id/btn_write"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="bottom|end"
-            android:layout_margin="20dp"
-            android:backgroundTint="@color/colorAccent"/>
+            android:layout_marginEnd="20dp"
+            android:layout_marginBottom="20dp"
+            android:backgroundTint="@color/colorAccent"
+            android:src="@drawable/ic_write_white_24dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
 
-    </FrameLayout>
+    </android.support.constraint.ConstraintLayout>
 
-</LinearLayout>
+</FrameLayout>

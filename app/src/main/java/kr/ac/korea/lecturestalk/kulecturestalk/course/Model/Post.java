@@ -7,7 +7,8 @@ import java.util.List;
 
 public class Post {
     String id; // Document id in Firebase Collection
-    String author; // author who write post
+    String author; // author's name
+    String authorID; // author's unique id
 
     String course;
     String semester;
@@ -24,12 +25,13 @@ public class Post {
     List<String> numReports;
     String img;
 
-    public Post(String id, String author, String course, String semester, String professor,
+    public Post(String id, String author, String authorID, String course, String semester, String professor,
                 String timeTable, String category, String title, String description,
                 List<String> comments, ArrayList<String> likes, int numView, long time,
                 List<String> numReports, String img) {
         this.id = id;
         this.author = author;
+        this.authorID = authorID;
         this.course = course;
         this.semester = semester;
         this.professor = professor;
@@ -60,6 +62,14 @@ public class Post {
 
     public void setAuthor(String author) {
         this.author = author;
+    }
+
+    public String getAuthorID() {
+        return authorID;
+    }
+
+    public void setAuthorID(String authorID) {
+        this.authorID = authorID;
     }
 
     public String getCourse() {
