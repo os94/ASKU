@@ -1,16 +1,21 @@
 package kr.ac.korea.lecturestalk.kulecturestalk;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewCompat;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -25,12 +30,16 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 
@@ -59,8 +68,10 @@ public class ReadPostFragment extends Fragment implements View.OnClickListener {
     private EditText comment_desc;
 
     private EmptyRecyclerView recyclerView;
+    private CommentListAdapter mAdapter;
 
     private String userName = userEmail.substring(0, atIndex);
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -74,6 +85,7 @@ public class ReadPostFragment extends Fragment implements View.OnClickListener {
 
         progressBar = view.findViewById(R.id.progressBar2);
         nestedScrollView = view.findViewById(R.id.post_read_view);
+
         progressBar.setVisibility(view.VISIBLE);
         nestedScrollView.setVisibility(view.GONE);
 
@@ -147,7 +159,6 @@ public class ReadPostFragment extends Fragment implements View.OnClickListener {
                 if (desc == null || desc.equals("")) {
                     Toast.makeText(view.getContext(), "Please Write a comment", Toast.LENGTH_SHORT).show();
                 } else {
-                    // TODO: implementation
                     Comment c = new Comment(null, docID, userName, desc, System.currentTimeMillis(), false);
                     db.collection("Comment").add(c).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                         @Override
@@ -158,6 +169,8 @@ public class ReadPostFragment extends Fragment implements View.OnClickListener {
                             List<String> listCom = post.getComments();
                             listCom.add(cId);
                             db.collection("Post").document(docID).update("comments", listCom);
+                            getComments();
+                            comment_desc.setText(null);
                         }
                     })
                             .addOnFailureListener(new OnFailureListener() {
@@ -166,7 +179,7 @@ public class ReadPostFragment extends Fragment implements View.OnClickListener {
                                     Log.d(TAG, "onFailure: Error: " + e);
                                 }
                             });
-                    Toast.makeText(view.getContext(), "Test !", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(view.getContext(), R.string.comment_success, Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -225,6 +238,7 @@ public class ReadPostFragment extends Fragment implements View.OnClickListener {
     private void getComments() {
         final List<Comment> comments = new ArrayList<>();
         db.collection("Comment")
+//                .orderBy("time", Query.Direction.ASCENDING)
                 .whereEqualTo("postId", post.getId())
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -242,7 +256,17 @@ public class ReadPostFragment extends Fragment implements View.OnClickListener {
                                 , (boolean)data.get("isPicked"));
                                 comments.add(comment);
                             }
-                            recyclerView.setAdapter(new CommentListAdapter(post, comments));
+                            Collections.sort(comments, new Comparator<Comment>() {
+                                @Override
+                                public int compare(Comment c1, Comment c2) {
+                                    if (c1.getTime() < c2.getTime()) return -1;
+                                    else if (c1.getTime() > c2.getTime()) return 1;
+                                    else return 0;
+                                }
+                            });
+                            recyclerView.setAdapter(mAdapter = new CommentListAdapter(post, comments));
+                            // Smooth scrolling
+                            ViewCompat.setNestedScrollingEnabled(recyclerView, false);
                         } else {
                             Log.d(TAG, "onComplete: Error getting documents: ", task.getException());
                         }

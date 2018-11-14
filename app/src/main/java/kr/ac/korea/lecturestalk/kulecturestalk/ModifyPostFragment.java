@@ -67,7 +67,7 @@ public class ModifyPostFragment extends Fragment implements View.OnClickListener
             , null
             , null
             , null
-            , new ArrayList<Integer>()
+            , new ArrayList<String>()
             , new ArrayList<String>()
             ,0
             ,0
@@ -130,7 +130,7 @@ public class ModifyPostFragment extends Fragment implements View.OnClickListener
                                 , (String)data.get("category")
                                 , (String)data.get("title")
                                 , (String)data.get("description")
-                                , (List<Integer>)data.get("comments")
+                                , (List<String>)data.get("comments")
                                 , (ArrayList<String>)data.get("likes")
                                 , (int) (long) data.get("numView")
                                 , (long)data.get("time")

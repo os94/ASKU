@@ -49,6 +49,7 @@
     <string name="post_comment_empty2">Please write a comment.</string>
     <string name="post_comment_hint">Please write a comment.</string>
     <string name="post_comment_leave">Leave a Comment</string>
+    <string name="comment_success">Commented Successfully.</string>
 
     <!-- CommentListAdapter -->
     <string name="pick_comment_title">Pick Comment</string>

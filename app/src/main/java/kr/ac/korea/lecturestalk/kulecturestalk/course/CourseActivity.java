@@ -1,9 +1,13 @@
 package kr.ac.korea.lecturestalk.kulecturestalk.course;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.FrameLayout;
 import android.widget.Toast;
 
 
@@ -12,7 +16,6 @@ import kr.ac.korea.lecturestalk.kulecturestalk.R;
 import kr.ac.korea.lecturestalk.kulecturestalk.ReadPostFragment;
 
 public class CourseActivity extends AppCompatActivity {
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,7 +42,6 @@ public class CourseActivity extends AppCompatActivity {
                 setTitle(subject + "(" + professor + ")");
             }
         }
-
     }
 
     @Override

@@ -46,6 +46,8 @@
     <string name="post_comment_empty2">댓글을 작성해 주세요.</string>
     <string name="post_comment_hint">댓글을 입력해 주세요.</string>
     <string name="post_comment_leave">댓글 남기기</string>
+    <string name="comment_success">댓글을 남겼습니다.</string>
+
 
     <!-- CommentListAdapter -->
     <string name="pick_comment_title">댓글 채택</string>
