@@ -17,7 +17,7 @@ public class Post {
     String category;
     String title;
     String description;
-    List<Integer> comments; // List of the id of comments
+    List<String> comments; // List of the id of comments
     ArrayList<String> likes; // List of the id of the users who pressed like
     int numView;
     long time; // TODO: Format?
@@ -26,7 +26,7 @@ public class Post {
 
     public Post(String id, String author, String course, String semester, String professor,
                 String timeTable, String category, String title, String description,
-                List<Integer> comments, ArrayList<String> likes, int numView, long time,
+                List<String> comments, ArrayList<String> likes, int numView, long time,
                 List<String> numReports, String img) {
         this.id = id;
         this.author = author;
@@ -118,11 +118,11 @@ public class Post {
         this.description = description;
     }
 
-    public List<Integer> getComments() {
+    public List<String> getComments() {
         return comments;
     }
 
-    public void setComments(List<Integer> comments) {
+    public void setComments(List<String> comments) {
         this.comments = comments;
     }
 

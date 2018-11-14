@@ -14,6 +14,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -31,6 +33,7 @@ import kr.ac.korea.lecturestalk.kulecturestalk.course.Model.Post;
 import kr.ac.korea.lecturestalk.kulecturestalk.course.View.EmptyRecyclerView;
 
 import static kr.ac.korea.lecturestalk.kulecturestalk.MainActivity.userid;
+import static kr.ac.korea.lecturestalk.kulecturestalk.MainActivity.userEmail;
 
 public class ReadPostFragment extends Fragment implements View.OnClickListener {
     FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -41,7 +44,10 @@ public class ReadPostFragment extends Fragment implements View.OnClickListener {
     Button btn_like, btn_msg, btn_report, btn_send_comment;
     EditText comment_desc;
 
+    private int atIndex = userEmail.indexOf("@");
     private EmptyRecyclerView recyclerView;
+
+    private String userName = userEmail.substring(0, atIndex);
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -72,7 +78,7 @@ public class ReadPostFragment extends Fragment implements View.OnClickListener {
                                 , (String)data.get("category")
                                 , (String)data.get("title")
                                 , (String)data.get("description")
-                                , (List<Integer>)data.get("comments")
+                                , (List<String>)data.get("comments")
                                 , (ArrayList<String>)data.get("likes")
                                 , (int) (long) data.get("numView") //firestore에 int로 넣었지만, long으로 들어가고 반납되고 있음. 때문에 int로 형변환
                                 , (long)data.get("time")
@@ -115,7 +121,25 @@ public class ReadPostFragment extends Fragment implements View.OnClickListener {
                     Toast.makeText(view.getContext(), "Please Write a comment", Toast.LENGTH_SHORT).show();
                 } else {
                     // TODO: implementation
-                    Toast.makeText(view.getContext(), "아직 구현 안됨 !", Toast.LENGTH_SHORT).show();
+                    Comment c = new Comment(null, docID, userName, desc, System.currentTimeMillis(), false);
+                    db.collection("Comment").add(c).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                        @Override
+                        public void onSuccess(DocumentReference documentReference) {
+                            Log.d(TAG, "onSuccess: comment with ID: " + documentReference.getId());
+                            String cId = documentReference.getId();
+                            db.collection("Comment").document(cId).update("id", cId);
+                            List<String> listCom = post.getComments();
+                            listCom.add(cId);
+                            db.collection("Post").document(docID).update("comments", listCom);
+                        }
+                    })
+                            .addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    Log.d(TAG, "onFailure: Error: " + e);
+                                }
+                            });
+                    Toast.makeText(view.getContext(), "Test !", Toast.LENGTH_SHORT).show();
                 }
             }
         });

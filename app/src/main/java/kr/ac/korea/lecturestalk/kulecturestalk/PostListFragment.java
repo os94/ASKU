@@ -135,7 +135,7 @@ public class PostListFragment extends Fragment implements View.OnClickListener {
                                         , (String)data.get("category")
                                         , (String)data.get("title")
                                         , (String)data.get("description")
-                                        , (List<Integer>)data.get("comments")
+                                        , (List<String>)data.get("comments")
                                         , (ArrayList<String>)data.get("likes")
                                         , (int) (long) data.get("numView") //firestore에 int로 넣었지만, long으로 들어가고 반납되고 있음. 때문에 int로 형변환
                                         , (long)data.get("time")
@@ -176,7 +176,7 @@ public class PostListFragment extends Fragment implements View.OnClickListener {
                                         , (String)data.get("category")
                                         , (String)data.get("title")
                                         , (String)data.get("description")
-                                        , (List<Integer>)data.get("comments")
+                                        , (List<String>)data.get("comments")
                                         , (ArrayList<String>)data.get("likes")
                                         , (int) (long) data.get("numView") //firestore에 int로 넣었지만, long으로 들어가고 반납되고 있음. 때문에 int로 형변환
                                         , (long)data.get("time")

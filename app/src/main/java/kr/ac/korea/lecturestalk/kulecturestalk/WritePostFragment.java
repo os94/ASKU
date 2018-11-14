@@ -42,7 +42,7 @@ public class WritePostFragment extends Fragment implements View.OnClickListener 
             , null
             , null
             , null
-            , new ArrayList<Integer>()
+            , new ArrayList<String>()
             , new ArrayList<String>()
             ,0
             ,0

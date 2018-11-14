@@ -5,7 +5,7 @@
     <item
         android:id="@+id/menu_lectures"
         android:enabled="true"
-        android:icon="@android:drawable/ic_dialog_map"
+        android:icon="@drawable/ic_course"
         android:title="수강과목"
         app:showAsAction="always" />
 
