@@ -1,6 +1,5 @@
-package kr.ac.korea.lecturestalk.kulecturestalk.Adapter;
+package kr.ac.korea.lecturestalk.kulecturestalk.course.Adapter;
 
-import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -24,9 +23,7 @@ import com.google.firebase.storage.StorageReference;
 import java.util.List;
 
 import kr.ac.korea.lecturestalk.kulecturestalk.ModifyPostFragment;
-import kr.ac.korea.lecturestalk.kulecturestalk.PostListFragment;
 import kr.ac.korea.lecturestalk.kulecturestalk.ReadPostFragment;
-import kr.ac.korea.lecturestalk.kulecturestalk.WritePostFragment;
 import kr.ac.korea.lecturestalk.kulecturestalk.course.Model.Post;
 import kr.ac.korea.lecturestalk.kulecturestalk.R;
 

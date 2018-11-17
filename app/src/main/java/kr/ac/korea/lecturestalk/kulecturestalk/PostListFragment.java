@@ -5,31 +5,25 @@ import android.support.annotation.NonNull;
 import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
-import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.FrameLayout;
-import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
-import com.google.firebase.firestore.ThrowOnExtraProperties;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import kr.ac.korea.lecturestalk.kulecturestalk.Adapter.PostListAdapter;
+import kr.ac.korea.lecturestalk.kulecturestalk.course.Adapter.PostListAdapter;
 import kr.ac.korea.lecturestalk.kulecturestalk.course.Model.Post;
 import kr.ac.korea.lecturestalk.kulecturestalk.course.View.EmptyRecyclerView;
 

@@ -1,4 +1,4 @@
-package kr.ac.korea.lecturestalk.kulecturestalk.Adapter;
+package kr.ac.korea.lecturestalk.kulecturestalk.course.Adapter;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
