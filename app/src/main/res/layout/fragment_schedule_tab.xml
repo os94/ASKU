@@ -8,15 +8,17 @@
         android:id="@+id/email"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/activity_margin"
-        android:layout_marginStart="@dimen/activity_margin" />
+        android:layout_marginEnd="5dp"
+        android:layout_marginStart="5dp"
+        android:visibility="gone" />
 
     <TextView
         android:id="@+id/uid"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/activity_margin"
-        android:layout_marginStart="@dimen/activity_margin" />
+        android:layout_marginEnd="5dp"
+        android:layout_marginStart="5dp"
+        android:visibility="gone" />
 
 
     <RelativeLayout
@@ -37,7 +39,7 @@
             android:text="시간표 가져오기" />
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_toStartOf="@id/take_schedule_button"
@@ -46,6 +48,8 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="5dp"
+                android:layout_marginStart="5dp"
                 android:text="2018년 2학기 수강과목"
                 android:textColor="@android:color/black"
                 android:textSize="20dp"
@@ -54,8 +58,10 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="5dp"
+                android:layout_marginStart="5dp"
                 android:text="각 과목을 클릭하시면 과목 커뮤니티로 이동합니다."
-                android:textSize="12dp" />
+                android:textSize="11dp" />
 
         </LinearLayout>
 
@@ -67,12 +73,15 @@
 
     </RelativeLayout>
 
-    <LinearLayout
-        android:id="@+id/cource_listview"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_height="match_parent">
 
-    </LinearLayout>
+        <LinearLayout
+            android:id="@+id/cource_listview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" />
+    </ScrollView>
 
 </LinearLayout>

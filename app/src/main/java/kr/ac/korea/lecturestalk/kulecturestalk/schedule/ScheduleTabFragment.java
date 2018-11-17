@@ -16,6 +16,10 @@ import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
 
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
+
 import kr.ac.korea.lecturestalk.kulecturestalk.R;
 import kr.ac.korea.lecturestalk.kulecturestalk.course.CourseActivity;
 
@@ -55,15 +59,15 @@ public class ScheduleTabFragment extends Fragment {
             }
         });
 
-        String subejcts[] = scheduleList.split("\n");
-
-
         // 이건 only test용... 필요할 때 enable 해서 쓰세요
-        SubjectInfo testSubject = new SubjectInfo("testSubject", "testName", "RoomA");
+        SubjectInfo testSubject = new SubjectInfo("데이터학습과지능", "석준희", "MOOC");
         addCourceView(inflater, container, testSubject);
 
+        String subejcts[] = scheduleList.split("\n");
+        Set<String> subjectSet = new HashSet<String>(Arrays.asList(subejcts));
         Log.d(TAG, "subejcts length : " + subejcts.length);
-        for (String subject : subejcts) {
+
+        for (String subject : subjectSet) {
             Log.d(TAG, "subject: " + subject);
             String[] subejctInfo = subject.split("/");
             try {
