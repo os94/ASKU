@@ -24,16 +24,16 @@ import kr.ac.korea.lecturestalk.kulecturestalk.R;
 public class WebViewActivity extends AppCompatActivity {
     public static final String EVERYTIME_URL = "https://everytime.kr/timetable";
     private WebView mWebView;
-    private MyJavaScriptInterface mJavaScriptInterface;
+    private ScheduleJavascriptInterface mJavaScriptInterface;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_webview);
-        mJavaScriptInterface = new MyJavaScriptInterface();
+        mJavaScriptInterface = new ScheduleJavascriptInterface();
 
         mWebView = (WebView) findViewById(R.id.webView);
-        mWebView.setWebViewClient(new ScheduleWebViewClient(WebViewActivity.this));
+        mWebView.setWebViewClient(new ScheduleWebViewClient());
         mWebView.getSettings().setJavaScriptEnabled(true);
         mWebView.getSettings().setJavaScriptCanOpenWindowsAutomatically(true);
         mWebView.addJavascriptInterface(mJavaScriptInterface, "Android");
@@ -57,73 +57,5 @@ public class WebViewActivity extends AppCompatActivity {
                 }
             }
         });
-    }
-}
-
-class ScheduleWebViewClient extends WebViewClient {
-    Activity activity;
-
-    public ScheduleWebViewClient(Activity activity) {
-        this.activity = activity;
-    }
-
-    @Override
-    public boolean shouldOverrideUrlLoading(WebView view, String url) {
-        view.loadUrl(url);
-        Log.d("ScheduleWebViewClient", "url - " + url);
-        return true;
-    }
-
-    @Override
-    public void onPageFinished(WebView view, String url) {
-        // This call inject JavaScript into the page which just finished loading.
-
-        Log.d("ScheduleWebViewClient 2", "url - " + url);
-        if (WebViewActivity.EVERYTIME_URL.equals(url)) {
-            Log.d("ScheduleWebViewClient 2", "This is EVERYTIME_URL. ");
-            view.loadUrl("javascript:window.Android.getHtml(document.getElementsByTagName('body')[0].innerHTML);");
-        }
-
-        super.onPageFinished(view, url);
-
-    }
-
-}
-
-class MyJavaScriptInterface {
-    StringBuilder mText;
-
-    MyJavaScriptInterface() {
-    }
-
-    @android.webkit.JavascriptInterface
-    public void getHtml(String html) {
-        Log.d("MyJavaScriptInterface", "Here is the value from html::" + html);
-
-        Document doc = Jsoup.parse(html);
-        Elements tablebody = doc.select("div[class=tablebody");
-        Elements cols = tablebody.select("div[class=cols");
-        for (int i = 1; i <= 10; i++) {
-            try {
-                Element subject = cols.select("div[class=subject color" + i).get(0);
-                mText = new StringBuilder();
-                mText.append(subject.select("h3").text()); // subject
-                mText.append("/");
-                mText.append(subject.select("em").text()); // professor
-                mText.append("/");
-                mText.append(subject.select("span").text()); // room
-                mText.append("\n");
-            } catch (IndexOutOfBoundsException e) {
-                e.printStackTrace();
-            }
-        }
-
-    }
-
-    public String getText() {
-        if (mText == null) {
-            return "";
-        }
-        return mText.toString();
     }
 }
