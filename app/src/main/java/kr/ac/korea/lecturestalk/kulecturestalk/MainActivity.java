@@ -11,7 +11,7 @@ import android.support.design.widget.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 
 import kr.ac.korea.lecturestalk.kulecturestalk.message.MsgTabFragment;
-import kr.ac.korea.lecturestalk.kulecturestalk.my.MyInfoActivity;
+import kr.ac.korea.lecturestalk.kulecturestalk.my.MyInfoTabFragment;
 import kr.ac.korea.lecturestalk.kulecturestalk.schedule.ScheduleTabFragment;
 
 public class MainActivity extends AppCompatActivity {
@@ -56,7 +56,10 @@ public class MainActivity extends AppCompatActivity {
                                 return true;
 
                             case R.id.menu_mypage:
-                                startActivity(new Intent(MainActivity.this, MyInfoActivity.class));
+                                getSupportFragmentManager()
+                                        .beginTransaction()
+                                        .replace(R.id.fragment_container, new MyInfoTabFragment())
+                                        .commit();
                                 return true;
 
 /*                            case R.id.menu_test:
@@ -76,7 +79,7 @@ public class MainActivity extends AppCompatActivity {
         if ("message".equals(tabName)) {
             initFragment =  new MsgTabFragment();
         } else if ("my_page".equals(tabName)) {
-//            initFragment =  new ScheduleTabFragment();
+            initFragment =  new MyInfoTabFragment();
         } else {
             initFragment =  new ScheduleTabFragment(); // default is ScheduleFragment
         }
