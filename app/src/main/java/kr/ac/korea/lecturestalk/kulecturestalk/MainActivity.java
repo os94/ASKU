@@ -3,13 +3,14 @@ package kr.ac.korea.lecturestalk.kulecturestalk;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.support.design.widget.BottomNavigationView;
 
 import com.google.firebase.auth.FirebaseAuth;
 
-import kr.ac.korea.lecturestalk.kulecturestalk.message.MsgTabActivity;
+import kr.ac.korea.lecturestalk.kulecturestalk.message.MsgTabFragment;
 import kr.ac.korea.lecturestalk.kulecturestalk.my.MyInfoActivity;
 import kr.ac.korea.lecturestalk.kulecturestalk.schedule.ScheduleTabFragment;
 
@@ -27,10 +28,11 @@ public class MainActivity extends AppCompatActivity {
         userid = mFirebaseAuth.getCurrentUser().getUid();
         userEmail = mFirebaseAuth.getCurrentUser().getEmail();
 
-        getSupportFragmentManager()
-                .beginTransaction()
-                .replace(R.id.fragment_container, new ScheduleTabFragment())
-                .commit();
+        Intent intent = getIntent();
+        if (intent != null) {
+            String initTabName = intent.getStringExtra("initTab");
+            initTab(initTabName);
+        }
 
         BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.navigation);
         bottomNavigationView.setOnNavigationItemSelectedListener(
@@ -47,7 +49,10 @@ public class MainActivity extends AppCompatActivity {
                                 return true;
 
                             case R.id.menu_messages:
-                                startActivity(new Intent(MainActivity.this, MsgTabActivity.class));
+                                getSupportFragmentManager()
+                                        .beginTransaction()
+                                        .replace(R.id.fragment_container, new MsgTabFragment())
+                                        .commit();
                                 return true;
 
                             case R.id.menu_mypage:
@@ -64,5 +69,20 @@ public class MainActivity extends AppCompatActivity {
                         return false;
                     }
                 });
+    }
+
+    private void initTab(String tabName) {
+        Fragment initFragment = null;
+        if ("message".equals(tabName)) {
+            initFragment =  new MsgTabFragment();
+        } else if ("my_page".equals(tabName)) {
+//            initFragment =  new ScheduleTabFragment();
+        } else {
+            initFragment =  new ScheduleTabFragment(); // default is ScheduleFragment
+        }
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.fragment_container, initFragment)
+                .commit();
     }
 }

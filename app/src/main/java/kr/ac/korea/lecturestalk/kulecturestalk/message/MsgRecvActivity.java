@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.database.Cursor;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -77,9 +78,6 @@ public class MsgRecvActivity extends Fragment {
         listview.setAdapter(arrayAdapter);
 
         //DB에서 쪽지 목록을 읽어서 화면에 출력.
-        final MsgTabActivity activity = (MsgTabActivity) getActivity();
-        Resources res = ((Context)(activity)).getResources();
-
         mDbOpenHelper = new MsgDbOpenHelper(view.getContext());
         mDbOpenHelper.open();
         mDbOpenHelper.create();
@@ -145,9 +143,6 @@ public class MsgRecvActivity extends Fragment {
 
 
     public void showDatabase(ListView listview, String strReceiver) {
-        final MsgTabActivity activity = (MsgTabActivity) getActivity();
-        Resources res = ((Context)(activity)).getResources();
-
         //arrayAdapter.clear();
         arrayAdapter = new MsgListViewAdapter() ;
         listview.setAdapter(arrayAdapter);
@@ -172,7 +167,10 @@ public class MsgRecvActivity extends Fragment {
             //arrayData.add(Result);
             //arrayIndex.add(tempIndex);
 
-            arrayAdapter.addItem(tempIndex, res.getDrawable(R.drawable.baseline_account_circle_black_18dp), strSender, strSentAt, strMsg);
+            if (getActivity() != null) {
+                Drawable drawable = getActivity().getDrawable(R.drawable.baseline_account_circle_black_18dp);
+                arrayAdapter.addItem(tempIndex, drawable, strSender, strSentAt, strMsg);
+            }
         }
         //arrayAdapter.addAll(arrayData);
      }

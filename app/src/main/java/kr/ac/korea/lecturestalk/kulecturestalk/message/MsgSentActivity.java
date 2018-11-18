@@ -69,9 +69,6 @@ public class MsgSentActivity extends Fragment {
         listview.setAdapter(arrayAdapter);
 
         //DB에서 쪽지 목록을 읽어서 화면에 출력.
-        final MsgTabActivity activity = (MsgTabActivity) getActivity();
-        Resources res = ((Context)(activity)).getResources();
-
         mDbOpenHelper = new MsgDbOpenHelper(view.getContext());
         mDbOpenHelper.open();
         mDbOpenHelper.create();
@@ -148,8 +145,7 @@ public class MsgSentActivity extends Fragment {
 
 
     public void showDatabase(ListView listview, String strSender) {
-        final MsgTabActivity activity = (MsgTabActivity) getActivity();
-        Resources res = ((Context)(activity)).getResources();
+        Resources res = getActivity().getResources();
 
         //arrayAdapter.clear();
         arrayAdapter = new MsgListViewAdapter() ;

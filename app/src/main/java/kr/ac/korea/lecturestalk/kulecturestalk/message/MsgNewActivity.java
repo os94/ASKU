@@ -8,6 +8,7 @@ import android.widget.EditText;
 
 import com.google.firebase.auth.FirebaseAuth;
 
+import kr.ac.korea.lecturestalk.kulecturestalk.MainActivity;
 import kr.ac.korea.lecturestalk.kulecturestalk.R;
 
 public class MsgNewActivity extends AppCompatActivity {
@@ -46,7 +47,8 @@ public class MsgNewActivity extends AppCompatActivity {
                 mDbOpenHelper.insertColumn(sender, receiver, message);
 
                 //현재 화면을 닫고, 쪽지함 목록으로 이동.
-                Intent intent = new Intent(MsgNewActivity.this, MsgTabActivity.class);
+                Intent intent = new Intent(MsgNewActivity.this, MainActivity.class);
+                intent.putExtra("initTab", "message");
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(new Intent(intent));
             }

@@ -35,9 +35,6 @@
             android:name=".SignUpActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".message.MsgTabActivity"
-            android:screenOrientation="portrait" />
-        <activity
             android:name=".message.MsgNewActivity"
             android:screenOrientation="portrait" />
         <activity
