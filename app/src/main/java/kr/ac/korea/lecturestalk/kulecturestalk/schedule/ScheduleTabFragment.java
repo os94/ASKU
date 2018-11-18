@@ -59,26 +59,29 @@ public class ScheduleTabFragment extends Fragment {
             }
         });
 
-        // 이건 only test용... 필요할 때 enable 해서 쓰세요
-        SubjectInfo testSubject = new SubjectInfo("데이터학습과지능", "석준희", "MOOC");
-        addCourceView(inflater, container, testSubject);
+        if (TextUtils.isEmpty(scheduleList)) {
+            // 이건 only test용... 필요할 때 enable 해서 쓰세요
+            SubjectInfo testSubject = new SubjectInfo("데이터학습과지능", "석준희", "MOOC");
+            addCourceView(inflater, container, testSubject);
+        } else {
 
-        String subejcts[] = scheduleList.split("\n");
-        Set<String> subjectSet = new HashSet<String>(Arrays.asList(subejcts));
-        Log.d(TAG, "subejcts length : " + subejcts.length);
+            String subejcts[] = scheduleList.split("\n");
+            Set<String> subjectSet = new HashSet<String>(Arrays.asList(subejcts));
+            Log.d(TAG, "subejcts length : " + subejcts.length);
 
-        for (String subject : subjectSet) {
-            Log.d(TAG, "subject: " + subject);
-            String[] subejctInfo = subject.split("/");
-            try {
-                String subjectTitle = subejctInfo[0];
-                String professorName = subejctInfo[1];
-                String roomName = subejctInfo[2];
+            for (String subject : subjectSet) {
+                Log.d(TAG, "subject: " + subject);
+                String[] subejctInfo = subject.split("/");
+                try {
+                    String subjectTitle = subejctInfo[0];
+                    String professorName = subejctInfo[1];
+                    String roomName = subejctInfo[2];
 
-                SubjectInfo subjectInfo = new SubjectInfo(subjectTitle, professorName, roomName);
-                addCourceView(inflater, container, subjectInfo);
-            } catch (ArrayIndexOutOfBoundsException e) {
-                e.printStackTrace();
+                    SubjectInfo subjectInfo = new SubjectInfo(subjectTitle, professorName, roomName);
+                    addCourceView(inflater, container, subjectInfo);
+                } catch (ArrayIndexOutOfBoundsException e) {
+                    e.printStackTrace();
+                }
             }
         }
 
