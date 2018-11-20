@@ -1,5 +1,6 @@
 package kr.ac.korea.lecturestalk.kulecturestalk;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
@@ -41,6 +42,7 @@ import kr.ac.korea.lecturestalk.kulecturestalk.course.Adapter.CommentListAdapter
 import kr.ac.korea.lecturestalk.kulecturestalk.course.Model.Comment;
 import kr.ac.korea.lecturestalk.kulecturestalk.course.Model.Post;
 import kr.ac.korea.lecturestalk.kulecturestalk.course.View.EmptyRecyclerView;
+import kr.ac.korea.lecturestalk.kulecturestalk.message.MsgNewActivity;
 
 import static kr.ac.korea.lecturestalk.kulecturestalk.MainActivity.userid;
 import static kr.ac.korea.lecturestalk.kulecturestalk.MainActivity.userEmail;
@@ -214,6 +216,7 @@ public class ReadPostFragment extends Fragment implements View.OnClickListener {
                 break;
             case R.id.btn_msg:
                 Toast.makeText(getContext(), "msg btn clicked", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(getActivity(), MsgNewActivity.class));
                 break;
             case R.id.btn_report:
                 if(post.getNumReports().contains(userid)) {
