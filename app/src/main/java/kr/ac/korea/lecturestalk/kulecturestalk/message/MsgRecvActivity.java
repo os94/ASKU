@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.database.Cursor;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -15,12 +14,22 @@ import android.widget.AdapterView;
 import android.widget.CheckBox;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.gson.internal.LinkedTreeMap;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import kr.ac.korea.lecturestalk.kulecturestalk.R;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 
 /**
@@ -35,7 +44,8 @@ public class MsgRecvActivity extends Fragment {
 
     static ArrayList<String> arrayIndex =  new ArrayList<String>();
     static ArrayList<String> arrayData = new ArrayList<String>();
-    private MsgDbOpenHelper mDbOpenHelper;
+    //private MsgDbOpenHelper mDbOpenHelper;
+    private Retrofit retrofit;
 
     private FirebaseAuth mFirebaseAuth;
     private String mStrReceiver = "";
@@ -78,9 +88,14 @@ public class MsgRecvActivity extends Fragment {
         listview.setAdapter(arrayAdapter);
 
         //DB에서 쪽지 목록을 읽어서 화면에 출력.
-        mDbOpenHelper = new MsgDbOpenHelper(view.getContext());
-        mDbOpenHelper.open();
-        mDbOpenHelper.create();
+        //mDbOpenHelper = new MsgDbOpenHelper(view.getContext());
+        //mDbOpenHelper.open();
+        //mDbOpenHelper.create();
+
+        retrofit = new Retrofit.Builder()
+                .baseUrl(MsgService.URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
 
         showDatabase(listview, mStrReceiver);
         int countItem = arrayAdapter.getCount();
@@ -124,7 +139,8 @@ public class MsgRecvActivity extends Fragment {
                         strMsg += ">> " + bSel + ", " + id;
 
                         //DB에서 항목 삭제.
-                        mDbOpenHelper.deleteColumn(id);
+                        //mDbOpenHelper.deleteColumn(id);
+                        deleteColumn(id);
 
                         //Adapter에서 항목 삭제.
                         item.setChkSelect(false);
@@ -141,7 +157,46 @@ public class MsgRecvActivity extends Fragment {
         return view;
     }
 
+    public void deleteColumn(long id) {
+        try {
+            MsgItem input = new MsgItem();
+            input.id = id;
+            input.sender = "";
+            input.receiver = "";
+            input.message = "";
 
+            MsgService msgService = retrofit.create(MsgService.class);
+            msgService.delMsg(input).enqueue(new Callback<Map<String, Object>>() {
+                @Override
+                public void onResponse(Call<Map<String, Object>> call, Response<Map<String, Object>> response) {
+                    boolean bSuccess = response.isSuccessful();
+                    Map<String, Object> body = new HashMap<String, Object>();
+                    String result = "";
+                    if (bSuccess) {
+                        body = response.body();
+                        result = (String) body.get("result");
+                    }
+                    if (response.isSuccessful() && result.equalsIgnoreCase("success")) {
+                    } else {
+                        Toast.makeText(getActivity(), "[오류] 받은 메시지 삭제 실패.", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<Map<String, Object>> call, Throwable t) {
+                    Toast.makeText(getActivity(), "받은 메시지 삭제 실패.", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+            });
+        } catch (Exception ex) {
+            Log.e("Insert Log", ex.toString());
+            Toast.makeText(getActivity(), "받은 메시지 삭제 실패.", Toast.LENGTH_SHORT).show();
+            return;
+        }
+    }
+
+    /*
     public void showDatabase(ListView listview, String strReceiver) {
         //arrayAdapter.clear();
         arrayAdapter = new MsgListViewAdapter() ;
@@ -174,6 +229,73 @@ public class MsgRecvActivity extends Fragment {
         }
         //arrayAdapter.addAll(arrayData);
      }
+     */
+    public void showDatabase(ListView listview, String strReceiver) {
+        final Resources res = getActivity().getResources();
+
+        //arrayAdapter.clear();
+        arrayAdapter = new MsgListViewAdapter() ;
+        listview.setAdapter(arrayAdapter);
+
+        //Cursor iCursor = mDbOpenHelper.getSentMsgList(strSender);
+        //Log.d("showDatabase", "DB Size: " + iCursor.getCount());
+        try {
+            MsgItem input = new MsgItem();
+            input.id = 0L;
+            input.sender = "";
+            input.receiver = strReceiver;
+            input.message = "";
+
+            MsgService msgService = retrofit.create(MsgService.class);
+            msgService.getRecvList(input).enqueue(new Callback<Map<String, Object>>() {
+                @Override
+                public void onResponse(Call<Map<String, Object>> call, Response<Map<String, Object>> response) {
+                    boolean bSuccess = response.isSuccessful();
+                    Map<String, Object> body = new HashMap<String, Object>();
+                    String result = "";
+                    if (bSuccess) {
+                        body = response.body();
+                        result = (String) body.get("result");
+                    }
+                    if (response.isSuccessful() && result.equalsIgnoreCase("success")) {
+                        arrayData.clear();
+                        arrayIndex.clear();
+
+                        List<Object> list = (List<Object>) body.get("rows");
+                        for(int i = 0; i < list.size(); i++ ) {
+                            LinkedTreeMap<String, Object> item = (LinkedTreeMap<String, Object>) list.get(i);
+                            int tempIndex =  ((Double) item.get("id")).intValue();
+                            String strSender = (String) item.get("sender");
+                            //String strReceiver = (String) item.get("receiver");
+                            String strMsg = (String) item.get("message");
+                            String strSentAt = (String) item.get("sent_at");
+
+                            //String Result = strSender + strReceiver + strMsg + strSentAt;
+                            //arrayData.add(Result);
+                            //arrayIndex.add(tempIndex);
+
+                            arrayAdapter.addItem(tempIndex, res.getDrawable(R.drawable.baseline_account_circle_black_18dp), strSender, strSentAt, strMsg);
+                        }
+                        //arrayAdapter.addAll(arrayData);
+                        arrayAdapter.notifyDataSetChanged();
+                    } else {
+                        Toast.makeText(getActivity(), "[오류] 받은 메시지 목록 검색 실패.", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<Map<String, Object>> call, Throwable t) {
+                    Toast.makeText(getActivity(), "받은 메시지 목록 검색 실패.", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+            });
+        } catch (Exception ex) {
+            Log.e("Insert Log", ex.toString());
+            Toast.makeText(getActivity(), "받은 메시지 목록 검색 실패.", Toast.LENGTH_SHORT).show();
+            return;
+        }
+    }
 
     public String setTextLength(String text, int length){
         if(text.length()<length){
