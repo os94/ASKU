@@ -12,6 +12,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
+        android:drawableLeft="@drawable/signup"
+        android:paddingLeft="50dp"
+        android:paddingRight="50dp"
         android:text="@string/sign_up_button" />
 
 

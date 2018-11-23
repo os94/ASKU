@@ -48,6 +48,9 @@
             android:id="@+id/save_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/save"
+            android:paddingLeft="50dp"
+            android:paddingRight="50dp"
             android:text="@string/save_button" />
     </LinearLayout>
 

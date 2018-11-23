@@ -38,23 +38,23 @@
                     android:layout_weight="1"
                     android:text="작성자" />
 
-                <Button
+                <ImageButton
                     android:id="@+id/btn_like"
-                    android:layout_width="60dp"
-                    android:layout_height="wrap_content"
-                    android:text="추천" />
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:src="@drawable/ic_like" />
 
-                <Button
+                <ImageButton
                     android:id="@+id/btn_msg"
-                    android:layout_width="60dp"
-                    android:layout_height="wrap_content"
-                    android:text="쪽지" />
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:src="@drawable/ic_msg" />
 
-                <Button
+                <ImageButton
                     android:id="@+id/btn_report"
-                    android:layout_width="60dp"
-                    android:layout_height="wrap_content"
-                    android:text="신고" />
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:src="@drawable/siren" />
             </LinearLayout>
 
             <LinearLayout
@@ -206,6 +206,9 @@
                     android:layout_gravity="end"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:drawableLeft="@drawable/reply"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
                     android:text="@string/post_comment_leave"/>
 
             </LinearLayout>

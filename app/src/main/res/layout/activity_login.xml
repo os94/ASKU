@@ -19,11 +19,12 @@
 
         <Button
             android:id="@+id/signup_button"
-            android:layout_width="wrap_content"
+            android:layout_width="150dp"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
             android:layout_marginEnd="30dp"
+            android:drawableLeft="@drawable/signup"
             android:text="@string/sign_up_button" />
 
         <TextView
@@ -65,6 +66,9 @@
             android:id="@+id/login_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/login"
+            android:paddingLeft="50dp"
+            android:paddingRight="50dp"
             android:text="@string/login_button" />
     </LinearLayout>
 

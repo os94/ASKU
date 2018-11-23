@@ -43,10 +43,13 @@
 
     <Button
         android:id="@+id/id_msg_send_button"
-        android:layout_width="match_parent"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/id_edit_msg"
         android:layout_marginHorizontal="15dp"
+        android:drawableLeft="@drawable/pencil"
+        android:paddingLeft="40dp"
+        android:paddingRight="40dp"
         android:text="@string/send_msg_button" />
 
 </RelativeLayout>

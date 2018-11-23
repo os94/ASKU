@@ -27,9 +27,9 @@
     <string name="msg_list_recv_no">No received messages.</string>
     <string name="msg_list_sent_no">No sent messages.</string>
     <string name="name_edittext_hint">User name</string>
-    <string name="new_msg_button">New Message</string>
-    <string name="delete_msg_button">Del. Message</string>
-    <string name="send_msg_button">Send Message</string>
+    <string name="new_msg_button">New</string>
+    <string name="delete_msg_button">Del</string>
+    <string name="send_msg_button">Send</string>
 
     <!-- Course Fragement -->
     <string name="course_tab_all">All</string>
