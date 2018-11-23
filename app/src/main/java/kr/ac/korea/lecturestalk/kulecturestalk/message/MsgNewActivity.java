@@ -48,6 +48,12 @@ public class MsgNewActivity extends AppCompatActivity {
         final EditText editReceiver = (EditText) findViewById(R.id.id_edit_receiver);
         final EditText editMsg = (EditText) findViewById(R.id.id_edit_msg);
 
+        //입력으로 전달된 수신자 이름 수신.
+        Intent intent = getIntent();
+        String receiverName = intent.getStringExtra("receiver");
+        editReceiver.setText(receiverName);
+
+        //화면 초기화.
         mFirebaseAuth = FirebaseAuth.getInstance();
         String displayName = mFirebaseAuth.getCurrentUser().getDisplayName();
         if (displayName == null) displayName = "";

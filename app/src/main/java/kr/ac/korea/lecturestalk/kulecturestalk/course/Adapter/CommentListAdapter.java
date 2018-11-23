@@ -2,6 +2,7 @@ package kr.ac.korea.lecturestalk.kulecturestalk.course.Adapter;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +16,7 @@ import java.util.List;
 import kr.ac.korea.lecturestalk.kulecturestalk.R;
 import kr.ac.korea.lecturestalk.kulecturestalk.course.Model.Comment;
 import kr.ac.korea.lecturestalk.kulecturestalk.course.Model.Post;
+import kr.ac.korea.lecturestalk.kulecturestalk.message.MsgNewActivity;
 
 import static kr.ac.korea.lecturestalk.kulecturestalk.MainActivity.userEmail;
 
@@ -76,6 +78,11 @@ public class CommentListAdapter extends RecyclerView.Adapter<CommentListHolder> 
             public void onClick(View view) {
                 // TODO: implementation
                 Toast.makeText(view.getContext(), "Send To Msg!", Toast.LENGTH_SHORT).show();
+
+                //New Message Activity로 이동.
+                Intent intent = new Intent(view.getContext(), MsgNewActivity.class);
+                intent.putExtra("receiver", holder.authorTextView.getText());
+                view.getContext().startActivity(intent);
             }
         });
     }
@@ -87,7 +94,7 @@ public class CommentListAdapter extends RecyclerView.Adapter<CommentListHolder> 
 }
 
 class CommentListHolder extends RecyclerView.ViewHolder {
-    private TextView authorTextView;
+    public TextView authorTextView;
     private TextView timeTextView;
     private TextView descTextView;
     ImageView pickedImageView;

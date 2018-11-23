@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.EditText;
@@ -60,7 +61,8 @@ public class ReadPostFragment extends Fragment implements View.OnClickListener {
     private StorageReference storageRef2;
     private ProgressBar progressBar;
     private NestedScrollView nestedScrollView;
-    private Button btn_like, btn_msg, btn_report, btn_send_comment;
+    private ImageButton btn_like, btn_msg, btn_report;
+    private Button btn_send_comment;
     private EditText comment_desc;
 
     private EmptyRecyclerView recyclerView;
@@ -216,7 +218,10 @@ public class ReadPostFragment extends Fragment implements View.OnClickListener {
                 break;
             case R.id.btn_msg:
                 Toast.makeText(getContext(), "msg btn clicked", Toast.LENGTH_SHORT).show();
-                startActivity(new Intent(getActivity(), MsgNewActivity.class));
+                //startActivity(new Intent(getActivity(), MsgNewActivity.class));
+                Intent intent = new Intent(view.getContext(), MsgNewActivity.class);
+                intent.putExtra("receiver", tv_author.getText());
+                view.getContext().startActivity(intent);
                 break;
             case R.id.btn_report:
                 if(post.getNumReports().contains(userid)) {
