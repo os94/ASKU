@@ -13,6 +13,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="3dp"
         android:textSize="20sp"
+        android:maxLines="1"
         tools:text="[공지]다음주 수업은 휴강이래요!" />
 
     <TextView
