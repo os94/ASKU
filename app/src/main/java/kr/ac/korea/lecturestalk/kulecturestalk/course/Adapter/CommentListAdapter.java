@@ -13,6 +13,8 @@ import android.widget.Toast;
 
 import java.util.List;
 
+import kr.ac.korea.lecturestalk.kulecturestalk.GetPointListener;
+import kr.ac.korea.lecturestalk.kulecturestalk.course.Model.Point;
 import kr.ac.korea.lecturestalk.kulecturestalk.R;
 import kr.ac.korea.lecturestalk.kulecturestalk.course.Model.Comment;
 import kr.ac.korea.lecturestalk.kulecturestalk.course.Model.Post;
@@ -58,6 +60,17 @@ public class CommentListAdapter extends RecyclerView.Adapter<CommentListHolder> 
                                     Toast.makeText(view.getContext(), R.string.comment_picked, Toast.LENGTH_SHORT).show();
                                     holder.unpickedImageView.setVisibility(View.GONE);
                                     holder.pickedImageView.setVisibility(View.VISIBLE);
+
+                                    if((post.getCategory()).equals("QA")) {
+                                        final Point pointModel = new Point(post.getAuthor());
+                                        pointModel.getPoint(new GetPointListener() {
+                                            @Override
+                                            public int onPointLoaded(int point) {
+                                                pointModel.addPoint(point+70);
+                                                return 0;
+                                            }
+                                        });
+                                    }
                                 }
                             })
                             .setNegativeButton("No", new DialogInterface.OnClickListener() {

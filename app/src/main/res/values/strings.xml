@@ -55,4 +55,16 @@
     <string name="pick_comment_title">Pick Comment</string>
     <string name="pick_comment_content">Would you pick this comment?</string>
     <string name="comment_picked">Comment picked.</string>
+
+    <string name="point_notice">
+        Initial Point : 200\n\n
+        [Notice/Material Board]\n
+        + 70 write Document\n
+        + 5 per Document Likes\n\n
+        [QA Board]\n
+        - 100 write Document\n
+        + 30 write Reply\n
+        + 70 Reply adopted
+    </string>
+
 </resources>

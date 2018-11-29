@@ -62,7 +62,7 @@ public class MainActivity extends AppCompatActivity {
                                         .commit();
                                 return true;
 
-/*                            case R.id.menu_test:
+                            /*case R.id.menu_test:
                                 getSupportFragmentManager()
                                         .beginTransaction()
                                         .replace(R.id.fragment_container, new TestTabFragment())

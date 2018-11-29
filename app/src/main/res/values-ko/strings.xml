@@ -53,4 +53,16 @@
     <string name="pick_comment_title">댓글 채택</string>
     <string name="pick_comment_content">이 댓글을 채택하시겠습니까?</string>
     <string name="comment_picked">댓글이 채택되었습니다.</string>
+
+    <string name="point_notice">
+        초기 포인트 : 200점\n\n
+        [공지/수업자료 게시판]\n
+        + 70점 게시글 작성\n
+        + 5점 게시글 추천횟수당\n\n
+        [QA 게시판]\n
+        - 100점 게시글 작성\n
+        + 30점 댓글 작성\n
+        + 70점 댓글 채택
+    </string>
+
 </resources>

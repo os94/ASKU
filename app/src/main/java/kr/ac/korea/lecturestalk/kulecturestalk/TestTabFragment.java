@@ -10,12 +10,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 
+import kr.ac.korea.lecturestalk.kulecturestalk.course.Model.Point;
 import kr.ac.korea.lecturestalk.kulecturestalk.schedule.WebViewActivity;
 
-public class TestTabFragment extends Fragment {
+public class TestTabFragment extends Fragment implements GetPointListener {
     private FirebaseAuth mFirebaseAuth;
 
     @Nullable
@@ -60,6 +62,44 @@ public class TestTabFragment extends Fragment {
             }
         });
 
+        Button getBtn = (Button)view.findViewById(R.id.get);
+        getBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Point pointModel = new Point();
+                pointModel.getPoint(new GetPointListener() {
+                    @Override
+                    public int onPointLoaded(int point) {
+                        // do your work here
+                        Log.d("@@@@@point", String.valueOf(point));
+                        Toast.makeText(getActivity(), "현재 포인트는 "+point+"점입니다.", Toast.LENGTH_SHORT).show();
+                        return point;
+                    }
+                });
+            }
+        });
+
+        Button addBtn = (Button)view.findViewById(R.id.add);
+        addBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                final Point pointModel = new Point();
+                pointModel.getPoint(new GetPointListener() {
+                    @Override
+                    public int onPointLoaded(int point) {
+                        pointModel.addPoint(point+10);
+                        Toast.makeText(getActivity(), "10포인트를 획득했습니다!", Toast.LENGTH_SHORT).show();
+                        return 0;
+                    }
+                });
+            }
+        });
+
         return view;
+    }
+
+    @Override
+    public int onPointLoaded(int point) {
+        return 0;
     }
 }

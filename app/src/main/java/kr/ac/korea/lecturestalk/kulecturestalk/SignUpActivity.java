@@ -5,22 +5,33 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class SignUpActivity extends AppCompatActivity {
     private static final int PASSWORD_CHARACTERS_AT_LEAST = 6;
     private FirebaseAuth mFirebaseAuth;
+    private static String TAG = "setInitialPoint";
+    private FirebaseFirestore db = FirebaseFirestore.getInstance();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,7 +50,7 @@ public class SignUpActivity extends AppCompatActivity {
         signup_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String idText = edittext_login_id.getText().toString().trim();
+                final String idText = edittext_login_id.getText().toString().trim();
                 String passText = edittext_password.getText().toString();
                 String confirmPassText = edittext_password_confirm.getText().toString();
 
@@ -60,6 +71,7 @@ public class SignUpActivity extends AppCompatActivity {
                                     if (task.isSuccessful()) {
                                         Intent intent = new Intent(SignUpActivity.this, LoginActivity.class);
                                         Toast.makeText(SignUpActivity.this, "가입 완료", Toast.LENGTH_SHORT).show();
+                                        setInitialPoint(idText);
                                         startActivity(intent);
                                         finish();
                                     } else {
@@ -81,4 +93,13 @@ public class SignUpActivity extends AppCompatActivity {
         });
 
     }
+
+    public void setInitialPoint(String mail) {
+        Map<String, Object> data = new HashMap<>();
+        data.put("point", 200);
+        int idx = mail.indexOf("@");
+        String id = mail.substring(0, idx);
+        db.collection("Point").document(id).set(data);
+    }
+
 }

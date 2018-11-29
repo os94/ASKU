@@ -37,6 +37,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import kr.ac.korea.lecturestalk.kulecturestalk.course.Model.Point;
 import kr.ac.korea.lecturestalk.kulecturestalk.course.Model.Post;
 
 import static android.app.Activity.RESULT_OK;
@@ -204,7 +205,6 @@ public class WritePostFragment extends Fragment implements View.OnClickListener 
             public void onSuccess(DocumentReference documentReference) {
                 Log.d(TAG, "DocumentSnapshot added with ID: " + documentReference.getId());
                 docID = documentReference.getId();
-                Toast.makeText(getContext(), "작성완료!", Toast.LENGTH_SHORT).show();
                 getFragmentManager().beginTransaction().remove(WritePostFragment.this).commit();
                 getFragmentManager().popBackStack();
                 db.collection("Post").document(docID).update(
@@ -217,6 +217,30 @@ public class WritePostFragment extends Fragment implements View.OnClickListener 
                     imageRef = storageRef.child("images/"+docID);
                     uploadTask = imageRef.putFile(file);
                     uploadImg();
+                }
+
+                if((post.getCategory()).equals("QA")) {
+                    final Point pointModel = new Point();
+                    pointModel.getPoint(new GetPointListener() {
+                        @Override
+                        public int onPointLoaded(int point) {
+                            pointModel.addPoint(point-100);
+                            return 0;
+                        }
+                    });
+                    Toast.makeText(getContext(), "질문을 작성하였습니다.\n100포인트가 차감됩니다.", Toast.LENGTH_SHORT).show();
+                } else if ( (post.getCategory()).equals("공지") || (post.getCategory()).equals("수업자료") ) {
+                    final Point pointModel = new Point();
+                    pointModel.getPoint(new GetPointListener() {
+                        @Override
+                        public int onPointLoaded(int point) {
+                            pointModel.addPoint(point+70);
+                            return 0;
+                        }
+                    });
+                    Toast.makeText(getContext(), "게시글을 작성하였습니다.\n70포인트를 획득합니다.", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(getContext(), "게시글을 작성하였습니다.", Toast.LENGTH_SHORT).show();
                 }
             }
         }).addOnFailureListener(new OnFailureListener() {

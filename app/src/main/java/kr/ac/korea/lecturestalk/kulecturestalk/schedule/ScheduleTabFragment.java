@@ -1,7 +1,9 @@
 package kr.ac.korea.lecturestalk.kulecturestalk.schedule;
 
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -11,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -20,13 +23,17 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
+import kr.ac.korea.lecturestalk.kulecturestalk.GetPointListener;
 import kr.ac.korea.lecturestalk.kulecturestalk.R;
 import kr.ac.korea.lecturestalk.kulecturestalk.course.CourseActivity;
+import kr.ac.korea.lecturestalk.kulecturestalk.course.Model.Point;
 
 public class ScheduleTabFragment extends Fragment {
     private static final String TAG = ScheduleTabFragment.class.getSimpleName();
     private FirebaseAuth mFirebaseAuth;
     private LinearLayout mCourceList;
+    private AnimationDrawable d;
+    private TextView currPoint;
 
     @Nullable
     @Override
@@ -35,11 +42,11 @@ public class ScheduleTabFragment extends Fragment {
 
         mFirebaseAuth = FirebaseAuth.getInstance();
 
-        TextView email = (TextView) view.findViewById(R.id.email);
+        /*TextView email = (TextView) view.findViewById(R.id.email);
         email.setText("email : " + mFirebaseAuth.getCurrentUser().getEmail());
 
         TextView uid = (TextView) view.findViewById(R.id.uid);
-        uid.setText("uid : " + mFirebaseAuth.getCurrentUser().getUid());
+        uid.setText("uid : " + mFirebaseAuth.getCurrentUser().getUid());*/
 
 
         mCourceList = view.findViewById(R.id.cource_listview);
@@ -59,10 +66,52 @@ public class ScheduleTabFragment extends Fragment {
             }
         });
 
+        currPoint = (TextView) view.findViewById(R.id.currPoint);
+        final Point pointModel = new Point();
+        pointModel.getPoint(new GetPointListener() {
+            @Override
+            public int onPointLoaded(int point) {
+                currPoint.setText(""+point);
+                return 0;
+            }
+        });
+
+        Button refreshBtn = (Button)view.findViewById(R.id.detail_refresh_btn);
+        d = (AnimationDrawable)refreshBtn.getCompoundDrawables()[0];
+        refreshBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                d.start();
+                pointModel.getPoint(new GetPointListener() {
+                    @Override
+                    public int onPointLoaded(int point) {
+                        currPoint.setText(""+point);
+                        d.stop();
+                        return 0;
+                    }
+                });
+            }
+        });
+
+        AlertDialog.Builder alert_confirm = new AlertDialog.Builder(getActivity());
+        alert_confirm.setPositiveButton("확인", null);
+        alert_confirm.setMessage(R.string.point_notice);
+        final AlertDialog alert = alert_confirm.create();
+        alert.setTitle("ASKU 포인트 정책");
+
+
+        ImageView pointNotice = (ImageView)view.findViewById(R.id.notice);
+        pointNotice.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                alert.show();
+            }
+        });
+
         if (TextUtils.isEmpty(scheduleList)) {
             // 이건 only test용... 필요할 때 enable 해서 쓰세요
-            SubjectInfo testSubject = new SubjectInfo("소프트웨어공학", "인호", "정보통신관 205호");
-            addCourceView(inflater, container, testSubject);
+            /*SubjectInfo testSubject = new SubjectInfo("소프트웨어공학", "인호", "정보통신관 202호");
+            addCourceView(inflater, container, testSubject);*/
         } else {
 
             String subejcts[] = scheduleList.split("\n");

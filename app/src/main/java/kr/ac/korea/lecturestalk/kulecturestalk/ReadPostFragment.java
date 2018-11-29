@@ -41,6 +41,7 @@ import java.util.Map;
 
 import kr.ac.korea.lecturestalk.kulecturestalk.course.Adapter.CommentListAdapter;
 import kr.ac.korea.lecturestalk.kulecturestalk.course.Model.Comment;
+import kr.ac.korea.lecturestalk.kulecturestalk.course.Model.Point;
 import kr.ac.korea.lecturestalk.kulecturestalk.course.Model.Post;
 import kr.ac.korea.lecturestalk.kulecturestalk.course.View.EmptyRecyclerView;
 import kr.ac.korea.lecturestalk.kulecturestalk.message.MsgNewActivity;
@@ -169,6 +170,21 @@ public class ReadPostFragment extends Fragment implements View.OnClickListener {
                             db.collection("Post").document(docID).update("comments", listCom);
                             getComments();
                             comment_desc.setText(null);
+
+                            if((post.getCategory()).equals("QA")) {
+                                final Point pointModel = new Point();
+                                pointModel.getPoint(new GetPointListener() {
+                                    @Override
+                                    public int onPointLoaded(int point) {
+                                        pointModel.addPoint(point+30);
+                                        return 0;
+                                    }
+                                });
+                                Toast.makeText(getContext(), "답변을 남겼습니다.\n30포인트를 획득합니다.", Toast.LENGTH_SHORT).show();
+                            } else {
+                                Toast.makeText(getContext(), R.string.comment_success, Toast.LENGTH_SHORT).show();
+                            }
+
                         }
                     })
                             .addOnFailureListener(new OnFailureListener() {
@@ -177,7 +193,6 @@ public class ReadPostFragment extends Fragment implements View.OnClickListener {
                                     Log.d(TAG, "onFailure: Error: " + e);
                                 }
                             });
-                    Toast.makeText(view.getContext(), R.string.comment_success, Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -214,6 +229,17 @@ public class ReadPostFragment extends Fragment implements View.OnClickListener {
                             "likes", post.getLikes()
                     );
                     Toast.makeText(getContext(), "이 글을 추천했습니다.", Toast.LENGTH_SHORT).show();
+
+                    if(( post.getCategory()).equals("공지") || (post.getCategory()).equals("수업자료") ) {
+                        final Point pointModel = new Point(post.getAuthor());
+                        pointModel.getPoint(new GetPointListener() {
+                            @Override
+                            public int onPointLoaded(int point) {
+                                pointModel.addPoint(point+5);
+                                return 0;
+                            }
+                        });
+                    }
                 }
                 break;
             case R.id.btn_msg:
