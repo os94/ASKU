@@ -75,9 +75,10 @@ public class PostListAdapter extends RecyclerView.Adapter<PostListHolder> {
         holder.mView.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(final View view) {
-                final CharSequence[] items = {"수정", "삭제"};
+                final CharSequence[] items = {view.getContext().getString(R.string.dialog_modification),
+                        view.getContext().getString(R.string.dialog_del)};
                 AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(view.getContext());
-                alertDialogBuilder.setTitle("게시글 관리");
+                alertDialogBuilder.setTitle(R.string.manage_boards);
                 alertDialogBuilder.setItems(items,
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
@@ -98,14 +99,14 @@ public class PostListAdapter extends RecyclerView.Adapter<PostListHolder> {
                                                         @Override
                                                         public void onSuccess(Void aVoid) {
                                                             Log.d(TAG, "DocumentSnapshot successfully deleted!");
-                                                            Toast.makeText(view.getContext(), "게시글을 삭제했습니다.", Toast.LENGTH_SHORT).show();
+                                                            Toast.makeText(view.getContext(), R.string.deleted_the_post, Toast.LENGTH_SHORT).show();
                                                         }
                                                     })
                                                     .addOnFailureListener(new OnFailureListener() {
                                                         @Override
                                                         public void onFailure(@NonNull Exception e) {
                                                             Log.w(TAG, "Error deleting document", e);
-                                                            Toast.makeText(view.getContext(), "게시글을 삭제하지 못했습니다.", Toast.LENGTH_SHORT).show();
+                                                            Toast.makeText(view.getContext(), R.string.failed_to_delete_the_post, Toast.LENGTH_SHORT).show();
                                                         }
                                                     });
                                             storageRef2 = storageRef.child("images/" + post.getImg());
@@ -126,7 +127,7 @@ public class PostListAdapter extends RecyclerView.Adapter<PostListHolder> {
                                             break;
                                     }
                                 } else {
-                                    Toast.makeText(view.getContext(), "권한이 없습니다.", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(view.getContext(), R.string.do_not_have_permission, Toast.LENGTH_SHORT).show();
                                 }
                                 dialog.dismiss();
                             }

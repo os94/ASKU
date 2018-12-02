@@ -12,7 +12,7 @@
         android:id="@+id/button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Click this if you are looking the Schedule Page" />
+        android:text="@string/schedule_watching" />
 
     <WebView xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/webView"

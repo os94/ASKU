@@ -1,6 +1,22 @@
 <resources>
     <string name="app_name">애스쿠</string>
 
+    <!--etc-->
+    <string name="no">아니오</string>
+    <string name="not_allowed">허용되지않음</string>
+    <string name="send_message">메세지 전송</string>
+    <string name="already_recommended">이미 추천했습니다</string>
+    <string name="success_recommend">이 글을 추천했습니다</string>
+    <string name="already_reported">이미 신고했습니다</string>
+    <string name="success_report">신고를 완료했습니다</string>
+    <string name="answered_get_point">답변을 남겼습니다.\n30포인트를 획득합니다.</string>
+    <string name="dialog_modification">수정</string>
+    <string name="dialog_del">삭제</string>
+    <string name="manage_boards">게시글 관리</string>
+    <string name="deleted_the_post">게시글을 삭제했습니다.</string>
+    <string name="failed_to_delete_the_post">게시글을 삭제하지 못했습니다.</string>
+    <string name="do_not_have_permission">권한이 없습니다.</string>
+
     <!-- LoginActivity -->
     <string name="login_id_edittext_hint">이메일</string>
     <string name="password_edittext_hint">비밀번호</string>
@@ -40,6 +56,7 @@
     <string name="schedule_take_button">시간표 가져오기</string>
     <string name="schedule_title">2018년 2학기 수강과목</string>
     <string name="schedule_description">각 과목을 클릭하시면 과목 커뮤니티로 이동합니다.</string>
+    <string name="schedule_watching">시간표가 보여지면 여기를 누르세요</string>
 
     <!-- Course Fragement -->
     <string name="course_tab_all">전체</string>
@@ -58,6 +75,10 @@
     <string name="post_comment_leave">댓글 남기기</string>
     <string name="comment_success">댓글을 남겼습니다.</string>
 
+    <!-- Write Post Fragment -->
+    <string name="input_subject">제목을 입력하세요.</string>
+    <string name="input_content">내용을 입력하세요.</string>
+    <string name="attachment">첨부파일</string>
 
     <!-- CommentListAdapter -->
     <string name="pick_comment_title">댓글 채택</string>

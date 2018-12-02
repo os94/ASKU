@@ -1,6 +1,22 @@
 <resources>
     <string name="app_name">AsKU</string>
 
+    <!--etc-->
+    <string name="no">No</string>
+    <string name="not_allowed">Not allowed.</string>
+    <string name="send_message">Send message</string>
+    <string name="already_recommended">Already recommended</string>
+    <string name="success_recommend">success to recommend this</string>
+    <string name="already_reported">already reported</string>
+    <string name="success_report">success to report</string>
+    <string name="answered_get_point">You wrote answer.\nYou got 30Point.</string>
+    <string name="dialog_modification">modification</string>
+    <string name="dialog_del">Del</string>
+    <string name="manage_boards">Manage boards</string>
+    <string name="deleted_the_post">Deleted the post</string>
+    <string name="failed_to_delete_the_post">Failed to delete the post.</string>
+    <string name="do_not_have_permission">You do not have permission</string>
+
     <!-- LoginActivity -->
     <string name="login_id_edittext_hint">Email</string>
     <string name="password_edittext_hint">Password</string>
@@ -40,6 +56,7 @@
     <string name="schedule_take_button">Take schedule</string>
     <string name="schedule_title">2018 Fall Subjects</string>
     <string name="schedule_description">Click the subject to go to community</string>
+    <string name="schedule_watching">Click this if you are looking the Schedule Page</string>
 
     <!-- Course Fragement -->
     <string name="course_tab_all">All</string>
@@ -60,6 +77,11 @@
     <string name="post_comment_hint">Please write a comment.</string>
     <string name="post_comment_leave">Leave a Comment</string>
     <string name="comment_success">Commented Successfully.</string>
+
+    <!-- Write Post Fragment -->
+    <string name="input_subject">Input title.</string>
+    <string name="input_content">Input content.</string>
+    <string name="attachment">Attachment</string>
 
     <!-- CommentListAdapter -->
     <string name="pick_comment_title">Pick Comment</string>

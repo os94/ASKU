@@ -73,7 +73,7 @@ public class CommentListAdapter extends RecyclerView.Adapter<CommentListHolder> 
                                     }
                                 }
                             })
-                            .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                            .setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialogInterface, int i) {
                                     dialogInterface.dismiss();
@@ -82,7 +82,7 @@ public class CommentListAdapter extends RecyclerView.Adapter<CommentListHolder> 
                     builder.show();
                 } else {
                     // No authority
-                    Toast.makeText(view.getContext(), "Not allowed.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(view.getContext(), R.string.not_allowed, Toast.LENGTH_SHORT).show();
                 }
             }
         });

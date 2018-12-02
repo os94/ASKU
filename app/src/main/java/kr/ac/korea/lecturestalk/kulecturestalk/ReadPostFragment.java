@@ -180,7 +180,7 @@ public class ReadPostFragment extends Fragment implements View.OnClickListener {
                                         return 0;
                                     }
                                 });
-                                Toast.makeText(getContext(), "답변을 남겼습니다.\n30포인트를 획득합니다.", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getContext(), R.string.answered_get_point, Toast.LENGTH_SHORT).show();
                             } else {
                                 Toast.makeText(getContext(), R.string.comment_success, Toast.LENGTH_SHORT).show();
                             }
@@ -222,13 +222,13 @@ public class ReadPostFragment extends Fragment implements View.OnClickListener {
         switch (view.getId()) {
             case R.id.btn_like:
                 if(post.getLikes().contains(userid)) {
-                    Toast.makeText(getContext(), "이미 추천했습니다.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), R.string.already_recommended, Toast.LENGTH_SHORT).show();
                 } else {
                     post.getLikes().add(userid);
                     db.collection("Post").document(docID).update(
                             "likes", post.getLikes()
                     );
-                    Toast.makeText(getContext(), "이 글을 추천했습니다.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), R.string.success_recommend, Toast.LENGTH_SHORT).show();
 
                     if(( post.getCategory()).equals("공지") || (post.getCategory()).equals("수업자료") ) {
                         final Point pointModel = new Point(post.getAuthor());
@@ -243,7 +243,6 @@ public class ReadPostFragment extends Fragment implements View.OnClickListener {
                 }
                 break;
             case R.id.btn_msg:
-                Toast.makeText(getContext(), "msg btn clicked", Toast.LENGTH_SHORT).show();
                 //startActivity(new Intent(getActivity(), MsgNewActivity.class));
                 Intent intent = new Intent(view.getContext(), MsgNewActivity.class);
                 intent.putExtra("receiver", tv_author.getText());
@@ -251,13 +250,13 @@ public class ReadPostFragment extends Fragment implements View.OnClickListener {
                 break;
             case R.id.btn_report:
                 if(post.getNumReports().contains(userid)) {
-                    Toast.makeText(getContext(), "이미 신고했습니다.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), R.string.already_reported, Toast.LENGTH_SHORT).show();
                 } else {
                     post.getNumReports().add(userid);
                     db.collection("Post").document(docID).update(
                             "numReports", post.getNumReports()
                     );
-                    Toast.makeText(getContext(), "이 글을 신고했습니다.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), R.string.success_report, Toast.LENGTH_SHORT).show();
                 }
                 break;
         }
