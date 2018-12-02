@@ -7,6 +7,10 @@
     <string name="login_button">Login</string>
     <string name="sign_up_button">Sign up</string>
     <string name="sign_up_button_description">After you sign up, share class information with classmates!</string>
+    <string name="success_login">Success to login</string>
+    <string name="fail_login_email_format">It does not fit the email format.</string>
+    <string name="fail_login_invalid">No ID or password is wrong.</string>
+    <string name="fail_login_id_does_not_exist">The ID does not exist</string>
 
     <!-- SignupActivity -->
     <string name="signup_id_edittext_hint">myemail@google.com</string>
@@ -30,6 +34,12 @@
     <string name="new_msg_button">New</string>
     <string name="delete_msg_button">Del</string>
     <string name="send_msg_button">Send</string>
+
+    <!-- Schedule -->
+    <string name="schedule_getting_failed_toast">Click when you can see the schedule.</string>
+    <string name="schedule_take_button">Take schedule</string>
+    <string name="schedule_title">2018 Fall Subjects</string>
+    <string name="schedule_description">Click the subject to go to community</string>
 
     <!-- Course Fragement -->
     <string name="course_tab_all">All</string>
@@ -56,6 +66,10 @@
     <string name="pick_comment_content">Would you pick this comment?</string>
     <string name="comment_picked">Comment picked.</string>
 
+    <!-- Point -->
+    <string name="point_notice_ok">Ok</string>
+    <string name="point_notice_body">Point policy</string>
+    <string name="point_current">current ASKU point</string>
     <string name="point_notice">
         Initial Point : 200\n\n
         [Notice/Material Board]\n
@@ -66,5 +80,4 @@
         + 30 write Reply\n
         + 70 Reply adopted
     </string>
-
 </resources>

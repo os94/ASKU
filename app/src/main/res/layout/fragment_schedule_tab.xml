@@ -25,7 +25,8 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="70dp"
+        android:layout_height="wrap_content"
+        android:minHeight="70dp"
         android:paddingStart="10dp"
         android:paddingEnd="10dp">
 
@@ -35,7 +36,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
-            android:text="시간표 가져오기" />
+            android:text="@string/schedule_take_button" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -47,7 +48,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="2018년 2학기 수강과목"
+                android:text="@string/schedule_title"
                 android:textColor="@android:color/black"
                 android:textSize="20dp"
                 android:textStyle="bold" />
@@ -55,7 +56,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="각 과목을 클릭하시면 과목 커뮤니티로 이동합니다."
+                android:text="@string/schedule_description"
                 android:textSize="11dp" />
 
         </LinearLayout>
@@ -78,7 +79,7 @@
             android:id="@+id/textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="현재 ASKU 포인트"
+            android:text="@string/point_current"
             android:textColor="@android:color/black"
             android:textSize="16sp"
             android:textStyle="bold" />

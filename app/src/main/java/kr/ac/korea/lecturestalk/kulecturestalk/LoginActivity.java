@@ -41,7 +41,7 @@ public class LoginActivity extends AppCompatActivity {
                             public void onComplete(@NonNull Task<AuthResult> task) {
                                 if (task.isSuccessful()) {
                                     startActivity(new Intent(LoginActivity.this, MainActivity.class));
-                                    Toast.makeText(LoginActivity.this, "로그인 성공", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(LoginActivity.this, R.string.success_login, Toast.LENGTH_SHORT).show();
                                     finish();
                                 } else {
                                     try {
@@ -49,16 +49,16 @@ public class LoginActivity extends AppCompatActivity {
                                     } catch (FirebaseAuthInvalidCredentialsException e) {
                                         String msg = e.getMessage().trim();
                                         if ("The email address is badly formatted.".equals(msg)) {
-                                            Toast.makeText(LoginActivity.this, "이메일 형식에 맞지 않습니다.", Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(LoginActivity.this, R.string.fail_login_email_format, Toast.LENGTH_SHORT).show();
                                         } else if ("The password is invalid or the user does not have a password.".equals(msg)) {
-                                            Toast.makeText(LoginActivity.this, "없는 아이디거나 패스워드가 틀렸습니다.", Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(LoginActivity.this, R.string.fail_login_invalid, Toast.LENGTH_SHORT).show();
                                         } else {
                                             Log.e(TAG, "FirebaseAuthInvalidCredentialsException occured");
                                             Toast.makeText(LoginActivity.this, msg, Toast.LENGTH_SHORT).show();
                                         }
                                     } catch (FirebaseAuthInvalidUserException e) {
                                         //There is no user record corresponding to this identifier. The user may have been deleted.
-                                        Toast.makeText(LoginActivity.this, "없는 아이디입니다", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(LoginActivity.this, R.string.fail_login_id_does_not_exist, Toast.LENGTH_SHORT).show();
                                     } catch (Exception e) {
                                         e.printStackTrace();
                                         Toast.makeText(LoginActivity.this, e.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
@@ -71,7 +71,6 @@ public class LoginActivity extends AppCompatActivity {
                         });
             }
         });
-
 
         Button signup_button = (Button) findViewById(R.id.signup_button);
         signup_button.setOnClickListener(new View.OnClickListener() {

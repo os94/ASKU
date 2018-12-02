@@ -94,10 +94,10 @@ public class ScheduleTabFragment extends Fragment {
         });
 
         AlertDialog.Builder alert_confirm = new AlertDialog.Builder(getActivity());
-        alert_confirm.setPositiveButton("확인", null);
+        alert_confirm.setPositiveButton(R.string.point_notice_ok, null);
         alert_confirm.setMessage(R.string.point_notice);
         final AlertDialog alert = alert_confirm.create();
-        alert.setTitle("ASKU 포인트 정책");
+        alert.setTitle(R.string.point_notice_body);
 
 
         ImageView pointNotice = (ImageView)view.findViewById(R.id.notice);

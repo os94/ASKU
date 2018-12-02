@@ -7,6 +7,10 @@
     <string name="login_button">로그인</string>
     <string name="sign_up_button">회원가입</string>
     <string name="sign_up_button_description">회원가입 후 클레스메이트와 수업 정보를 공유해보세요!</string>
+    <string name="success_login">로그인 성공</string>
+    <string name="fail_login_email_format">이메일 형식에 맞지 않습니다.</string>
+    <string name="fail_login_invalid">없는 아이디거나 패스워드가 틀렸습니다.</string>
+    <string name="fail_login_id_does_not_exist">없는 아이디입니다</string>
 
     <!-- SignupActivity -->
     <string name="signup_id_edittext_hint">myemail@google.com</string>
@@ -31,6 +35,12 @@
     <string name="delete_msg_button">쪽지 삭제</string>
     <string name="send_msg_button">쪽지 보내기</string>
 
+    <!-- Schedule -->
+    <string name="schedule_getting_failed_toast">시간표가 보여질 때 누르세요</string>
+    <string name="schedule_take_button">시간표 가져오기</string>
+    <string name="schedule_title">2018년 2학기 수강과목</string>
+    <string name="schedule_description">각 과목을 클릭하시면 과목 커뮤니티로 이동합니다.</string>
+
     <!-- Course Fragement -->
     <string name="course_tab_all">전체</string>
     <string name="course_tab_notice">공지</string>
@@ -54,6 +64,10 @@
     <string name="pick_comment_content">이 댓글을 채택하시겠습니까?</string>
     <string name="comment_picked">댓글이 채택되었습니다.</string>
 
+    <!-- Point -->
+    <string name="point_notice_ok">확인</string>
+    <string name="point_notice_body">포인트정책</string>
+    <string name="point_current">현재 ASKU 포인트</string>
     <string name="point_notice">
         초기 포인트 : 200점\n\n
         [공지/수업자료 게시판]\n

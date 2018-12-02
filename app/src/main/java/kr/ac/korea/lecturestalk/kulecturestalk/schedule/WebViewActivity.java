@@ -53,7 +53,7 @@ public class WebViewActivity extends AppCompatActivity {
                     intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(intent);
                 } else {
-                    Toast.makeText(WebViewActivity.this, "시간표가 보여질 때 누르세요", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(WebViewActivity.this, R.string.schedule_getting_failed_toast, Toast.LENGTH_SHORT).show();
                 }
             }
         });
