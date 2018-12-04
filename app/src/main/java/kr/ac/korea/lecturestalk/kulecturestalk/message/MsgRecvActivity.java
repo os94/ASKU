@@ -62,7 +62,7 @@ public class MsgRecvActivity extends Fragment {
         //return inflater.inflate(R.layout.activity_msg_recv, container, false);
         //super.onCreate(savedInstanceState);
         //setContentView(R.layout.activity_msg_recv);
-        View view = inflater.inflate(R.layout.activity_msg_recv, container, false);
+        final View view = inflater.inflate(R.layout.activity_msg_recv, container, false);
 
         //사용자 이름 추출.
         mFirebaseAuth = FirebaseAuth.getInstance();
@@ -97,15 +97,7 @@ public class MsgRecvActivity extends Fragment {
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
-        showDatabase(listview, mStrReceiver);
-        int countItem = arrayAdapter.getCount();
-
-        //쪽지 없음 표시.
-        TextView txtView = (TextView) view.findViewById(R.id.id_no_msg_recv);
-        if (countItem > 0)
-            txtView.setVisibility(View.INVISIBLE);
-        else
-            txtView.setVisibility(View.VISIBLE);
+        showDatabase(view, listview, mStrReceiver);
 
         // 위에서 생성한 listview에 클릭 이벤트 핸들러 정의.
         final MsgListViewAdapter farrayAdapter = arrayAdapter;
@@ -140,7 +132,7 @@ public class MsgRecvActivity extends Fragment {
 
                         //DB에서 항목 삭제.
                         //mDbOpenHelper.deleteColumn(id);
-                        deleteColumn(id);
+                        deleteColumn(view, id);
 
                         //Adapter에서 항목 삭제.
                         item.setChkSelect(false);
@@ -157,7 +149,18 @@ public class MsgRecvActivity extends Fragment {
         return view;
     }
 
-    public void deleteColumn(long id) {
+    protected void updateView(View view) {
+        int countItem = arrayAdapter.getCount();
+
+        //쪽지 없음 표시.
+        TextView txtView = (TextView) view.findViewById(R.id.id_no_msg_recv);
+        if (countItem > 0)
+            txtView.setVisibility(View.INVISIBLE);
+        else
+            txtView.setVisibility(View.VISIBLE);
+    }
+
+    public void deleteColumn(final View view, long id) {
         try {
             MsgItem input = new MsgItem();
             input.id = id;
@@ -181,6 +184,9 @@ public class MsgRecvActivity extends Fragment {
                         Toast.makeText(getActivity(), "[오류] 받은 메시지 삭제 실패.", Toast.LENGTH_SHORT).show();
                         return;
                     }
+
+                    //화면상태 update.
+                    updateView(view);
                 }
 
                 @Override
@@ -197,7 +203,7 @@ public class MsgRecvActivity extends Fragment {
     }
 
     /*
-    public void showDatabase(ListView listview, String strReceiver) {
+    public void showDatabase(View view, ListView listview, String strReceiver) {
         //arrayAdapter.clear();
         arrayAdapter = new MsgListViewAdapter() ;
         listview.setAdapter(arrayAdapter);
@@ -230,7 +236,7 @@ public class MsgRecvActivity extends Fragment {
         //arrayAdapter.addAll(arrayData);
      }
      */
-    public void showDatabase(ListView listview, String strReceiver) {
+    public void showDatabase(View view, ListView listview, String strReceiver) {
         final Resources res = getActivity().getResources();
 
         //arrayAdapter.clear();
@@ -239,6 +245,7 @@ public class MsgRecvActivity extends Fragment {
 
         //Cursor iCursor = mDbOpenHelper.getSentMsgList(strSender);
         //Log.d("showDatabase", "DB Size: " + iCursor.getCount());
+        final View fview = view;
         try {
             MsgItem input = new MsgItem();
             input.id = 0L;
@@ -282,6 +289,9 @@ public class MsgRecvActivity extends Fragment {
                         Toast.makeText(getActivity(), "[오류] 받은 메시지 목록 검색 실패.", Toast.LENGTH_SHORT).show();
                         return;
                     }
+
+                    //화면상태 update.
+                    updateView(fview);
                 }
 
                 @Override
