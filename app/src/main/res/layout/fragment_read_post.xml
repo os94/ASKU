@@ -28,12 +28,13 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:gravity="center"
                 android:orientation="horizontal"
                 android:padding="5dp">
 
                 <TextView
                     android:id="@+id/tv_author"
-                    android:layout_width="0dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="작성자" />
@@ -42,26 +43,29 @@
                     android:id="@+id/btn_like"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
-                    android:src="@drawable/ic_like" />
+                    android:src="@drawable/ic_like_24dp" />
 
                 <ImageButton
                     android:id="@+id/btn_msg"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
-                    android:src="@drawable/ic_msg" />
+                    android:src="@drawable/ic_msg_24dp" />
 
                 <ImageButton
                     android:id="@+id/btn_report"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
-                    android:src="@drawable/siren" />
+                    android:src="@drawable/ic_dislike_24dp" />
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:gravity="center"
                 android:orientation="horizontal"
-                android:padding="5dp">
+                android:paddingStart="5dp"
+                android:paddingEnd="5dp"
+                android:paddingBottom="5dp">
 
                 <TextView
                     android:id="@+id/tv_time"
@@ -75,7 +79,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="3dp"
-                    android:src="@drawable/ic_view" />
+                    android:src="@drawable/ic_view_24dp" />
 
                 <TextView
                     android:id="@+id/tv_view"
@@ -89,7 +93,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="3dp"
-                    android:src="@drawable/ic_like" />
+                    android:src="@drawable/ic_like_24dp" />
 
                 <TextView
                     android:id="@+id/tv_like"
@@ -135,8 +139,9 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
                     android:layout_marginBottom="5dp"
-                    android:textStyle="bold"
-                    android:text="@string/post_comment_title"/>
+                    android:padding="5dp"
+                    android:text="@string/post_comment_title"
+                    android:textStyle="bold" />
 
                 <kr.ac.korea.lecturestalk.kulecturestalk.course.View.EmptyRecyclerView
                     android:id="@+id/post_comment_recycler_view"
@@ -148,22 +153,25 @@
                     android:id="@+id/post_comment_empty"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
                     android:gravity="center"
+                    android:orientation="vertical"
+                    android:paddingTop="5dp"
+                    android:paddingBottom="15dp"
                     android:visibility="gone">
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:gravity="center_horizontal"
                         android:text="@string/post_comment_empty1"
-                        android:textSize="16sp"
-                        android:gravity="center_horizontal"/>
+                        android:textSize="16sp" />
+
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:gravity="center_horizontal"
                         android:text="@string/post_comment_empty2"
-                        android:textSize="16sp"
-                        android:gravity="center_horizontal"/>
+                        android:textSize="16sp" />
                 </LinearLayout>
 
             </LinearLayout>
@@ -201,15 +209,15 @@
 
                 <Button
                     android:id="@+id/btn_send_comment"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
                     android:layout_marginEnd="5dp"
                     android:layout_gravity="end"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:drawableLeft="@drawable/reply"
-                    android:paddingLeft="10dp"
-                    android:paddingRight="10dp"
-                    android:text="@string/post_comment_leave"/>
+                    android:drawableLeft="@drawable/ic_message_24dp"
+                    android:paddingLeft="15dp"
+                    android:paddingRight="15dp"
+                    android:text="@string/post_comment_leave" />
 
             </LinearLayout>
 

@@ -2,6 +2,7 @@
     <string name="app_name">AsKU</string>
 
     <!--etc-->
+    <string name="yes">Yed</string>
     <string name="no">No</string>
     <string name="not_allowed">Not allowed.</string>
     <string name="send_message">Send message</string>
@@ -75,8 +76,9 @@
     <string name="post_comment_empty1">There are no comments.</string>
     <string name="post_comment_empty2">Please write a comment.</string>
     <string name="post_comment_hint">Please write a comment.</string>
-    <string name="post_comment_leave">Leave a Comment</string>
+    <string name="post_comment_leave">\u0020\u0020Leave a Comment</string>
     <string name="comment_success">Commented Successfully.</string>
+    <string name="point_notice2">ASKU Point System</string>
 
     <!-- Write Post Fragment -->
     <string name="input_subject">Input title.</string>

@@ -12,8 +12,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="3dp"
-        android:textSize="20sp"
         android:maxLines="1"
+        android:textColor="@android:color/black"
+        android:textSize="18sp"
         tools:text="[공지]다음주 수업은 휴강이래요!" />
 
     <TextView
@@ -32,59 +33,61 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginStart="3dp"
-        android:orientation="horizontal">
-
-        <ImageView
-            android:layout_width="20dp"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_view" />
-
-        <TextView
-            android:id="@+id/post_num_view"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_marginStart="3dp"
-            android:layout_marginEnd="6dp"
-            tools:text="7" />
-
-        <ImageView
-            android:layout_width="20dp"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_like" />
-
-        <TextView
-            android:id="@+id/post_num_like"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_marginStart="3dp"
-            android:layout_marginEnd="6dp"
-            tools:text="3" />
-
-        <ImageView
-            android:layout_width="20dp"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_comment" />
-
-        <TextView
-            android:id="@+id/post_num_comment"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_marginStart="3dp"
-            android:layout_marginEnd="6dp"
-            tools:text="4" />
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:layout_gravity="center">
 
         <TextView
             android:id="@+id/post_date"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:layout_marginEnd="10dp"
             android:layout_weight="1"
-            android:gravity="end"
+            android:gravity="start"
             tools:text="2018-10-18" />
+
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_view_24dp" />
+
+        <TextView
+            android:id="@+id/post_num_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="10dp"
+            tools:text="7" />
+
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_like_24dp" />
+
+        <TextView
+            android:id="@+id/post_num_like"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="10dp"
+            tools:text="3" />
+
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_comment_24dp" />
+
+        <TextView
+            android:id="@+id/post_num_comment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="10dp"
+            tools:text="4" />
+
     </LinearLayout>
 
 
