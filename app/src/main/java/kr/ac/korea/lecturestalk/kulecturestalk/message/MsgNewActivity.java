@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -58,6 +59,10 @@ public class MsgNewActivity extends AppCompatActivity {
         String displayName = mFirebaseAuth.getCurrentUser().getDisplayName();
         if (displayName == null) displayName = "";
         final String sender = displayName;
+
+        final EditText txtSender = (EditText) findViewById(R.id.id_edit_sender);
+        txtSender.setText(sender);
+
 
         (this.findViewById(R.id.id_msg_send_button)).setOnClickListener(new View.OnClickListener() {
             @Override
