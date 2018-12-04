@@ -23,6 +23,7 @@
             android:id="@+id/categoryList"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:paddingTop="10dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
@@ -31,11 +32,11 @@
                 android:id="@+id/course_tab_all"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="7dp"
-                android:layout_marginBottom="7dp"
+                android:layout_gravity="center"
                 android:layout_weight="1"
                 android:gravity="center"
                 android:text="@string/course_tab_all"
+                android:textStyle="bold"
                 android:textColor="@android:color/black"
                 android:textSize="16sp" />
 
@@ -43,11 +44,11 @@
                 android:id="@+id/course_tab_notice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="7dp"
-                android:layout_marginBottom="7dp"
+                android:layout_gravity="center"
                 android:layout_weight="1"
                 android:gravity="center"
                 android:text="@string/course_tab_notice"
+                android:textStyle="bold"
                 android:textColor="@android:color/black"
                 android:textSize="16sp" />
 
@@ -55,11 +56,11 @@
                 android:id="@+id/course_tab_materials"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="7dp"
-                android:layout_marginBottom="7dp"
+                android:layout_gravity="center"
                 android:layout_weight="1"
                 android:gravity="center"
                 android:text="@string/course_tab_materials"
+                android:textStyle="bold"
                 android:textColor="@android:color/black"
                 android:textSize="16sp" />
 
@@ -67,11 +68,11 @@
                 android:id="@+id/course_tab_qna"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="7dp"
-                android:layout_marginBottom="7dp"
+                android:layout_gravity="center"
                 android:layout_weight="1"
                 android:gravity="center"
                 android:text="@string/course_tab_qna"
+                android:textStyle="bold"
                 android:textColor="@android:color/black"
                 android:textSize="16sp" />
 
@@ -79,11 +80,11 @@
                 android:id="@+id/course_tab_etc"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="7dp"
-                android:layout_marginBottom="7dp"
+                android:layout_gravity="center"
                 android:layout_weight="1"
                 android:gravity="center"
                 android:text="@string/course_tab_etc"
+                android:textStyle="bold"
                 android:textColor="@android:color/black"
                 android:textSize="16sp" />
 
@@ -100,13 +101,54 @@
         <!--android:layout_margin="20dp"-->
         <!--android:text="write" />-->
 
+        <LinearLayout
+            android:id="@+id/pointNspinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/categoryList">
+
+            <ImageView
+                android:id="@+id/ps1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:paddingStart="15dp"
+                android:paddingEnd="5dp"
+                app:srcCompat="@drawable/ic_info_outline_black_24dp" />
+
+            <TextView
+                android:id="@+id/ps2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/point_notice2"
+                android:textColor="@android:color/black"
+                android:textStyle="bold" />
+
+            <View
+                android:id="@+id/view"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
+
+            <Spinner
+                android:id="@+id/sort"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"></Spinner>
+        </LinearLayout>
+
         <kr.ac.korea.lecturestalk.kulecturestalk.course.View.EmptyRecyclerView
             android:id="@+id/course_posts_recycler_view"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/categoryList" />
+            app:layout_constraintTop_toBottomOf="@+id/pointNspinner" />
 
         <LinearLayout
             android:id="@+id/course_post_empty"

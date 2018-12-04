@@ -34,11 +34,11 @@ public class MyInfoTabFragment extends Fragment {
 
         mFirebaseAuth = FirebaseAuth.getInstance();
 
-        TextView email = (TextView) view.findViewById(R.id.email);
+        /*TextView email = (TextView) view.findViewById(R.id.email);
         email.setText("email : " + mFirebaseAuth.getCurrentUser().getEmail());
 
         TextView uid = (TextView) view.findViewById(R.id.uid);
-        uid.setText("uid : " + mFirebaseAuth.getCurrentUser().getUid());
+        uid.setText("uid : " + mFirebaseAuth.getCurrentUser().getUid());*/
 
         Log.d("getPhotoUrl", "" + mFirebaseAuth.getCurrentUser().getPhotoUrl());
         Log.d("getDisplayName", "" + mFirebaseAuth.getCurrentUser().getDisplayName());

@@ -110,8 +110,8 @@ public class ScheduleTabFragment extends Fragment {
 
         if (TextUtils.isEmpty(scheduleList)) {
             // 이건 only test용... 필요할 때 enable 해서 쓰세요
-            /*SubjectInfo testSubject = new SubjectInfo("소프트웨어공학", "인호", "정보통신관 202호");
-            addCourceView(inflater, container, testSubject);*/
+            SubjectInfo testSubject = new SubjectInfo("소프트웨어공학", "인호", "정보통신관 202호");
+            addCourceView(inflater, container, testSubject);
         } else {
 
             String subejcts[] = scheduleList.split("\n");

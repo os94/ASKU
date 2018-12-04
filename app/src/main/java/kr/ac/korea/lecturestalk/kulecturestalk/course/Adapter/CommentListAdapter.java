@@ -53,7 +53,7 @@ public class CommentListAdapter extends RecyclerView.Adapter<CommentListHolder> 
                     AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
                     builder.setTitle(R.string.pick_comment_title)
                             .setMessage(R.string.pick_comment_content)
-                            .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                            .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialogInterface, int i) {
                                     // TODO: 포인트 관리?
@@ -90,7 +90,7 @@ public class CommentListAdapter extends RecyclerView.Adapter<CommentListHolder> 
             @Override
             public void onClick(View view) {
                 // TODO: implementation
-                Toast.makeText(view.getContext(), "Send To Msg!", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(view.getContext(), "Send To Msg!", Toast.LENGTH_SHORT).show();
 
                 //New Message Activity로 이동.
                 Intent intent = new Intent(view.getContext(), MsgNewActivity.class);

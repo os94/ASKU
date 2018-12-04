@@ -2,6 +2,7 @@
     <string name="app_name">애스쿠</string>
 
     <!--etc-->
+    <string name="yes">네</string>
     <string name="no">아니오</string>
     <string name="not_allowed">허용되지않음</string>
     <string name="send_message">메세지 전송</string>
@@ -72,8 +73,9 @@
     <string name="post_comment_empty1">작성된 댓글이 없습니다.</string>
     <string name="post_comment_empty2">댓글을 작성해 주세요.</string>
     <string name="post_comment_hint">댓글을 입력해 주세요.</string>
-    <string name="post_comment_leave">댓글 남기기</string>
+    <string name="post_comment_leave">\u0020\u0020댓글 남기기</string>
     <string name="comment_success">댓글을 남겼습니다.</string>
+    <string name="point_notice2">ASKU 포인트 제도</string>
 
     <!-- Write Post Fragment -->
     <string name="input_subject">제목을 입력하세요.</string>
