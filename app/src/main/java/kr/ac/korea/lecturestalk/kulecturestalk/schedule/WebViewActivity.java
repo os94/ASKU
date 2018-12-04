@@ -8,9 +8,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import org.jsoup.Jsoup;
@@ -33,9 +35,16 @@ public class WebViewActivity extends AppCompatActivity {
         mJavaScriptInterface = new ScheduleJavascriptInterface();
 
         mWebView = (WebView) findViewById(R.id.webView);
-        mWebView.setWebViewClient(new ScheduleWebViewClient());
+
+        ProgressBar progressBar = findViewById(R.id.progressbar);
+        mWebView.setWebViewClient(new ScheduleWebViewClient(progressBar));
         mWebView.getSettings().setJavaScriptEnabled(true);
         mWebView.getSettings().setJavaScriptCanOpenWindowsAutomatically(true);
+        mWebView.getSettings().setAppCacheEnabled(false);
+        mWebView.getSettings().setCacheMode(WebSettings.LOAD_NO_CACHE);
+//        mWebView.getSettings().setSupportZoom(true);
+//        mWebView.getSettings().setDisplayZoomControls(true);
+//        mWebView.zoomIn();
         mWebView.addJavascriptInterface(mJavaScriptInterface, "Android");
         mWebView.loadUrl(EVERYTIME_URL);
 
