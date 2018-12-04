@@ -98,6 +98,12 @@ public class ReadPostFragment extends Fragment implements View.OnClickListener {
                     if (document.exists()) {
                         Log.d(TAG, "DocumentSnapshot data: " + document.getData());
                         Map<String, Object> data = document.getData();
+
+                        long time = System.currentTimeMillis();
+                        if (data.get("time") != null) {
+                            time = (long) data.get("time");
+                        }
+
                         post = new Post( (String)data.get("id")
                                 , (String)data.get("author")
                                 , (String)data.get("authorID")
@@ -111,7 +117,7 @@ public class ReadPostFragment extends Fragment implements View.OnClickListener {
                                 , (List<String>)data.get("comments")
                                 , (ArrayList<String>)data.get("likes")
                                 , (int) (long) data.get("numView") //firestore에 int로 넣었지만, long으로 들어가고 반납되고 있음. 때문에 int로 형변환
-                                , (long)data.get("time")
+                                , time
                                 , (List<String>)data.get("numReports")
                                 , (String)data.get("img")
                         );

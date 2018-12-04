@@ -34,6 +34,7 @@ import java.util.Map;
 import kr.ac.korea.lecturestalk.kulecturestalk.course.Adapter.PostListAdapter;
 import kr.ac.korea.lecturestalk.kulecturestalk.course.Model.Post;
 import kr.ac.korea.lecturestalk.kulecturestalk.course.View.EmptyRecyclerView;
+import retrofit2.http.HEAD;
 
 public class PostListFragment extends Fragment implements View.OnClickListener {
     private TextView mAllTab, mNoticeTab, mMaterialsTab, mQnaTab, mEtcTab;
@@ -190,6 +191,7 @@ public class PostListFragment extends Fragment implements View.OnClickListener {
     }
 
     private void getDB(final View view) {
+
         final ArrayList<Post> posts = new ArrayList<>();
         setCategoryColor();
 
@@ -256,6 +258,11 @@ public class PostListFragment extends Fragment implements View.OnClickListener {
                                     Log.d(TAG, String.valueOf(document.getData()));
                                     Map<String, Object> data = document.getData();
 
+                                    long time = System.currentTimeMillis();
+                                    if (data.get("time") != null) {
+                                        time = (long) data.get("time");
+                                    }
+
                                     Post post = new Post((String) data.get("id")
                                             , (String) data.get("author")
                                             , (String) data.get("authorID")
@@ -269,7 +276,7 @@ public class PostListFragment extends Fragment implements View.OnClickListener {
                                             , (List<String>) data.get("comments")
                                             , (ArrayList<String>) data.get("likes")
                                             , (int) (long) data.get("numView") //firestore에 int로 넣었지만, long으로 들어가고 반납되고 있음. 때문에 int로 형변환
-                                            , (long) data.get("time")
+                                            , time
                                             , (List<String>) data.get("numReports")
                                             , (String) data.get("img")
                                     );
