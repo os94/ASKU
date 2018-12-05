@@ -9,15 +9,15 @@ public class Comment {
     String author;
     String desc;
     long time;
-    boolean isPicked;
+    boolean picked;
 
-    public Comment(String id, String postId, String author, String desc, long time, boolean isPicked) {
+    public Comment(String id, String postId, String author, String desc, long time, boolean picked) {
         this.id = id;
         this.postId = postId;
         this.author = author;
         this.desc = desc;
         this.time = time;
-        this.isPicked = isPicked;
+        this.picked = picked;
     }
 
     public String getId() {
@@ -61,11 +61,11 @@ public class Comment {
     }
 
     public boolean isPicked() {
-        return isPicked;
+        return picked;
     }
 
     public void setPicked(boolean picked) {
-        isPicked = picked;
+        picked = picked;
     }
 
     public String getFormattedTime() {

@@ -286,7 +286,7 @@ public class ReadPostFragment extends Fragment implements View.OnClickListener {
                                 , (String)data.get("author")
                                 , (String)data.get("desc")
                                 , (long)data.get("time")
-                                , (boolean)data.get("isPicked"));
+                                , (boolean)data.get("picked"));
                                 comments.add(comment);
                             }
                             Collections.sort(comments, new Comparator<Comment>() {

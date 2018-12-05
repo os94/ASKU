@@ -61,7 +61,7 @@ public class CommentListAdapter extends RecyclerView.Adapter<CommentListHolder> 
 
                                     FirebaseFirestore db = FirebaseFirestore.getInstance();
                                     db.collection("Comment").document(comment.getId()).update(
-                                            "isPicked", true
+                                            "picked", true
                                     );
                                     Toast.makeText(view.getContext(), R.string.comment_picked, Toast.LENGTH_SHORT).show();
                                     holder.unpickedImageView.setVisibility(View.GONE);
