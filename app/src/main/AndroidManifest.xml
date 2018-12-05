@@ -41,6 +41,9 @@
             android:name=".my.MyInfoActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:name=".my.MyInfoTabFragment"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".course.CourseActivity"
             android:screenOrientation="portrait" />
 
