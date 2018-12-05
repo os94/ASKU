@@ -11,6 +11,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.firestore.FirebaseFirestore;
+
 import java.util.List;
 
 import kr.ac.korea.lecturestalk.kulecturestalk.GetPointListener;
@@ -56,7 +58,11 @@ public class CommentListAdapter extends RecyclerView.Adapter<CommentListHolder> 
                             .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialogInterface, int i) {
-                                    // TODO: 포인트 관리?
+
+                                    FirebaseFirestore db = FirebaseFirestore.getInstance();
+                                    db.collection("Comment").document(comment.getId()).update(
+                                            "isPicked", true
+                                    );
                                     Toast.makeText(view.getContext(), R.string.comment_picked, Toast.LENGTH_SHORT).show();
                                     holder.unpickedImageView.setVisibility(View.GONE);
                                     holder.pickedImageView.setVisibility(View.VISIBLE);
@@ -89,7 +95,7 @@ public class CommentListAdapter extends RecyclerView.Adapter<CommentListHolder> 
         holder.msgImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // TODO: implementation
+
                 //Toast.makeText(view.getContext(), "Send To Msg!", Toast.LENGTH_SHORT).show();
 
                 //New Message Activity로 이동.

@@ -2,7 +2,7 @@
     <string name="app_name">AsKU</string>
 
     <!--etc-->
-    <string name="yes">Yed</string>
+    <string name="yes">Yes</string>
     <string name="no">No</string>
     <string name="not_allowed">Not allowed.</string>
     <string name="send_message">Send message</string>
