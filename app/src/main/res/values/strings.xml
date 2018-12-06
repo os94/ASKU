@@ -89,6 +89,7 @@
     <string name="pick_comment_title">Pick Comment</string>
     <string name="pick_comment_content">Would you pick this comment?</string>
     <string name="comment_picked">Comment picked.</string>
+    <string name="cannot_pick">Cannot pick own comment</string>
 
     <!-- Point -->
     <string name="point_notice_ok">Ok</string>

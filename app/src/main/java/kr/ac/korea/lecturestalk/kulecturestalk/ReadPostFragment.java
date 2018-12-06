@@ -234,6 +234,8 @@ public class ReadPostFragment extends Fragment implements View.OnClickListener {
                     db.collection("Post").document(docID).update(
                             "likes", post.getLikes()
                     );
+                    String prevLikes = tv_like.getText().toString();
+                    tv_like.setText(String.valueOf(Integer.parseInt(prevLikes) + 1));
                     Toast.makeText(getContext(), R.string.success_recommend, Toast.LENGTH_SHORT).show();
 
                     if(( post.getCategory()).equals("공지") || (post.getCategory()).equals("수업자료") ) {

@@ -86,6 +86,7 @@
     <string name="pick_comment_title">댓글 채택</string>
     <string name="pick_comment_content">이 댓글을 채택하시겠습니까?</string>
     <string name="comment_picked">댓글이 채택되었습니다.</string>
+    <string name="cannot_pick">자신의 댓글을 채택할 수 없습니다.</string>
 
     <!-- Point -->
     <string name="point_notice_ok">확인</string>

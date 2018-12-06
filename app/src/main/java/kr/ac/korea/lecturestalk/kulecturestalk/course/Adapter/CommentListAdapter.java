@@ -50,7 +50,12 @@ public class CommentListAdapter extends RecyclerView.Adapter<CommentListHolder> 
             public void onClick(final View view) {
                 int index = userEmail.indexOf("@");
                 String author = userEmail.substring(0, index);
+
                 if (post.getAuthor().equals(author)) {
+                    if (comment.getAuthor().equals(author)) {
+                        Toast.makeText(view.getContext(), R.string.cannot_pick, Toast.LENGTH_SHORT).show();
+                        return;
+                    }
                     // Pick?
                     AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
                     builder.setTitle(R.string.pick_comment_title)
