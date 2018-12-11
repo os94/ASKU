@@ -18,55 +18,65 @@ import android.widget.Toast;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.UserProfileChangeRequest;
 
+import kr.ac.korea.lecturestalk.kulecturestalk.GetPointListener;
 import kr.ac.korea.lecturestalk.kulecturestalk.LoginActivity;
 import kr.ac.korea.lecturestalk.kulecturestalk.MainActivity;
-import kr.ac.korea.lecturestalk.kulecturestalk.MyPostListFragment;
-import kr.ac.korea.lecturestalk.kulecturestalk.PostListFragment;
 import kr.ac.korea.lecturestalk.kulecturestalk.R;
+import kr.ac.korea.lecturestalk.kulecturestalk.course.Model.Point;
 import kr.ac.korea.lecturestalk.kulecturestalk.schedule.WebViewActivity;
 
-public class MyInfoTabFragment extends AppCompatActivity {
+import static kr.ac.korea.lecturestalk.kulecturestalk.MainActivity.userEmail;
+
+public class MyInfoTabFragment extends Fragment {
     private static final String TAG = MyInfoTabFragment.class.getSimpleName();
-    private FirebaseAuth mFirebaseAuth;
+    private FirebaseAuth mFirebaseAuth = FirebaseAuth.getInstance();
+    private TextView tv_currPoint;
 
     @Nullable
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.fragment_myinfo);
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_myinfo, container, false);
 
-        mFirebaseAuth = FirebaseAuth.getInstance();
+        TextView tv_user = (TextView)view.findViewById(R.id.user);
+        int index = userEmail.indexOf("@");
+        String user = userEmail.substring(0, index);
+        tv_user.setText(user);
 
-        String myName = mFirebaseAuth.getCurrentUser().getDisplayName();
-        Log.d("getPhotoUrl", "" + mFirebaseAuth.getCurrentUser().getPhotoUrl());
-        Log.d("getDisplayName", "" + mFirebaseAuth.getCurrentUser().getDisplayName());
-        Log.d("getPhoneNumber", "" + mFirebaseAuth.getCurrentUser().getPhoneNumber());
+        tv_currPoint = (TextView) view.findViewById(R.id.currPoint);
+        final Point pointModel = new Point();
+        pointModel.getPoint(new GetPointListener() {
+            @Override
+            public int onPointLoaded(int point) {
+                tv_currPoint.setText(""+point);
+                return 0;
+            }
+        });
 
-        Button logout = (Button) findViewById(R.id.logout);
+        /*Button logout = (Button) view.findViewById(R.id.logout);
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (mFirebaseAuth.getCurrentUser() != null) {
                     mFirebaseAuth.signOut();
-
-                    startActivity(new Intent(MyInfoTabFragment.this, LoginActivity.class));
-                    MyInfoTabFragment.this.finish();
+                    if (getActivity() != null) {
+                        startActivity(new Intent(getActivity(), LoginActivity.class));
+                        getActivity().finish();
+                    }
                 }
             }
         });
 
-        Button setting = findViewById(R.id.setting);
+        Button setting = view.findViewById(R.id.setting);
         setting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-            startActivity(new Intent(MyInfoTabFragment.this, MyInfoActivity.class));
-            }
-        });
+                if (getActivity() != null) {
+                    startActivity(new Intent(getActivity(), MyInfoActivity.class));
+                }
 
-        MyPostListFragment fragment = new MyPostListFragment();
-        Bundle bundle = new Bundle();
-        bundle.putString("author", myName);
-        fragment.setArguments(bundle);
-        getSupportFragmentManager().beginTransaction().replace(R.id.post_container, fragment, "fragmentTag").commit();
+            }
+        });*/
+
+        return view;
     }
 }

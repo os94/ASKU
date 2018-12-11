@@ -103,4 +103,10 @@
         + 70점 댓글 채택
     </string>
 
+    <!-- MyPage -->
+    <string name="logout">로그아웃</string>
+    <string name="currPoint">현재 포인트</string>
+    <string name="myQuestion">내가 질문한 글</string>
+    <string name="myComment">댓글 작성한 글</string>
+
 </resources>

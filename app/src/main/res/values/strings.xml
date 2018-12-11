@@ -105,4 +105,11 @@
         + 30 write Reply\n
         + 70 Reply adopted
     </string>
+
+    <!-- MyPage -->
+    <string name="logout">Logout</string>
+    <string name="currPoint">Current Point</string>
+    <string name="myQuestion">My Question</string>
+    <string name="myComment">My Comment</string>
+
 </resources>

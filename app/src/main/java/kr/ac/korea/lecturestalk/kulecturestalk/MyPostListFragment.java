@@ -34,7 +34,7 @@ import java.util.Map;
 import kr.ac.korea.lecturestalk.kulecturestalk.course.Adapter.PostListAdapter;
 import kr.ac.korea.lecturestalk.kulecturestalk.course.Model.Post;
 import kr.ac.korea.lecturestalk.kulecturestalk.course.View.EmptyRecyclerView;
-
+// 미사용
 public class MyPostListFragment extends Fragment implements View.OnClickListener {
     private TextView mAllTab, mNoticeTab, mMaterialsTab, mQnaTab, mEtcTab;
     private FloatingActionButton writeButton;

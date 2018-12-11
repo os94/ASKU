@@ -56,16 +56,15 @@ public class MainActivity extends AppCompatActivity {
                                 return true;
 
                             case R.id.menu_mypage:
-                                /*
                                 getSupportFragmentManager()
                                         .beginTransaction()
                                         .replace(R.id.fragment_container, new MyInfoTabFragment())
                                         .commit();
                                 return true;
-                                */
-                                Intent intent = new Intent(MainActivity.this, MyInfoTabFragment.class);
+
+                                /*Intent intent = new Intent(MainActivity.this, MyInfoTabFragment.class);
                                 startActivity(intent);
-                                return false;
+                                return false;*/
 
                             /*case R.id.menu_test:
                                 getSupportFragmentManager()
@@ -83,8 +82,8 @@ public class MainActivity extends AppCompatActivity {
         Fragment initFragment = null;
         if ("message".equals(tabName)) {
             initFragment =  new MsgTabFragment();
-        //} else if ("my_page".equals(tabName)) {
-        //    initFragment =  new MyInfoTabFragment();
+        } else if ("my_page".equals(tabName)) {
+            initFragment =  new MyInfoTabFragment();
         } else {
             initFragment =  new ScheduleTabFragment(); // default is ScheduleFragment
         }

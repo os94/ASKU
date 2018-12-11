@@ -14,7 +14,7 @@ import com.google.firebase.auth.UserProfileChangeRequest;
 
 import kr.ac.korea.lecturestalk.kulecturestalk.MainActivity;
 import kr.ac.korea.lecturestalk.kulecturestalk.R;
-
+// 미사용
 public class MyInfoActivity extends AppCompatActivity {
     private static final String TAG = MyInfoActivity.class.getSimpleName();
     private FirebaseAuth mFirebaseAuth;
