@@ -153,7 +153,7 @@ class PostListHolder extends RecyclerView.ViewHolder {
     private TextView numLikeTextView;
     private TextView numCommentTextView;
     private TextView dateTextView;
-
+    private TextView categoryTextView;
     public final View mView;
 
     PostListHolder(View itemView) {
@@ -164,11 +164,12 @@ class PostListHolder extends RecyclerView.ViewHolder {
         numLikeTextView = itemView.findViewById(R.id.post_num_like);
         numCommentTextView = itemView.findViewById(R.id.post_num_comment);
         dateTextView = itemView.findViewById(R.id.post_date);
+        categoryTextView = itemView.findViewById(R.id.post_category);
         mView = itemView;
     }
 
     void bindPost(Post post) {
-        titleTextView.setText("[" + post.getCategory() + "] " + post.getTitle());
+        titleTextView.setText(post.getTitle());
         String desc = post.getDescription();
         if (desc.length() >= 50) {
             desc = desc.substring(0, 50);
@@ -179,6 +180,7 @@ class PostListHolder extends RecyclerView.ViewHolder {
         numLikeTextView.setText(Integer.toString(post.getLikes().size()));
         numCommentTextView.setText(String.format("%d", post.getComments().size()));
         dateTextView.setText(post.getFormattedTime());
+        categoryTextView.setText(post.getCategory());
     }
 
 }

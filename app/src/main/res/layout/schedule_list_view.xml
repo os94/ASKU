@@ -18,13 +18,17 @@
             android:id="@+id/textView2"
             android:layout_width="50dp"
             android:layout_height="wrap_content"
+            android:textColor="@android:color/black"
+            android:gravity="end"
             android:text="강의 : " />
 
         <TextView
             android:id="@+id/subject"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="소프트웨어공학" />
+            android:layout_marginStart="10dp"
+            android:text="소프트웨어공학"
+            android:textColor="@android:color/black" />
     </LinearLayout>
 
     <LinearLayout
@@ -38,12 +42,16 @@
             android:id="@+id/textView3"
             android:layout_width="50dp"
             android:layout_height="wrap_content"
+            android:textColor="@android:color/black"
+            android:gravity="end"
             android:text="교수 : " />
 
         <TextView
             android:id="@+id/professor"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:textColor="@android:color/black"
             android:text="인호" />
     </LinearLayout>
 
@@ -59,12 +67,16 @@
             android:id="@+id/textView4"
             android:layout_width="50dp"
             android:layout_height="wrap_content"
+            android:textColor="@android:color/black"
+            android:gravity="end"
             android:text="강의실 : " />
 
         <TextView
             android:id="@+id/room"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:textColor="@android:color/black"
             android:text="정보통신관 202호" />
     </LinearLayout>
 
@@ -72,5 +84,5 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_alignParentBottom="true"
-        android:background="#606060" />
+        android:background="@color/light_gray" />
 </LinearLayout>
