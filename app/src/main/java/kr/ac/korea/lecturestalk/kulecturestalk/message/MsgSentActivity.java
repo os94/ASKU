@@ -285,7 +285,8 @@ public class MsgSentActivity extends Fragment {
                             //arrayData.add(Result);
                             //arrayIndex.add(tempIndex);
 
-                            arrayAdapter.addItem(tempIndex, res.getDrawable(R.drawable.baseline_account_circle_black_18dp), strReceiver, strSentAt, strMsg);
+                            //arrayAdapter.addItem(tempIndex, res.getDrawable(R.drawable.baseline_account_circle_black_18dp), strReceiver, strSentAt, strMsg);
+                            arrayAdapter.addItem(tempIndex, res.getDrawable(R.drawable.ic_profile), strReceiver, strSentAt, strMsg);
                         }
                         //arrayAdapter.addAll(arrayData);
                         arrayAdapter.notifyDataSetChanged();

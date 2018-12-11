@@ -33,9 +33,10 @@
                         </option>
                         <option name="values">
                           <map>
+                            <entry key="assetSourceType" value="FILE" />
                             <entry key="color" value="666666" />
-                            <entry key="outputName" value="ic_save_24dp" />
-                            <entry key="sourceFile" value="C:\Users\JUHAN PARK" />
+                            <entry key="outputName" value="ic_profile" />
+                            <entry key="sourceFile" value="C:\Users\ohsang seo\Desktop\profile.svg" />
                           </map>
                         </option>
                       </PersistentState>

@@ -48,9 +48,9 @@
     <string name="msg_list_recv_no">받은 쪽지가 없습니다.</string>
     <string name="msg_list_sent_no">보낸 쪽지가 없습니다.</string>
     <string name="name_edittext_hint">사용자 이름</string>
-    <string name="new_msg_button">쪽지 보내기</string>
-    <string name="delete_msg_button">쪽지 삭제</string>
-    <string name="send_msg_button">쪽지 보내기</string>
+    <string name="new_msg_button">보내기</string>
+    <string name="delete_msg_button">삭제</string>
+    <string name="send_msg_button">보내기</string>
 
     <!-- Schedule -->
     <string name="schedule_getting_failed_toast">시간표가 보여질 때 누르세요</string>
