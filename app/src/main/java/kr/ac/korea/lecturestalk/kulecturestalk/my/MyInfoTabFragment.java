@@ -52,11 +52,11 @@ import static kr.ac.korea.lecturestalk.kulecturestalk.MainActivity.userEmail;
 
 public class MyInfoTabFragment extends Fragment implements View.OnClickListener {
     private static final String TAG = MyInfoTabFragment.class.getSimpleName();
-    private FirebaseAuth mFirebaseAuth = FirebaseAuth.getInstance();
+    private FirebaseAuth mFirebaseAuth;
     private TextView tv_currPoint;
     private ViewGroup myQuestion, myComment;
     private View underlineQuestion, underlineComment;
-    private FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private FirebaseFirestore db;
     private String user;
     private EmptyRecyclerView recyclerView;
     private ProgressBar progressBar;
@@ -68,6 +68,9 @@ public class MyInfoTabFragment extends Fragment implements View.OnClickListener 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_myinfo, container, false);
+
+        mFirebaseAuth = FirebaseAuth.getInstance();
+        db = FirebaseFirestore.getInstance();
 
         progressBar = view.findViewById(R.id.progressBar);
         Layout = view.findViewById(R.id.post_list_view);
@@ -215,7 +218,15 @@ public class MyInfoTabFragment extends Fragment implements View.OnClickListener 
                                 }
                                 HashSet<String> distinctData = new HashSet<String>(comments);           // 중복
                                 ArrayList<String> comments_new = new ArrayList<String>(distinctData);   // 제거
-                                for (String tmp : comments_new) {
+                                Log.d("@@@@@comments", String.valueOf(comments_new));
+                                if(comments_new.isEmpty()) {
+                                    ArrayList<Post> posts_new = posts;
+                                    //Collections.sort(posts_new, cmpPost);
+                                    recyclerView.setAdapter(new PostListAdapter2(posts_new));
+                                    progressBar.setVisibility(view.GONE);
+                                    Layout.setVisibility(view.VISIBLE);
+                                }
+                                for (String tmp : comments_new) { // comments_new가 비어있으면 for문 실행안됨
                                     db.collection("Post")
                                             .whereEqualTo("id", tmp)
                                             .get()
