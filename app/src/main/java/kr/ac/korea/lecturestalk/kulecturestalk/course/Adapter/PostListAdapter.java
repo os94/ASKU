@@ -93,22 +93,24 @@ public class PostListAdapter extends RecyclerView.Adapter<PostListHolder> {
                                             activity.getSupportFragmentManager().beginTransaction().replace(R.id.post_container, fragment).addToBackStack(null).commit();
                                             break;
                                         case 1: // delete doc
-                                            db.collection("Post").document(post.getId())
-                                                    .delete()
-                                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                                        @Override
-                                                        public void onSuccess(Void aVoid) {
-                                                            Log.d(TAG, "DocumentSnapshot successfully deleted!");
-                                                            Toast.makeText(view.getContext(), R.string.deleted_the_post, Toast.LENGTH_SHORT).show();
-                                                        }
-                                                    })
-                                                    .addOnFailureListener(new OnFailureListener() {
-                                                        @Override
-                                                        public void onFailure(@NonNull Exception e) {
-                                                            Log.w(TAG, "Error deleting document", e);
-                                                            Toast.makeText(view.getContext(), R.string.failed_to_delete_the_post, Toast.LENGTH_SHORT).show();
-                                                        }
-                                                    });
+                                            if (post.getId() != null) {
+                                                db.collection("Post").document(post.getId())
+                                                        .delete()
+                                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                            @Override
+                                                            public void onSuccess(Void aVoid) {
+                                                                Log.d(TAG, "DocumentSnapshot successfully deleted!");
+                                                                Toast.makeText(view.getContext(), R.string.deleted_the_post, Toast.LENGTH_SHORT).show();
+                                                            }
+                                                        })
+                                                        .addOnFailureListener(new OnFailureListener() {
+                                                            @Override
+                                                            public void onFailure(@NonNull Exception e) {
+                                                                Log.w(TAG, "Error deleting document", e);
+                                                                Toast.makeText(view.getContext(), R.string.failed_to_delete_the_post, Toast.LENGTH_SHORT).show();
+                                                            }
+                                                        });
+                                            }
                                             storageRef2 = storageRef.child("images/" + post.getImg());
                                             storageRef2.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
                                                 @Override
