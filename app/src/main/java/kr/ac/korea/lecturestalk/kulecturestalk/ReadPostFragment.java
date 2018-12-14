@@ -89,63 +89,64 @@ public class ReadPostFragment extends Fragment implements View.OnClickListener {
         nestedScrollView.setVisibility(view.GONE);
 
         docID = getArguments().getString("id");
-        DocumentReference docRef = db.collection("Post").document(docID);
-        docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                if (task.isSuccessful()) {
-                    DocumentSnapshot document = task.getResult();
-                    if (document.exists()) {
-                        Log.d(TAG, "DocumentSnapshot data: " + document.getData());
-                        Map<String, Object> data = document.getData();
+        if (docID != null) {
+            DocumentReference docRef = db.collection("Post").document(docID);
+            docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                    if (task.isSuccessful()) {
+                        DocumentSnapshot document = task.getResult();
+                        if (document.exists()) {
+                            Log.d(TAG, "DocumentSnapshot data: " + document.getData());
+                            Map<String, Object> data = document.getData();
 
-                        long time = System.currentTimeMillis();
-                        if (data.get("time") != null) {
-                            time = (long) data.get("time");
+                            long time = System.currentTimeMillis();
+                            if (data.get("time") != null) {
+                                time = (long) data.get("time");
+                            }
+
+                            post = new Post((String) data.get("id")
+                                    , (String) data.get("author")
+                                    , (String) data.get("authorID")
+                                    , (String) data.get("course")
+                                    , (String) data.get("semester")
+                                    , (String) data.get("professor")
+                                    , (String) data.get("timetable")
+                                    , (String) data.get("category")
+                                    , (String) data.get("title")
+                                    , (String) data.get("description")
+                                    , (List<String>) data.get("comments")
+                                    , (ArrayList<String>) data.get("likes")
+                                    , (int) (long) data.get("numView") //firestore에 int로 넣었지만, long으로 들어가고 반납되고 있음. 때문에 int로 형변환
+                                    , time
+                                    , (List<String>) data.get("numReports")
+                                    , (String) data.get("img")
+                            );
+                            Log.d(TAG, "why!!!" + (String) data.get("id"));
+                        } else {
+                            Log.d(TAG, "No such document");
                         }
-
-                        post = new Post( (String)data.get("id")
-                                , (String)data.get("author")
-                                , (String)data.get("authorID")
-                                , (String)data.get("course")
-                                , (String)data.get("semester")
-                                , (String)data.get("professor")
-                                , (String)data.get("timetable")
-                                , (String)data.get("category")
-                                , (String)data.get("title")
-                                , (String)data.get("description")
-                                , (List<String>)data.get("comments")
-                                , (ArrayList<String>)data.get("likes")
-                                , (int) (long) data.get("numView") //firestore에 int로 넣었지만, long으로 들어가고 반납되고 있음. 때문에 int로 형변환
-                                , time
-                                , (List<String>)data.get("numReports")
-                                , (String)data.get("img")
-                        );
-                        Log.d(TAG, "why!!!"+(String)data.get("id"));
                     } else {
-                        Log.d(TAG, "No such document");
+                        Log.d(TAG, "get failed with ", task.getException());
                     }
-                } else {
-                    Log.d(TAG, "get failed with ", task.getException());
+                    setView(post);
+                    ImageView imageView = (ImageView) view.findViewById(R.id.iv_img);
+                    storageRef2 = storageRef.child("images/" + post.getImg());
+                    Glide.with(getContext())
+                            .using(new FirebaseImageLoader())
+                            .load(storageRef2)
+                            .into(imageView);
+                    progressBar.setVisibility(view.GONE);
+                    nestedScrollView.setVisibility(view.VISIBLE);
                 }
-                setView(post);
-                ImageView imageView = (ImageView) view.findViewById(R.id.iv_img);
-                storageRef2 = storageRef.child("images/" + post.getImg());
-                Glide.with(getContext())
-                        .using(new FirebaseImageLoader())
-                        .load(storageRef2)
-                        .into(imageView);
-                progressBar.setVisibility(view.GONE);
-                nestedScrollView.setVisibility(view.VISIBLE);
-            }
-        });
-
-        tv_author = (TextView)view.findViewById(R.id.tv_author);
-        tv_time = (TextView)view.findViewById(R.id.tv_time);
-        tv_view = (TextView)view.findViewById(R.id.tv_view);
-        tv_like = (TextView)view.findViewById(R.id.tv_like);
-        tv_tile = (TextView)view.findViewById(R.id.tv_title);
-        tv_content = (TextView)view.findViewById(R.id.tv_content);
+            });
+        }
+        tv_author = (TextView) view.findViewById(R.id.tv_author);
+        tv_time = (TextView) view.findViewById(R.id.tv_time);
+        tv_view = (TextView) view.findViewById(R.id.tv_view);
+        tv_like = (TextView) view.findViewById(R.id.tv_like);
+        tv_tile = (TextView) view.findViewById(R.id.tv_title);
+        tv_content = (TextView) view.findViewById(R.id.tv_content);
 
         btn_like = view.findViewById(R.id.btn_like);
         btn_msg = view.findViewById(R.id.btn_msg);
@@ -177,12 +178,12 @@ public class ReadPostFragment extends Fragment implements View.OnClickListener {
                             getComments();
                             comment_desc.setText(null);
 
-                            if((post.getCategory()).equals("QA")) {
+                            if ((post.getCategory()).equals("QA")) {
                                 final Point pointModel = new Point();
                                 pointModel.getPoint(new GetPointListener() {
                                     @Override
                                     public int onPointLoaded(int point) {
-                                        pointModel.addPoint(point+30);
+                                        pointModel.addPoint(point + 30);
                                         return 0;
                                     }
                                 });
@@ -208,7 +209,7 @@ public class ReadPostFragment extends Fragment implements View.OnClickListener {
     }
 
     void setView(Post post) {
-        Log.d(TAG, "why???"+(String)post.getId());
+        Log.d(TAG, "why???" + (String) post.getId());
         tv_author.setText(post.getAuthor());
         tv_time.setText(post.getFormattedTime());
         tv_view.setText(String.valueOf(post.getNumView()));
@@ -217,7 +218,7 @@ public class ReadPostFragment extends Fragment implements View.OnClickListener {
         tv_content.setText(post.getDescription());
 
         db.collection("Post").document(docID).update(
-                "numView", (int)post.getNumView()+1
+                "numView", (int) post.getNumView() + 1
         );
 
         getComments();
@@ -227,7 +228,7 @@ public class ReadPostFragment extends Fragment implements View.OnClickListener {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btn_like:
-                if(post.getLikes().contains(userid)) {
+                if (post.getLikes().contains(userid)) {
                     Toast.makeText(getContext(), R.string.already_recommended, Toast.LENGTH_SHORT).show();
                 } else {
                     post.getLikes().add(userid);
@@ -238,12 +239,12 @@ public class ReadPostFragment extends Fragment implements View.OnClickListener {
                     tv_like.setText(String.valueOf(Integer.parseInt(prevLikes) + 1));
                     Toast.makeText(getContext(), R.string.success_recommend, Toast.LENGTH_SHORT).show();
 
-                    if(( post.getCategory()).equals("공지") || (post.getCategory()).equals("수업자료") ) {
+                    if ((post.getCategory()).equals("공지") || (post.getCategory()).equals("수업자료")) {
                         final Point pointModel = new Point(post.getAuthor());
                         pointModel.getPoint(new GetPointListener() {
                             @Override
                             public int onPointLoaded(int point) {
-                                pointModel.addPoint(point+5);
+                                pointModel.addPoint(point + 5);
                                 return 0;
                             }
                         });
@@ -257,7 +258,7 @@ public class ReadPostFragment extends Fragment implements View.OnClickListener {
                 view.getContext().startActivity(intent);
                 break;
             case R.id.btn_report:
-                if(post.getNumReports().contains(userid)) {
+                if (post.getNumReports().contains(userid)) {
                     Toast.makeText(getContext(), R.string.already_reported, Toast.LENGTH_SHORT).show();
                 } else {
                     post.getNumReports().add(userid);
@@ -283,12 +284,12 @@ public class ReadPostFragment extends Fragment implements View.OnClickListener {
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 Log.d(TAG, String.valueOf(document.getData()));
                                 Map<String, Object> data = document.getData();
-                                Comment comment = new Comment((String)data.get("id")
-                                , (String)data.get("postId")
-                                , (String)data.get("author")
-                                , (String)data.get("desc")
-                                , (long)data.get("time")
-                                , (boolean)data.get("picked"));
+                                Comment comment = new Comment((String) data.get("id")
+                                        , (String) data.get("postId")
+                                        , (String) data.get("author")
+                                        , (String) data.get("desc")
+                                        , (long) data.get("time")
+                                        , (boolean) data.get("picked"));
                                 comments.add(comment);
                             }
                             Collections.sort(comments, new Comparator<Comment>() {
