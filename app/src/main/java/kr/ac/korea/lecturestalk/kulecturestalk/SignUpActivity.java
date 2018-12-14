@@ -20,6 +20,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
+import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -69,6 +70,13 @@ public class SignUpActivity extends AppCompatActivity {
                                 @Override
                                 public void onComplete(@NonNull Task<AuthResult> task) {
                                     if (task.isSuccessful()) {
+                                        //Default로 UserID의 이름 설정.
+                                        String[] nameList = idText.split("@");
+                                        UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
+                                                .setDisplayName(nameList[0])
+                                                .build();
+                                        mFirebaseAuth.getCurrentUser().updateProfile(profileUpdates);
+
                                         Intent intent = new Intent(SignUpActivity.this, LoginActivity.class);
                                         Toast.makeText(SignUpActivity.this, "가입 완료", Toast.LENGTH_SHORT).show();
                                         setInitialPoint(idText);
